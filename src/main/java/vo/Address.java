@@ -4,72 +4,74 @@ import java.sql.Date;
 
 public class Address {
 
-	private int addressNo;
-	private String addressName;
-	private int postalCode;
-	private String address1;
-	private String address2;
+	private int no;
+	private String name;
+	private int zip;
+	private String city;
+	private String street;
 	private String tel;
-	private Date addressCreatedDate;
+	private Date createdDate;
 	
 	public Address() {
 		super();
 	}
-	public Address(int addressNo, String addressName, int postalCode, String address, String address2, String tel,
-			Date addressCreatedDate) {
-		super();
-		this.addressNo = addressNo;
-		this.addressName = addressName;
-		this.postalCode = postalCode;
-		this.address1 = address;
-		this.address2 = address2;
-		this.tel = tel;
-		this.addressCreatedDate = addressCreatedDate;
+
+	public int getNo() {
+		return no;
 	}
-	
-	public int getAddressNo() {
-		return addressNo;
+
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public void setAddressNo(int addressNo) {
-		this.addressNo = addressNo;
+
+	public String getName() {
+		return name;
 	}
-	public String getAddressName() {
-		return addressName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setAddressName(String addressName) {
-		this.addressName = addressName;
+
+	public int getZip() {
+		return zip;
 	}
-	public int getPostalCode() {
-		return postalCode;
+
+	public void setZip(int zip) {
+		this.zip = zip;
 	}
-	public void setPostalCode(int postalCode) {
-		this.postalCode = postalCode;
+
+	public String getCity() {
+		return city;
 	}
-	public String getAddress() {
-		return address1;
+
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public void setAddress(String address1) {
-		this.address1 = address1;
+
+	public String getStreet() {
+		return street;
 	}
-	public String getAddress2() {
-		return address2;
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
+
 	public String getTel() {
 		return tel;
 	}
+
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public Date getAddressCreatedDate() {
-		return addressCreatedDate;
-	}
-	public void setAddressCreatedDate(Date addressCreatedDate) {
-		this.addressCreatedDate = addressCreatedDate;
+
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	
 	
 	
 }

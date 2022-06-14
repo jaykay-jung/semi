@@ -4,46 +4,46 @@ import java.sql.Date;
 
 public class PointHistory {
 
-	private int pointHistoryNo;
-	private String historyTitle;
-	private int pointAmount;
-	private Date pointHistoryCreatedDate;
+	private int pointNo;
+	private String title;
+	private int pointtAmount;
+	private Date createdDate;
 	
 	public PointHistory() {
-		super();
 	}
-	public PointHistory(int pointHistoryNo, String historyTitle, int pointAmount, Date pointHistoryCreatedDate) {
-		super();
-		this.pointHistoryNo = pointHistoryNo;
-		this.historyTitle = historyTitle;
-		this.pointAmount = pointAmount;
-		this.pointHistoryCreatedDate = pointHistoryCreatedDate;
+
+	public int getPointNo() {
+		return pointNo;
 	}
-	
-	public int getPointHistoryNo() {
-		return pointHistoryNo;
+
+	public void setPointNo(int pointNo) {
+		this.pointNo = pointNo;
 	}
-	public void setPointHistoryNo(int pointHistoryNo) {
-		this.pointHistoryNo = pointHistoryNo;
+
+	public String getTitle() {
+		return title;
 	}
-	public String getHistoryTitle() {
-		return historyTitle;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public void setHistoryTitle(String historyTitle) {
-		this.historyTitle = historyTitle;
+
+	public int getPointtAmount() {
+		return pointtAmount;
 	}
-	public int getPointAmount() {
-		return pointAmount;
+
+	public void setPointtAmount(int pointtAmount) {
+		this.pointtAmount = pointtAmount;
 	}
-	public void setPointAmount(int pointAmount) {
-		this.pointAmount = pointAmount;
+
+	public Date getCreatedDate() {
+		return createdDate;
 	}
-	public Date getPointHistoryCreatedDate() {
-		return pointHistoryCreatedDate;
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
-	public void setPointHistoryCreatedDate(Date pointHistoryCreatedDate) {
-		this.pointHistoryCreatedDate = pointHistoryCreatedDate;
-	}
-	
+
+
 	
 }

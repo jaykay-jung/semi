@@ -2,47 +2,45 @@ package vo;
 
 public class Point {
 
-	private int totalPoint;
-	private int usedPoint;
-	private int availablePoint;
-	private int unUsedPoint;
+	private int tot;
+	private int used;
+	private int availble;
+	private int unUsed;
 	
 	public Point() {
-		super();
 	}
-	public Point(int totalPoint, int usedPoint, int availablePoint, int unUsedPoint) {
-		super();
-		this.totalPoint = totalPoint;
-		this.usedPoint = usedPoint;
-		this.availablePoint = availablePoint;
-		this.unUsedPoint = unUsedPoint;
+
+	public int getTot() {
+		return tot;
 	}
-	
-	public int getTotalPoint() {
-		return totalPoint;
+
+	public void setTot(int tot) {
+		this.tot = tot;
 	}
-	public void setTotalPoint(int totalPoint) {
-		this.totalPoint = totalPoint;
+
+	public int getUsed() {
+		return used;
 	}
-	public int getUsedPoint() {
-		return usedPoint;
+
+	public void setUsed(int used) {
+		this.used = used;
 	}
-	public void setUsedPoint(int usedPoint) {
-		this.usedPoint = usedPoint;
+
+	public int getAvailble() {
+		return availble;
 	}
-	public int getAvailablePoint() {
-		return availablePoint;
+
+	public void setAvailble(int availble) {
+		this.availble = availble;
 	}
-	public void setAvailablePoint(int availablePoint) {
-		this.availablePoint = availablePoint;
+
+	public int getUnUsed() {
+		return unUsed;
 	}
-	public int getUnUsedPoint() {
-		return unUsedPoint;
+
+	public void setUnUsed(int unUsed) {
+		this.unUsed = unUsed;
 	}
-	public void setUnUsedPoint(int unUsedPoint) {
-		this.unUsedPoint = unUsedPoint;
-	}
-	
 	
 	
 }
