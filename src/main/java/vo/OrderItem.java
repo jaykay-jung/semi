@@ -4,7 +4,7 @@ public class OrderItem {
 	
 	private int no;
     private int orderNo;
-    private Product Product;
+    private Product product;
     private int quantity;
     private int price;
     
