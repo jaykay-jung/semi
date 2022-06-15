@@ -5,8 +5,8 @@ import java.util.Date;
 public class WishList {
 
 	private int wishNo;
-	private User userNo;
-	private Product productNo;
+	private User user;
+	private Product product;
 	private Date createdDate;
 	
 	public WishList() {}
@@ -19,20 +19,20 @@ public class WishList {
 		this.wishNo = wishNo;
 	}
 
-	public User getUserNo() {
-		return userNo;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserNo(User userNo) {
-		this.userNo = userNo;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Product getProductNo() {
-		return productNo;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductNo(Product productNo) {
-		this.productNo = productNo;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public Date getCreatedDate() {
