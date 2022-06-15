@@ -1,15 +1,24 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class PointHistory {
 
 	private int pointNo;
 	private String title;
 	private int pointtAmount;
+	private User user;
 	private Date createdDate;
 	
 	public PointHistory() {
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getPointNo() {
