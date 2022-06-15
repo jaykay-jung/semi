@@ -11,10 +11,9 @@ public class Address {
 	private String street;
 	private String tel;
 	private Date createdDate;
+	private User user;
 	
-	public Address() {
-		super();
-	}
+	public Address() {}
 
 	public int getNo() {
 		return no;
@@ -70,6 +69,14 @@ public class Address {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

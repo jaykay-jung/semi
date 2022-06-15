@@ -4,19 +4,19 @@ import java.util.Date;
 
 public class WishList {
 
-	private int wishNo;
+	private int no;
 	private User user;
 	private Product product;
 	private Date createdDate;
 	
 	public WishList() {}
 
-	public int getWishNo() {
-		return wishNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setWishNo(int wishNo) {
-		this.wishNo = wishNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public User getUser() {
