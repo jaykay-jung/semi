@@ -2,19 +2,19 @@ package vo;
 
 public class OrderItem {
 	
-	private int orderItemNo;
+	private int no;
     private int orderNo;
-    private int productNo;
+    private Product Product;
     private int quantity;
     private int price;
     
     public OrderItem() {}    
     
-	public int getOrderItemNo() {
-		return orderItemNo;
+	public int getNo() {
+		return no;
 	}
-	public void setOrderItemNo(int orderItemNo) {
-		this.orderItemNo = orderItemNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 	public int getOrderNo() {
 		return orderNo;
@@ -22,11 +22,11 @@ public class OrderItem {
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	public int getProductNo() {
-		return productNo;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProductNo(int productNo) {
-		this.productNo = productNo;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public int getQuantity() {
 		return quantity;
