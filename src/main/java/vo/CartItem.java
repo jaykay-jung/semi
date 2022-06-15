@@ -4,42 +4,44 @@ import java.util.Date;
 
 public class CartItem {
 
-	private int no;
-    private int userNo;
-    private int productNo;
+	  private int no;
+    private User user;
+    private Product product;
     private Date createdDate;
 
     public CartItem() {}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
     
-    public int getNo() {
-        return this.no;
-    }
-
-    public void setNo(int no) {
-        this.no = no;
-    }
-
-    public int getUserNo() {
-        return this.userNo;
-    }
-
-    public void setUserNo(int userNo) {
-        this.userNo = userNo;
-    }
-
-    public int getProductNo() {
-        return this.productNo;
-    }
-
-    public void setProductNo(int productNo) {
-        this.productNo = productNo;
-    }
-
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+    
 }

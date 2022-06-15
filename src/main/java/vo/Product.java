@@ -1,6 +1,7 @@
+
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Product {
 	
@@ -13,132 +14,126 @@ public class Product {
     private int depositPoint;
     private int deleveryFee;
     private int stock;
-    private boolean onSell;
+    private String onSell;
     private Date createdDate;
     private Date updatedDate;
     private int categoryNo;
-    private boolean deleted;
+    private String deleted;
 
     public Product() {}
 
-    public int getNo() {
-        return this.no;
-    }
+	public int getNo() {
+		return no;
+	}
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+	public void setNo(int no) {
+		this.no = no;
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getImageName() {
-        return this.imageName;
-    }
+	public String getImageName() {
+		return imageName;
+	}
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 
-    public String getDescription() {
-        return this.description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public int getCustomerPrice() {
-        return this.customerPrice;
-    }
+	public int getCustomerPrice() {
+		return customerPrice;
+	}
 
-    public void setCustomerPrice(int customerPrice) {
-        this.customerPrice = customerPrice;
-    }
+	public void setCustomerPrice(int customerPrice) {
+		this.customerPrice = customerPrice;
+	}
 
-    public int getSellPrice() {
-        return this.sellPrice;
-    }
+	public int getSellPrice() {
+		return sellPrice;
+	}
 
-    public void setSellPrice(int sellPrice) {
-        this.sellPrice = sellPrice;
-    }
+	public void setSellPrice(int sellPrice) {
+		this.sellPrice = sellPrice;
+	}
 
-    public int getDepositPoint() {
-        return this.depositPoint;
-    }
+	public int getDepositPoint() {
+		return depositPoint;
+	}
 
-    public void setDepositPoint(int depositPoint) {
-        this.depositPoint = depositPoint;
-    }
+	public void setDepositPoint(int depositPoint) {
+		this.depositPoint = depositPoint;
+	}
 
-    public int getDeleveryFee() {
-        return this.deleveryFee;
-    }
+	public int getDeleveryFee() {
+		return deleveryFee;
+	}
 
-    public void setDeleveryFee(int deleveryFee) {
-        this.deleveryFee = deleveryFee;
-    }
+	public void setDeleveryFee(int deleveryFee) {
+		this.deleveryFee = deleveryFee;
+	}
 
-    public int getStock() {
-        return this.stock;
-    }
+	public int getStock() {
+		return stock;
+	}
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 
-    public boolean isOnSell() {
-        return this.onSell;
-    }
+	public String getOnSell() {
+		return onSell;
+	}
 
-    public boolean getOnSell() {
-        return this.onSell;
-    }
+	public void setOnSell(String onSell) {
+		this.onSell = onSell;
+	}
 
-    public void setOnSell(boolean onSell) {
-        this.onSell = onSell;
-    }
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
 
-    public Date getUpdatedDate() {
-        return this.updatedDate;
-    }
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+	public int getCategoryNo() {
+		return categoryNo;
+	}
 
-    public int getCategoryNo() {
-        return this.categoryNo;
-    }
+	public void setCategoryNo(int categoryNo) {
+		this.categoryNo = categoryNo;
+	}
 
-    public void setCategoryNo(int categoryNo) {
-        this.categoryNo = categoryNo;
-    }
+	public String getDeleted() {
+		return deleted;
+	}
 
-    public boolean isDeleted() {
-        return this.deleted;
-    }
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
 
-    public boolean getDeleted() {
-        return this.deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
+    
 }
+
