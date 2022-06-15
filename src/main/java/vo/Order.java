@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Order {
 
-	private int no;
+    private int no;
     private Date createdDate;
     private String status;
     private int totalPrice;
@@ -13,8 +13,8 @@ public class Order {
     private String payType;
     private Date updatedDate;
     private Date receiveDate;
-    private int userNo;
-    private int addressNo;
+    private User user;
+    private Address address;
     
     public Order() {}
     
@@ -72,17 +72,17 @@ public class Order {
 	public void setReceiveDate(Date receiveDate) {
 		this.receiveDate = receiveDate;
 	}
-	public int getUserNo() {
-		return userNo;
+	public User getUser() {
+		return user;
 	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public int getAddressNo() {
-		return addressNo;
+	public Address getAddress() {
+		return address;
 	}
-	public void setAddressNo(int addressNo) {
-		this.addressNo = addressNo;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
     
