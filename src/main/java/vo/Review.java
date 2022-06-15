@@ -3,9 +3,9 @@ package vo;
 import java.util.Date;
 
 public class Review {
-	private int reviewNo;
-	private User userNo;
-	private Product productNo;
+	private int  no;
+	private User user;
+	private Product product;
 	private String title;
 	private String content;
 	private Date createdDate;
@@ -13,28 +13,28 @@ public class Review {
 	
 	public Review() {}
 
-	public int getReviewNo() {
-		return reviewNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setReviewNo(int reviewNo) {
-		this.reviewNo = reviewNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
-	public User getUserNo() {
-		return userNo;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserNo(User userNo) {
-		this.userNo = userNo;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Product getProductNo() {
-		return productNo;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductNo(Product productNo) {
-		this.productNo = productNo;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public String getTitle() {

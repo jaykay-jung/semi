@@ -4,53 +4,53 @@ import java.util.Date;
 
 public class Notice {
 
-    private int no;
-    private String title;
-    private String content;
-    private Date createdDate;
-    private int viewCount;
+	private int no;
+	private String title;
+	private String content;
+	private Date createdDate;
+	private int viewCount;
+	
+	public Notice() {}
 
-    public Notice() {}
+	public int getNo() {
+		return no;
+	}
 
-    public int getNo() {
-        return this.no;
-    }
+	public void setNo(int no) {
+		this.no = no;
+	}
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getTitle() {
-        return this.title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public String getContent() {
-        return this.content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public int getViewCount() {
+		return viewCount;
+	}
 
-    public int getViewCount() {
-        return this.viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+	
+	
 }
-
