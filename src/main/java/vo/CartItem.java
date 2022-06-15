@@ -4,10 +4,11 @@ import java.util.Date;
 
 public class CartItem {
 
-	  private int no;
+	private int no;
     private User user;
     private Product product;
     private Date createdDate;
+    private int quantity;
 
     public CartItem() {}
 
@@ -41,6 +42,14 @@ public class CartItem {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
     
     
