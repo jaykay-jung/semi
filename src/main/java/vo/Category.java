@@ -2,25 +2,25 @@ package vo;
 
 public class Category {
 
-	private int categoryNo;
-	private String categoryName;
+	private int no;
+	private String name;
 	
 	public Category() {}
 
-	public int getCategoryNo() {
-		return categoryNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
