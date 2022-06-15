@@ -47,7 +47,6 @@ public class AddressDao {
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
 			address.setName(rs.getString("ADDRESS_NAME"));
-			
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
 			address.setStreet(rs.getString("ADDRESS_DETAIL"));

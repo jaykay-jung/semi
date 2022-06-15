@@ -11,7 +11,6 @@ import vo.User;
 
 public class CartItemDao {
 	
-	// 객체만들기와 helper생성
 	private static CartItemDao instance = new CartItemDao();
 	private CartItemDao() {}
 	public static CartItemDao getInstance() {
@@ -37,26 +36,12 @@ public class CartItemDao {
 				+ "INSERT (CART_ITEM_NO, USER_NO, PRODUCT_NO, CART_ITEM_QUANTITY) "
 				+ "VALUES (SEMI_CART_ITEMS_SEQ.nextval, ?, ?, 1) ";
 		
-		// 이게 가능한가?
-		// 예를 들어, update메소드를 실행하면, 아래 sql이 실행, 만약 update가 아니라 insert면 예외처리했으니까, 실행안되고 insert로 넘어가는건가?
 		helper.update(sql, cartItem.getUser().getNo(), cartItem.getProduct().getNo());
 		helper.insert(sql, cartItem.getUser().getNo(), cartItem.getProduct().getNo());
-	
-		/*
-		Connection connection = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, cartItem.getUser().getNo());
-		pstmt.setInt(2, cartItem.getProduct().getNo());
-		pstmt.setInt(3, cartItem.getUser().getNo());
-		pstmt.setInt(4, cartItem.getProduct().getNo());
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		connection.close();
-		*/
+
 	}
 	
-	// -> 삭제에서, 아이템이 여러개면? 수량을 줄이고, 1개면 삭제, 하는거 내가 할수 있나?!
+
 
 	/**
 	 * 전달받은 장바구니 아이템 번호와 일치하는 상품 정보를 삭제한다.
@@ -86,18 +71,15 @@ public class CartItemDao {
 
 		return helper.selectList(sql, rs -> {
 			
-			// 객체 생성해서 필드 채우기
 			CartItem cartItem = new CartItem();
 			cartItem.setNo(rs.getInt("CART_ITEM.NO"));
 			cartItem.setQuantity(rs.getInt("CART_ITEM_QUANTITY"));
 			
-			// User객체
 			User user = new User();
 			user.setNo(rs.getInt("USER_NO"));
 			user.setName(rs.getString("USER_NAME"));
 			cartItem.setUser(user);
 			
-			// Product객체
 			Product product = new Product();
 			product.setNo(rs.getInt("PRODUCT_NO"));
 			product.setImageName(rs.getString("PRODUCT_IMAGE_NAME"));

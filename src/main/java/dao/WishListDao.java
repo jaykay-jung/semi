@@ -30,7 +30,7 @@ public class WishListDao {
 					+ "	WHERE U.USER_NO = ? "
 					+ "	AND U.USER_NO = W.USER_NO "
 					+ "	AND P.PRODUCT_NO = W.PRODUCT_NO "
-					+ "	ORDER BY W.WISH_ITEM_NO ";
+					+ "	ORDER BY W.WISH_ITEM_NO DESC ";
 
 		return helper.selectList(sql, rs -> {
 		
