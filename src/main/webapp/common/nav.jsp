@@ -6,13 +6,18 @@
 	User user = (User) session.getAttribute("LOGINED_USER");
 %>
 <style>
-	div {border: 1px solid #000;}
+	* {margin: 0; padding: 0;}
+	ul li {list-style: none; float: left;}
+	div {}
+	.navTop a {color: #999; height: 45px;}
+	.navMain ul {height: 45px; margin: 20px 0 10px 0;}
+	.navMain a {color: #222; padding: 0px 15px;}
 </style>
 <nav class="">
 	<div class="container">
-		<div class="">
-			<div class="col-3 mb-6"></div>
-			<div class="col-3 mb-6">
+		<!-- 최상단 nav -->
+		<div class="nav justify-content-end">
+			<div class="navTop">
 				<ul>
 				<!-- 로그인 했을 때  -->
 				<%
@@ -22,8 +27,10 @@
 						<a class="nav-link" href="">MODIFY</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">LOGOUT</a>
+						<a class="nav-link" href="/semi/logout.jsp">LOGOUT</a>
 					</li>
+				
+				<!-- 로그인 전일 때 -->
 				<%
 					} else if (user == null) {
 				%>
@@ -31,7 +38,7 @@
 						<a class="nav-link" href="/semi/loginform.jsp">LOGIN</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">JOIN</a>
+						<a class="nav-link" href="/semi/registerform.jsp">JOIN</a>
 					</li>
 				<%	
 					}
@@ -46,7 +53,39 @@
 						<a class="nav-link" href="">MYPAGE</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">LOGIN</a>
+						<a class="nav-link" href="">BOARD</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<!-- 로고, 검색창 -->
+		<div>
+			<div class="col-7 text-end">
+				<a href="home.jsp">
+					<img src="images/h_logo.png" alt="로고이미지">
+				</a>
+			</div>
+		</div>
+		
+		<!-- nav -->
+		<div class="navMain">
+			<div>
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="">정기구독</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">플라워</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">드라이플라워</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">실크플라워</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">소품</a>
 					</li>
 				</ul>
 			</div>

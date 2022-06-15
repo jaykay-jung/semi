@@ -23,11 +23,11 @@ public class UserDao {
      */
     public void insertUser(User user) throws SQLException {
         String sql = "insert into semi_users "
-                   + "(user_no, user_id, user_password, user_email, user_name, user_phone, user_gender, user_birthday) "
+                   + "(user_no, user_id, user_password, user_email, user_name, user_phone, user_gender, user_birthday, user_grade) "
                    + "values "
-                   + "(semi_users_seq.nextval, ?, ?, ?, ?, ?, ?, ?) ";
+                   + "(semi_users_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
-        helper.insert(sql, user.getId(), user.getPassword(), user.getEmail(), user.getName(), user.getPhone(), user.getGender(), user.getBirthday());
+        helper.insert(sql, user.getId(), user.getPassword(), user.getEmail(), user.getName(), user.getPhone(), user.getGender(), user.getBirthday(), user.getGrade());
     }
 
     /**
