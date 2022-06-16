@@ -85,9 +85,5 @@ public class Order {
 		this.address = address;
 	}
 
-    
-    
-    
-    
-    
 }
+

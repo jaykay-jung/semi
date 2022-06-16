@@ -42,5 +42,5 @@ public class WishList {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
 }
+

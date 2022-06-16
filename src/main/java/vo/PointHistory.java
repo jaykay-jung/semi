@@ -7,6 +7,7 @@ public class PointHistory {
 	private int pointNo;
 	private String title;
 	private int pointAmount;
+
 	private User user;
 	private Date createdDate;
 	
@@ -35,7 +36,6 @@ public class PointHistory {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
 
 	public int getPointAmount() {
 		return pointAmount;
@@ -52,7 +52,5 @@ public class PointHistory {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
-
-	
 }
+

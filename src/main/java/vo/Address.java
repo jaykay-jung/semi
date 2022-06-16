@@ -1,6 +1,6 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Address {
 
@@ -10,10 +10,16 @@ public class Address {
 	private String city;
 	private String street;
 	private String tel;
-	private Date createdDate;
+	private Date createdDate;	
+  
+	public Address() {
+		super();
+	}
+
 	private User user;
 	
 	public Address() {}
+
 
 	public int getNo() {
 		return no;
@@ -71,6 +77,7 @@ public class Address {
 		this.createdDate = createdDate;
 	}
 
+
 	public User getUser() {
 		return user;
 	}
@@ -82,3 +89,4 @@ public class Address {
 	
 	
 }
+

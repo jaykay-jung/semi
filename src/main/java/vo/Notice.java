@@ -52,5 +52,4 @@ public class Notice {
 		this.viewCount = viewCount;
 	}
 	
-	
 }

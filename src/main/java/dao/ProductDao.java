@@ -1,8 +1,10 @@
 package dao;
 
 import java.sql.SQLException;
+
 import helper.DaoHelper;
 import vo.Category;
+
 import vo.Product;
 
 public class ProductDao {
@@ -15,6 +17,7 @@ public class ProductDao {
 	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
+
 	
 	// 상품 정보 등록
 	public void insertProduct(Product product) throws SQLException { 

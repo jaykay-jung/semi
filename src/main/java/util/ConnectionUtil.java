@@ -1,3 +1,4 @@
+
 package util;
 
 import java.sql.Connection;
@@ -22,3 +23,4 @@ public class ConnectionUtil {
 		return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 	}
 }
+
