@@ -5,6 +5,7 @@
 	String menu = request.getParameter("menu");
 	User user = (User) session.getAttribute("LOGINED_USER");
 %>
+<script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 <style>
 	* {margin: 0; padding: 0;}
 	ul li {list-style: none; float: left;}
@@ -53,18 +54,26 @@
 						<a class="nav-link" href="">MYPAGE</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">BOARD</a>
+						<a class="nav-link" href="/semi/review.jsp">REVIEW</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 		
 		<!-- 로고, 검색창 -->
-		<div>
+		<div class="row">
 			<div class="col-7 text-end">
 				<a href="home.jsp">
 					<img src="images/h_logo.png" alt="로고이미지">
 				</a>
+			</div>
+			<div class="col-5 text-end">
+				<form>
+					<input type="text" name="keyword" placeholder="검색창 수정필요">
+					<button>
+						<i class="fa-light fa-magnifying-glass"></i>
+					</button>
+				</form>
 			</div>
 		</div>
 		
