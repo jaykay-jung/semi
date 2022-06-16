@@ -11,12 +11,7 @@ public class Address {
 	private String street;
 	private String tel;
 	private Date createdDate;	
-  
-	public Address() {
-		super();
-	}
-
-	private User user;
+  	private User user;
 	
 	public Address() {}
 
@@ -77,7 +72,6 @@ public class Address {
 		this.createdDate = createdDate;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
@@ -85,8 +79,6 @@ public class Address {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
+		
 }
 
