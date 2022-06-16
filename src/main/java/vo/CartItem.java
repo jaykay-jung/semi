@@ -6,10 +6,8 @@ public class CartItem {
 
 	  private int no;
     private User user;
-    private User user;
     private Product product;
-	  private int cartItemQuantity;
-	  private int orderPrice;
+	private int orderPrice;
     private Date createdDate;
     private int quantity;
 
@@ -38,14 +36,6 @@ public class CartItem {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public int getCartItemQuantity() {
-		return this.cartItemQuantity;
-	}
-
-	public void setCartItemQuantity(int cartItemQuantity) {
-		this.cartItemQuantity = cartItemQuantity;
 	}
 
 	public int getOrderPrice() {
