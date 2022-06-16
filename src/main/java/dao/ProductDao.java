@@ -30,7 +30,7 @@ public class ProductDao {
 	}
 	
 	
-	// 등록된 모든 상품 정보 조회 (카테고리 명칭도 포함)
+	// 등록된 모든 상품 정보 조회 (카테고리 명칭도 포함, 카테고리 명칭은 아직 반환값에 담아두지 않음)
 	public Product getAllProduct() throws SQLException {
 	String sql = "select p.product_no, p.product_name, p.product_image_name, p.product_description, p.product_customer_price, p.product_sell_price, p.product_deposit_point, p.product_delivery_fee, p.product_stock, p.product_on_sell, p.category_no, c.cateogry_name, p.product_deleted, p.product_created_date, p.product_updated_date "      
 			   + "from semi_products p, semi_product_category c "
