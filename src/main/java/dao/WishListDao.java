@@ -18,6 +18,55 @@ public class WishListDao {
 	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
+	
+	/**
+	 * 위시리스트에 등록한다.
+	 * @param wishList 위시리스트 상품정보
+	 * @throws SQLException
+	 */
+	public void insertWishList(WishList wishList) throws SQLException {
+		String sql = "INSERT INTO SEMI_WISH_PRODUCTS "
+					+ "(WISH_ITEM_NO, USER_NO, PRODUCT_NO) "
+					+ "values "
+					+ "(SEMI_WISH_PRODUCTS_seq.nextval, ?, ?) ";
+		
+		helper.insert(sql, wishList.getUser().getName(), wishList.getProduct().getNo());
+	}
+	
+
+	/**
+	 * 지정된 위시리스트 번호와 일치하는 위시리스트 정보를 반환한다.
+	 * @param wishNo
+	 * @return 위시리스트 상품
+	 * @throws SQLException
+	 */
+	public WishList getWishListByWishListNo(int wishNo) throws SQLException {
+		String sql = "select WISH_ITEM_NO, USER_NO, PRODUCT_NO, WISH_ITEM_CREATED_DATE "
+				   + "from SEMI_WISH_PRODUCTS "
+				   + "where WISH_ITEM_NO = ? ";
+		
+		
+		return helper.selectOne(sql, rs -> {
+			
+			WishList wishList = new WishList();
+			wishList.setNo(rs.getInt("WISH_ITEM_NO"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("USER_NO"));
+			wishList.setUser(user);
+			
+			Product product = new Product();
+			product.setNo(rs.getInt("PRODUCT_NO"));
+			wishList.setProduct(product);
+			
+			wishList.setCreatedDate(rs.getDate("WISH_ITEM_CREATED_DATE"));
+			return wishList;
+			
+		}, wishNo);
+				
+	}
+	
+	
 	/**
 	 * 지정된 사용자번호로 저장된 위시리스트 상품을 조회한다.
 	 * @param userNo 사용자번호
