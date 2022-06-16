@@ -1,6 +1,6 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Order {
 
@@ -9,6 +9,7 @@ public class Order {
     private String status;
     private int totalPrice;
     private int usedPoint;
+	private int depositPoint;
     private int totalpay;
     private String payType;
     private Date updatedDate;
@@ -17,73 +18,103 @@ public class Order {
     private Address address;
     
     public Order() {}
-    
+
 	public int getNo() {
-		return no;
+		return this.no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
+
 	public Date getCreatedDate() {
-		return createdDate;
+		return this.createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public String getStatus() {
-		return status;
+		return this.status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public int getTotalPrice() {
-		return totalPrice;
+		return this.totalPrice;
 	}
+
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
 	public int getUsedPoint() {
-		return usedPoint;
+		return this.usedPoint;
 	}
+
 	public void setUsedPoint(int usedPoint) {
 		this.usedPoint = usedPoint;
 	}
-	public int getTotalpay() {
-		return totalpay;
+
+	public int getDepositPoint() {
+		return this.depositPoint;
 	}
+
+	public void setDepositPoint(int depositPoint) {
+		this.depositPoint = depositPoint;
+	}
+
+	public int getTotalpay() {
+		return this.totalpay;
+	}
+
 	public void setTotalpay(int totalpay) {
 		this.totalpay = totalpay;
 	}
+
 	public String getPayType() {
-		return payType;
+		return this.payType;
 	}
+
 	public void setPayType(String payType) {
 		this.payType = payType;
 	}
+
 	public Date getUpdatedDate() {
-		return updatedDate;
+		return this.updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
 	public Date getReceiveDate() {
-		return receiveDate;
+		return this.receiveDate;
 	}
+
 	public void setReceiveDate(Date receiveDate) {
 		this.receiveDate = receiveDate;
 	}
+
 	public User getUser() {
-		return user;
+		return this.user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
+
 	public void setAddress(Address address) {
 		this.address = address;
-	}
+
+	}	
 
 }
 
