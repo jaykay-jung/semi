@@ -6,10 +6,13 @@ public class CartItem {
 
 	  private int no;
     private User user;
+    private User user;
     private Product product;
-	private int cartItemQuantity;
-	private int orderPrice;
+	  private int cartItemQuantity;
+	  private int orderPrice;
     private Date createdDate;
+    private int quantity;
+
 
     public CartItem() {}
 
@@ -60,5 +63,13 @@ public class CartItem {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}	
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
     
 }

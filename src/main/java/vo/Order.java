@@ -1,6 +1,6 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Order {
 
@@ -113,6 +113,8 @@ public class Order {
 
 	public void setAddress(Address address) {
 		this.address = address;
+
 	}	
-    
+
 }
+

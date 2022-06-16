@@ -41,5 +41,4 @@ public class OrderItem {
 		this.price = price;
 	}
 
-    
 }

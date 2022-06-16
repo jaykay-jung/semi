@@ -68,6 +68,5 @@ public class Review {
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
 	}
-	
-	
+
 }

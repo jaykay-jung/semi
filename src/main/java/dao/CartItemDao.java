@@ -7,6 +7,7 @@ import helper.DaoHelper;
 import vo.CartItem;
 import vo.Product;
 
+
 public class CartItemDao {
 
     private static CartItemDao instance = new CartItemDao();
@@ -135,5 +136,45 @@ public class CartItemDao {
 		helper.delete(sql, itemNo);
 	} 
 
+
+	/**
+	 * 사용자번호를 전달받아 저장된 장바구니 상품들을 조회한다.
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<CartItem> getAllCartItemByUserNo(int userNo) throws SQLException {
+		String sql = "SELECT C.CART_ITEM_NO, C.CART_ITEM_QUANTITY, C.USER_NO, U.USER_NAME, C.PRODUCT_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
+				+ "FROM SEMI_CART_ITEMS C, SEMI_USERS U, SEMI_PRODUCTS P "
+				+ "WHERE C.USER_NO = ? "
+				+ "AND C.USER_NO = U.USER_NO "
+				+ "AND C.PRODUCT_NO = P.PRODUCT_NO "
+				+ "ORDER BY C.CART_ITEM_CREATED_DATE DESC ";
+
+		return helper.selectList(sql, rs -> {
+			
+			CartItem cartItem = new CartItem();
+			cartItem.setNo(rs.getInt("CART_ITEM.NO"));
+			cartItem.setQuantity(rs.getInt("CART_ITEM_QUANTITY"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("USER_NO"));
+			user.setName(rs.getString("USER_NAME"));
+			cartItem.setUser(user);
+			
+			Product product = new Product();
+			product.setNo(rs.getInt("PRODUCT_NO"));
+			product.setImageName(rs.getString("PRODUCT_IMAGE_NAME"));
+			product.setName(rs.getString("PRODUCT_NAME"));
+			product.setSellPrice(rs.getInt("PRODUCT_SELL_PRICE"));
+			product.setDepositPoint(rs.getInt("PRODUCT_DEPOSIT_POINT"));
+			product.setDeliveryFee(rs.getInt("PRODUCT_DELIVERY_FEE"));	
+			cartItem.setProduct(product);
+						
+			return cartItem;
+			
+		}, userNo);
+	
+	}
 
 }
