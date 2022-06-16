@@ -41,6 +41,6 @@ public class Point {
 	public void setUnUsed(int unUsed) {
 		this.unUsed = unUsed;
 	}
-	
-	
+
 }
+
