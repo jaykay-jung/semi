@@ -47,7 +47,7 @@ public class CartItemDao {
         return helper.selectList(sql, rs -> {
             CartItem cartItem = new CartItem();
             cartItem.setNo(rs.getInt("cart_item_no"));
-            cartItem.setCartItemQuantity(rs.getInt("cart_item_quantity"));
+            cartItem.setQuantity(rs.getInt("cart_item_quantity"));
 
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
@@ -77,7 +77,7 @@ public class CartItemDao {
 		return helper.selectOne(sql, rs -> {
             CartItem cartItem = new CartItem();
             cartItem.setNo(rs.getInt("cart_item_no"));
-            cartItem.setCartItemQuantity(rs.getInt("cart_item_quantity"));
+            cartItem.setQuantity(rs.getInt("cart_item_quantity"));
 
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
