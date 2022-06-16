@@ -6,6 +6,7 @@ import java.util.List;
 import helper.DaoHelper;
 import vo.CartItem;
 import vo.Product;
+import vo.User;
 
 
 public class CartItemDao {
@@ -71,7 +72,7 @@ public class CartItemDao {
      */
     public CartItem getCartItemByItemNo(int itemNo) throws SQLException {
 		String sql = "select * "
-				   + "from store_cart_items "
+				   + "from semi_cart_items "
 				   + "where cart_item_no = ? ";
 		
 		return helper.selectOne(sql, rs -> {
@@ -98,7 +99,7 @@ public class CartItemDao {
      */
     public void mergeCartItem(CartItem cartItem) throws SQLException {
         String sql = "merge "
-                   + "  into store_cart_items C "
+                   + "  into semi_cart_items C "
                    + "using dual "
                    + "  on (C.user_no = ? and C.product_no = ?) "
                    + "when matched then "
@@ -118,7 +119,7 @@ public class CartItemDao {
      * @throws SQLException
      */
     public void deleteCartItemByUserNo(int userNo) throws SQLException {
-        String sql = "delete from store_cart_items "
+        String sql = "delete from semi_cart_items "
                    + "where user_no = ? ";
 
         helper.delete(sql, userNo);
@@ -130,7 +131,7 @@ public class CartItemDao {
      * @throws SQLException
      */
     public void deleteCartItem(int itemNo) throws SQLException {
-		String sql = "delete from store_cart_items "
+		String sql = "delete from semi_cart_items "
 				   + "where cart_item_no = ? ";
 		
 		helper.delete(sql, itemNo);
