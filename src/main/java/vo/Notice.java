@@ -9,6 +9,7 @@ public class Notice {
 	private String content;
 	private Date createdDate;
 	private int viewCount;
+	private String deleted;
 	
 	public Notice() {}
 
@@ -51,5 +52,15 @@ public class Notice {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
+
+	public String getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+	
+	
 	
 }

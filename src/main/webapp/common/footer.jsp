@@ -4,7 +4,8 @@
 <%
 	String menu = request.getParameter("footer");
 %>
-<div class="container">
+
+<div class="container footerContainer">
 	<div class="row bg-light  p-3">
 		<div class="col-4 text-center">
 			<p><strong>CS CENTER</strong></p>
