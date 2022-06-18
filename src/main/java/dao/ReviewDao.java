@@ -126,5 +126,41 @@ public class ReviewDao {
 		},keyword, beginIndex, endIndex);
 	}
 	
+	/**
+	 * 지정된 사용자번호로 저장된 리뷰목록을 조회한다.
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Review> getAllReviewsByNo(int userNo) throws SQLException {
+		String sql = "SELECT R.REVIEW_NO, R.PRODUCT_NO, P.PRODUCT_IMAGE_NAME, R.REVIEW_TITLE, R.REVIEW_CONTENT, R.REVIEW_CREATED_DATE "
+				+ "FROM SEMI_REVIEWS R, SEMI_PRODUCTS P "
+				+ "WHERE R.REVIEW_DELETED = 'N' "
+				+ "AND P.PRODUCT_NO = R.PRODUCT_NO "
+				+ "ORDER BY R.REVIEW_NO DESC ";
+		
+		return helper.selectList(sql, rs -> {
+			
+			Review review = new Review();
+			review.setNo(rs.getInt("REVIEW_NO"));
+			
+			Product product = new Product();
+			product.setNo(rs.getInt("PRODUCT_NO"));
+			product.setImageName(rs.getString("PRODUCT_IMAGE_NAME"));
+			
+			review.setTitle(rs.getString("REVIEW_TITLE"));
+			review.setContent(rs.getString("REVIEW_CONTENT"));
+			review.setCreatedDate(rs.getDate("REVIEW_CREATED_DATE"));
+			
+			return review;
+			
+		}, userNo);
+	}
+	
+	
+	
+	
+	
+	
 	
 }

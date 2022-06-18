@@ -75,7 +75,7 @@ public class WishListDao {
 	 */
 	public List<WishList> getAllWishList(int userNo) throws SQLException {
 		String sql = "select W.WISH_ITEM_NO, U.USER_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
-					+ "	FROM SEMI_USERS U, SEMI_WISH_PRODUCTS W, SEMI_PRODUCTS "
+					+ "	FROM SEMI_USERS U, SEMI_WISH_PRODUCTS W, SEMI_PRODUCTS P "
 					+ "	WHERE U.USER_NO = ? "
 					+ "	AND U.USER_NO = W.USER_NO "
 					+ "	AND P.PRODUCT_NO = W.PRODUCT_NO "
