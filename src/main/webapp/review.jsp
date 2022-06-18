@@ -23,7 +23,7 @@
 <body>
 <!-- header -->
 <jsp:include page="common/nav.jsp">
-	<jsp:param name="menu" value="home"/>
+	<jsp:param name="menu" value="review"/>
 </jsp:include>
 
 <!-- content -->
@@ -63,8 +63,8 @@
 		<div>
 			<table class="table">
 				<colgroup>
-					<col width="10%">
-					<col width="20%">
+					<col width="5%">
+					<col width="15%">
 					<col width="%">
 					<col width="10%">
 					<col width="10%">
@@ -84,8 +84,13 @@
 				%>
 					<tr>
 						<td><%=review.getNo() %></td>
-						<td><%=review.getProduct().getName() %></td>
-						<td><%=review.getTitle() %></td>
+						<td>
+							<!-- 상품 이미지 출력 -->
+							<div>
+							</div>
+							<%=review.getProduct().getName() %>
+						</td>
+						<td class="text-"><a href="reviewdetail.jsp?no=<%=review.getNo() %>"><%=review.getTitle() %></a></td>
 						<td><%=review.getUser().getName() %></td>
 						<td><%=review.getCreatedDate() %></td>
 					</tr>
@@ -102,7 +107,7 @@
 				<%
 					User user = (User) session.getAttribute("LOGINED_USER");
 				%>
-				<a href="reviewform.jsp" class="btn btn-dark btn-sm  <%=user == null ? "disabled" : "" %>" >글쓰기</a>
+				<a href="reviewform.jsp" class="btn btn-dark btn-sm <%=user == null ? "disabled" : "" %> " >글쓰기</a>
 			</div>
 		</div>
 	</div>
@@ -110,14 +115,16 @@
 	<!-- 검색 -->
 	<div class="row">
 		<div class="col">
-			<p>검색어</p>
+			<form>
+				<input type="text" name="keyword">
+			</form>
 		</div>
 	</div>
 </div>
 
 <!-- footer -->
 <jsp:include page="common/footer.jsp">
-	<jsp:param name="footer" value="home"/>
+	<jsp:param name="footer" value="review"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

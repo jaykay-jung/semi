@@ -17,7 +17,7 @@
 <body>
 <!-- header -->
 <jsp:include page="common/nav.jsp">
-	<jsp:param name="menu" value="registerform"/>
+	<jsp:param name="menu" value="register"/>
 </jsp:include>
 
 <!-- content -->
@@ -107,7 +107,7 @@
 
 <!-- footer -->
 <jsp:include page="common/footer.jsp">
-	<jsp:param name="footer" value="registerform"/>
+	<jsp:param name="footer" value="register"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

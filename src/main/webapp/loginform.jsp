@@ -52,7 +52,7 @@
 
 <!-- footer -->
 <jsp:include page="common/footer.jsp">
-	<jsp:param name="footer" value="registerform"/>
+	<jsp:param name="footer" value="login"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">

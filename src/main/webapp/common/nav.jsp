@@ -45,16 +45,19 @@
 					}
 				%>
 					<li class="nav-item">
-						<a class="nav-link" href="">CART</a>
+						<a class="nav-link" href="/semi/cartform.jsp">CART</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">ORDER</a>
+						<a class="nav-link" href="/semi/orderform.jsp">ORDER</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="">MYPAGE</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/semi/review.jsp">REVIEW</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/semi/notice.jsp">NOTICE</a>
 					</li>
 				</ul>
 			</div>
@@ -71,7 +74,7 @@
 				<form>
 					<input type="text" name="keyword" placeholder="검색창 수정필요">
 					<button>
-						<i class="fa-light fa-magnifying-glass"></i>
+						<i class="bi bi-search"></i>
 					</button>
 				</form>
 			</div>
