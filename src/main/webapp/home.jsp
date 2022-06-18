@@ -8,6 +8,13 @@
 <title>Insert title here</title>
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+	.footerContainer {margin-top: 100px;}
+	p .productExplain {color: #666;}
+	.seemoreButton {margin: 20px 0;}
+	.textBold {font-weight: bold;}
+</style>
+
 </head>
 <body>
 <!-- header -->
@@ -17,6 +24,9 @@
 
 <!-- content -->
 <div class="container-fluid">
+	<%
+	
+	%>
 	<div class="row mb-3">
 		<div class="col-12">
 			<!-- 슬라이드 이미지 -->
@@ -80,11 +90,112 @@
 	</div>
 </div>
 
-<div>
+<div class="container">
 	<div>
 		<div class="text-center">
 			<h3>Best</h3>
 		</div>
+		<div class="row">
+			<div class="col-4">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col text-center">
+			<a class="btn btn-light btn-outline-secondary mx-auto seemoreButton" href="">
+				SEEMORE
+			</a>
+		</div>
+	</div>
+	<div>
+		<div class="text-center">
+			<h3>드라이 플라워</h3>
+		</div>
+		<div class="row">
+			<div class="col-3">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>			
+			</div>
+			<div class="col-3">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>			
+			</div>
+			<div class="col-3">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>			
+			</div>
+			<div class="col-3">
+				<div class="card">
+					<div style="border: 1px solid #eee; margin: 25px;">					
+						<p>상품사진</p>
+					</div>
+					<div class="card-body">
+						<p class="textBold">상품명</p>
+						<p class="textBold">가격</p>
+						<p><small class="productExplain">설명</small></p>
+					</div>
+				</div>			
+			</div>
+		</div>
+		
 	</div>
 </div>
 

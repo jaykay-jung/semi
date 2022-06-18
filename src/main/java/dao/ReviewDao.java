@@ -57,7 +57,13 @@ public class ReviewDao {
 		}, keyword);
 	}
 	
-	
+	/**
+	 * 
+	 * @param beginIndex
+	 * @param endIndex
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Review> getReviews(int beginIndex, int endIndex) throws SQLException {
 		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
 					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "
@@ -66,7 +72,7 @@ public class ReviewDao {
 					+ "		 where review_deleted = 'N') R, semi_users U, semi_products P "
 					+ "where R.row_number >= ? and R.row_number <= ? "
 					+ "and R.user_no = U.user_no "
-					+ "and R.product_no = P.category_no "
+					+ "and R.product_no = P.product_no "
 					+ "order by R.review_no desc ";
 		
 		return helper.selectList(sql, rs -> {
@@ -126,7 +132,40 @@ public class ReviewDao {
 		},keyword, beginIndex, endIndex);
 	}
 	
-	/**
+	
+ /**
+	 * 
+	 * @param reviewNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Review getReviewByNo(int reviewNo) throws SQLException {
+		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, "
+					+ "		 R.review_content, R.review_deleted, R.review_created_date "
+					+ "from semi_reviews R, semi_users U, semi_products P "
+					+ "where R.review_no = ? "
+					+ "and R.user_no = U.user_no "
+					+ "and R.product_no = P.product_no ";
+		
+		return helper.selectOne(sql, rs -> {
+			Review review = new Review();
+			review.setNo(rs.getInt("review_no"));
+			review.setTitle(rs.getString("review_title"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("user_no"));
+			user.setName(rs.getString("user_name"));
+			review.setUser(user);
+			
+			review.setContent(rs.getString("review_content"));
+			review.setDeleted(rs.getString("review_deleted"));
+			review.setCreatedDate(rs.getDate("review_created_date"));
+			
+			return review;
+		}, reviewNo);
+	}
+  
+ /**
 	 * 지정된 사용자번호로 저장된 리뷰목록을 조회한다.
 	 * @param userNo
 	 * @return
@@ -156,11 +195,5 @@ public class ReviewDao {
 			
 		}, userNo);
 	}
-	
-	
-	
-	
-	
-	
 	
 }

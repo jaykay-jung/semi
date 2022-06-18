@@ -17,7 +17,7 @@
 <body>
 <!-- header -->
 <jsp:include page="common/nav.jsp">
-	<jsp:param name="menu" value="home"/>
+	<jsp:param name="menu" value="reviewform"/>
 </jsp:include>
 
 <!-- content -->
@@ -53,7 +53,8 @@
 
 <!-- footer -->
 <jsp:include page="common/footer.jsp">
-	<jsp:param name="footer" value="home"/>
+	<jsp:param name="footer" value="reviewform"/>
 </jsp:include>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
