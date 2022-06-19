@@ -3,7 +3,7 @@ package vo;
 public class OrderItem {
 	
 	private int no;
-    private int orderNo;
+    private Order order;
     private Product product;
     private int quantity;
     private int price;
@@ -16,12 +16,15 @@ public class OrderItem {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getOrderNo() {
-		return orderNo;
+
+	public Order getOrder() {
+		return order;
 	}
-	public void setOrderNo(int orderNo) {
-		this.orderNo = orderNo;
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
+
 	public Product getProduct() {
 		return product;
 	}
