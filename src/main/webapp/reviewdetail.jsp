@@ -1,3 +1,5 @@
+<%@page import="vo.Product"%>
+<%@page import="dao.ProductDao"%>
 <%@page import="vo.Review"%>
 <%@page import="dao.ReviewDao"%>
 <%@page import="util.StringUtil"%>
@@ -13,6 +15,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 	h3 {font-size: 20px;}
+	.reviewContent {font-size: 15px; line-height: 50px;}
 </style>
 </head>
 <body>
@@ -40,23 +43,29 @@
 	</div>
 	<!-- 상품정보 출력 -->
 	<div class="row">
-		<div class="col">
-			<div>
-				<!-- 상품이미지 -->
-			</div>
-			<div>
-				<h4><!-- 상품이름 --></h4>
-				<p><!-- 상품가격 --></p>
-			</div>
-			<div>
-				<a class="btn btn-dark" href="#">상품상세보기<small> ></small></a>
+		<div class="col" style="border: 3px solid #eee; width: 100%; height: 150px;">
+			<div class="row">
+				<div class="col-2">
+					<!-- 상품이미지 -->
+					<img style="width: 100%; height: 100%;" src="images/catogory-flower/Sample1_ConfessionSunflower.jpg">
+				</div>
+				<div class="col-10">
+					<div>
+						<h4>상품 이름</h4>
+						<p>상품 가격</p>
+					</div>
+					<div>
+						<a class="btn btn-dark" href="#">상품상세보기<small> ></small></a>
+					</div>		
+				</div>
 			</div>
 		</div>
 	</div>
+	
 	<!-- 리뷰 내용 출력 -->
 	<div class="row">
 		<div class="col">
-			<table class="table	table-bordered">
+			<table class="table">
 				<tbody>
 					<tr>
 						<th>제목</th>
@@ -66,8 +75,19 @@
 						<th>작성자</th>
 						<td><%=review.getUser().getName() %></td>
 					</tr>
+					<tr>
+						<th colspan="2">작성일 <small><%=review.getCreatedDate() %></small></th>
+					</tr>
+					<tr class="reviewContent">
+						<td colspan="2" ><%=review.getContent() %></td>
+					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	<div>
+		<div>
+			<a class="btn btn-secondary" href="review.jsp">목록</a>
 		</div>
 	</div>
 </div>
