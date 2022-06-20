@@ -57,6 +57,7 @@ public class NoticeDao {
 			return rs.getInt("cnt");
 		}, keyword);
 	}
+	
 	/**
 	 * 
 	 * @param beginIndex
