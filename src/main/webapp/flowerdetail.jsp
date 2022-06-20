@@ -9,18 +9,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+#hoverpoint img {
+	min-width: 500px;
+	max-width: 500px;
+ 	min-height: 500px;
+ 	max-height: 500px;
+}
 
 #hoverobject img {
 	width : 20%;
- 	height: 20%;
-	}
-
-#hoverobject img:hover {
-	}
-	
-	
-#hoverpoint {
-	position: relative;
+	height: 20%;
 	}
 
 #productname { 
@@ -40,18 +38,34 @@
     border-top: 1px solid grey;
     padding: 10px;
   }
+
 #priceandquantity{
 	border-top: 1px solid black;
     border-bottom: 1px solid grey;
     padding: 10px;
 	}
+		
+.btn-outline-secondary{font-size: 12px; }
+.btn-dark{margin-top:10px;}
+.btn-outline-dark{margin-top:10px;}
+.btn-outline-danger{margin-top:10px; margin-bottom:10px;}
 
-.btn-dark{width: 100%; margin-top:10px;}
-.btn-outline-dark{width: 100%; margin-top:10px;}
-.btn-outline-danger{width: 100%; margin-top:10px; margin-bottom:10px;}
 
-#movingfunction a {color: #999; height: 45px;}
+#movingfunctionR a {color: black; font-size: 12px;}
+#movingfunctionD a {color: black; font-size: 12px;}
+#movingfunctionW a {color: black; font-size: 12px;}
+#movingfunctionQ a {color: black; font-size: 12px;}
+
 	
+#REVIEW th{
+	font-size : 12px;
+	border-bottom: 1px solid black;
+	}
+	
+#QNA th{
+	font-size : 12px;
+	border-bottom: 1px solid black;
+	}	
 </style>
 
 </head>
@@ -63,26 +77,27 @@
 <div class="container">
    	<div class="row" style="border-bottom:1px solid grey; padding-bottom:20px; margin-bottom:20px;">
    		<div class="col">
-   	   		<div id="big-image-box">
-   	   			<img id="i1" src="images/category-detail/Sample1_1.jpg">
+   	   		<div id="hoverpoint">
+   	   			<img src="images/category-detail/Sample1_1.jpg" >
    	   		</div>
-   	   		<div id="hoverobject" >
-   	   			<img id="i1" src="images/category-detail/Sample1_1.jpg"> <!--sample image1입력-->
-   	   			<img id="i2" src="images/category-detail/Sample1_2.jpg"> <!--sample image2입력-->
-   	   			<img id="i3" src="images/category-detail/Sample1_3.jpg"> <!--sample image3입력-->
-   	   			<img id="i4" src="images/category-detail/Sample1_4.jpg"> <!--sample image4입력-->
+   	   		<div id="hoverobject" onmousemove="changeImage(event);"><!-- onmouseout사용해서 위치했던 이미지에서 벗어난 경우 마지막 이미지 표현하는 코드 구현해야 함 -->
+   	   			<img src="images/category-detail/Sample1_1.jpg"> <!--sample image1입력-->
+   	   			<img src="images/category-detail/Sample1_2.jpg"> <!--sample image2입력-->
+   	   			<img src="images/category-detail/Sample1_3.jpg"> <!--sample image3입력-->
+   	   			<img src="images/category-detail/Sample1_4.jpg"> <!--sample image4입력-->
    	   		</div>
    	   	</div>
    	   	
    	   	<script>
-		    function changeImage(event) {
-		        let imgEl = event.target;
+		    function changeImage(e) {
+		        let imgEl = e.target;
 		
 		        let imagePath = imgEl.getAttribute("src");
 		       			
-		        let gallaryImgEl = document.querySelector("#big-image-box img");
+		        let gallaryImgEl = document.querySelector("#hoverpoint img");
 		        gallaryImgEl.setAttribute("src", imagePath);
 		    }
+		   
 		</script>
    		
    		<div class="col">
@@ -91,7 +106,7 @@
    			</div>
    			
    			<div id="productinfo">
-   				<table style="width:100%">
+   				<table class="table table-borderless">
 	    			<tr>
 	    				<th>&nbsp;</th>
 	    				<th>&nbsp;</th>
@@ -139,32 +154,40 @@
 	        		</tr>
 				</table>
    			</div>
-   			
+   			<!-- 상품 옵션 선택란 -->
    			<div id="productoption">
-   				<table style="width:100%">
+   				<table class="table">
    					<tr>
    						<td>희망수령일(월/일/형식)[선택]</td>
-   						<td>&nbsp;<input type="text"></td>
+   						<td colspan="3">&nbsp;<input type="text" style="width:250px;">&nbsp;(<!-- 글자수 세기 -->/10)</td>
+   						
    					</tr>
    					<tr>
    						<td>편지</td>
+   						<td><button type="button" class="btn btn-outline-secondary btn-sm btn text-black">선택안함</button><!--[필수]옵션을 선택해주세요--><!--[필수]선택안함--></td>
+   						<td><button type="button" class="btn btn-outline-secondary btn-sm btn text-black">선택(+2000)</button><!--[필수]선택(+2000)--></td>
    						<td></td>
+   						
    					</tr>
+   					
    					<tr>
    						<td>화병</td>
-   						<td></td>
+   						<td><button type="button" class="btn btn-outline-secondary btn-sm">선택안함</button><!--[필수]옵션을 선택해주세요--><!--[필수]선택안함--></td>
+   						<td><button type="button" class="btn btn-outline-secondary btn-sm">사각화병(+2900)</button><!--[필수]사각화병(+2900)(+4,900원)--></td>
+   						<td><button type="button" class="btn btn-outline-secondary btn-sm">원형화병(+5000)</button><!--[필수]원형화병(+5000)(+7,000원)--></td>
+   						
    					</tr>	
    					<tr>
 	   					<td style="color:grey"><font size="1">(최소주문수량 1개 이상)</font></td>
 	   					<td></td>
-	   				</tr>
-	   				<tr>
-	   					<td>&nbsp;</td>
+	   					<td></td>
+	   					<td></td>
+	   					
 	   				</tr>
 	   				</table>
 	   		</div>
-	   			
-	   		<div id=productselected>
+	   		<!-- 선택된 상품 정보 출력 -->	
+	   		<div id="productselected">
 	   			<table style="width:100%">
 	   				<tr>
 	   					<td colspan="3"><font size="1">&nbsp;위 옵션박스를 선택하시면 아래에 상품이 추가됩니다.</font></td>
@@ -176,7 +199,7 @@
 	   				</tr>
 	   			</table>
 	   		</div>
-	   		
+	   		<!-- 선택된 상품 정보, 수량, 가격 출력 -->
 	   		<div id="priceandquantity">
 	   			<table style="width:100%">
 	   				<tr>
@@ -191,37 +214,157 @@
 	   		</div>
 	   		
 	   		<div id="buttonlist">
-	   			<a href="orderform.jsp"><button class="btn btn-dark">바로구매</button></a>
-	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-dark">장바구니</button></a>
-	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-danger">♥ wish</button></a>
+	   			<a href="orderform.jsp"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
+	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-dark" style="width: 100%;">장바구니</button></a>
+	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
 	   		</div>
    					
    		</div>
    	</div>
    	
-   	<div id="movingfunction">
+   	<div id="movingfunctionR">
 		<ul class="nav justify-content-start">
   			<li class="nav-item">
     			<a class="nav-link" href="#DETAIL">DETAIL</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="">WITH ITEM</a>
+    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="">REVIEW</a>
+    			<a class="nav-link" href="#REVIEW"><strong>REVIEW</strong></a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="">Q&A</a>
+    			<a class="nav-link" href="#QNA">Q&A</a>
   			</li>
 		</ul>
 	</div>
 	
+	<!-- 특정 상품에 대한 리뷰, for문으로 출력하기, 페이징 처리하기 -->
+	<div id="REVIEW" style="margin-top:20px;">
+		<table class="table">
+				<colgroup>
+					<col width="10%">
+					<col width="60%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+				</colgroup>
+				<tr>
+					<th>번호</th>
+					<th style="text-align:center;">제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회</th>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+		</table>
+		<div style="text-align:end">
+				<a href="reviewform.jsp"><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
+				<a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a> 
+		</div>
+	</div>
+	
+	
+	<div id="movingfunctionD">
+		<ul class="nav justify-content-center">
+  			<li class="nav-item">
+    			<a class="nav-link" href="#DETAIL"><strong>DETAIL</strong></a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#REVIEW">REVIEW</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#QNA">Q&A</a>
+  			</li>
+		</ul>
+	</div>
 	<div id="DETAIL">
 		<img src="images/category-detail/CommonDetail1.png">
 		<img src="images/category-detail/CommonDetail2.png">
 		<img src="images/category-detail/CommonDetail3.jpg">
 		<img src="images/category-detail/Sample1_1.jpg"> <!-- 추후에 조회중인 제품의 이미지에 해당하는 값이 들어가도록 설정 -->
 		<img src="images/category-detail/CommonDetail4.png">
+	</div>
+	
+	<div id="movingfunctionW">
+		<ul class="nav justify-content-center">
+  			<li class="nav-item">
+    			<a class="nav-link" href="#DETAIL">DETAIL</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#WITHITEM"><strong>WITH ITEM</strong></a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#REVIEW">REVIEW</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#QNA">Q&A</a>
+  			</li>
+		</ul>
+	</div>
+	
+	<div id="WITH ITEM">
+	<P>아직 구현하지 않았습니다.</P>
+	</div>
+	
+	<div id="movingfunctionQ">
+		<ul class="nav justify-content-center">
+  			<li class="nav-item">
+    			<a class="nav-link" href="#DETAIL">DETAIL</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#REVIEW">REVIEW</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" href="#QNA"><strong>Q&A</strong></a>
+  			</li>
+		</ul>
+	</div>
+	
+	<!-- 특정 상품에 대한 문의, for문으로 출력하기, 페이징 처리하기 -->
+	<div id="QNA" style="margin-bottom:20px;">
+		<table class="table">
+				<colgroup>
+					<col width="10%">
+					<col width="10%">
+					<col width="40%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+				</colgroup>
+				<tr>
+					<th>번호</th>
+					<th>카테고리</th>
+					<th style="text-align:center;">제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회</th>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+		</table>
+		<div style="text-align:end;">
+				<p><a href=""><button class="btn btn-dark" style="width: 12%;">WRITE</button></a></p>
+				<p><a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a></p> 
+		</div>
 	</div>
 </div>
    	   		
