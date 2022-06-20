@@ -45,16 +45,16 @@
 					}
 				%>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/cartform.jsp">CART</a>
+						<a class="nav-link" href="/semi/cart/form.jsp">CART</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/orderform.jsp">ORDER</a>
+						<a class="nav-link" href="/semi/order/form.jsp">ORDER</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="">MYPAGE</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/review.jsp">REVIEW</a>
+						<a class="nav-link" href="/semi/reviewlist.jsp">REVIEW</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/semi/notice.jsp">NOTICE</a>
@@ -67,7 +67,7 @@
 		<div class="row">
 			<div class="col-7 text-end">
 				<a href="home.jsp">
-					<img src="images/h_logo.png" alt="로고이미지">
+					<img src="/semi/images/h_logo.png" alt="로고이미지">
 				</a>
 			</div>
 			<div class="col-5 text-end">
@@ -88,7 +88,7 @@
 						<a class="nav-link" href="">정기구독</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">플라워</a>
+						<a class="nav-link" href="/semi/flowercategory.jsp">플라워</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="">드라이플라워</a>

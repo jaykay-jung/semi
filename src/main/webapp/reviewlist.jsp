@@ -15,8 +15,9 @@
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
+	a {text-decoration: none; color: #000;}
 	h3 {font-size: 20px;}
-	table {text-align: center; font-size: 15px;}
+	table {text-align: center; font-size: 15px; }
 	table tbody {font-size: 13px;}
 </style>
 </head>
@@ -86,12 +87,15 @@
 					<tr>
 						<td><%=review.getNo() %></td>
 						<td>
-							<!-- 상품 이미지 출력 -->
-							<div>
-							</div>
-							<%=review.getProduct().getName() %>
+							<a href="#">
+								<!-- 상품 이미지 출력 -->
+								<img src="<%=review.getProduct().getImageName() %>">
+								<span><%=review.getProduct().getName() %></span>
+							</a>
 						</td>
-						<td class="text-"><a href="reviewdetail.jsp?no=<%=review.getNo() %>"><%=review.getTitle() %></a></td>
+						<td style="text-align: left; padding: 10px;">
+							<a id="review-title" href="reviewdetail.jsp?no=<%=review.getNo() %>"><%=review.getTitle() %></a>
+						</td>
 						<td><%=review.getUser().getName() %></td>
 						<td><%=review.getCreatedDate() %></td>
 					</tr>

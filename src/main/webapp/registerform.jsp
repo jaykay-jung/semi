@@ -9,9 +9,15 @@
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-	h3 {font-size: 20px;}
-	.agreeBox {padding: 20px; background-color: #eee;}
+	#registerform-container {margin-bottom: 100px;}
+	h3 {font-size: 18px; font-weight: bold;}
+	.agreeBox {padding: 20px; border: 1px solid #ddd; background-color: #fbfafa;}
 	.agreeText {overflow: scroll; height: 200px; width: 100%; background-color: #fff; line-height: 30px; font-size: 13px;}
+	#register-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
+	#register-button {margin: 0 auto; width: 30%; margin-top: 20px;}
+	.table {color: #353535; font-size: 15px; border-top: 2px solid #eaeaea;}
+	.table th {background-color: #fbfafa;}
+	.register-button {line-height: 40px;}
 </style>
 </head>
 <body>
@@ -21,9 +27,9 @@
 </jsp:include>
 
 <!-- content -->
-<div class="container">
+<div class="container" id="registerform-container">
 	<div>
-		<h3>회원가입</h3>
+		<h3 id="register-h3">회원가입</h3>
 	</div>
 	<%
 		String fail = request.getParameter("fail");
@@ -57,11 +63,42 @@
 	
 	<form action="register.jsp" method="post">
 		<div>
-			<input type="text" name="id" placeholder="아이디">
-			<input type="password" name="password" placeholder="비밀번호">
-			<input type="text" name="name" placeholder="이름">
-			<input type="text" name="phone" placeholder="핸드폰번호">
-			<input type="text" name="email" placeholder="이메일">
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>아아디 <img src="images/require.gif"></th>
+						<td>
+							<input type="text" name="id" placeholder="아이디">
+							<span>(조건)</span>
+						</td>
+					</tr>
+					<tr>
+						<th>비밀번호 <img src="images/require.gif"></th>
+						<td>
+							<input type="password" name="password" placeholder="비밀번호">
+							<span>(조건)</span>
+						</td>
+					</tr>
+					<tr>
+						<th>이름 <img src="images/require.gif"></th>
+						<td>
+							<input type="text" name="name" placeholder="이름">
+						</td>
+					</tr>
+					<tr>
+						<th>휴대전화 <img src="images/require.gif"></th>
+						<td>
+							<input type="text" name="phone" placeholder="핸드폰번호">
+						</td>
+					</tr>
+					<tr>
+						<th>이메일 <img src="images/require.gif"></th>
+						<td>
+							<input type="email" name="email" placeholder="이메일">
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		
 		<!-- 이용약관동의, 개인정보수집동의 만들기 -->
@@ -98,9 +135,9 @@
 			</div>
 		</div>
 		
-		<div>
-			<button type="submit">회원가입</button>
-			<a href="home.jsp">회원가입 취소</a>
+		<div id="register-button" class="row">
+			<button type="submit" class="btn btn-dark col-6 register-button">회원가입</button>
+			<a href="home.jsp" class="btn btn-secondary col-6 register-button">회원가입 취소</a>
 		</div>
 	</form>
 </div>

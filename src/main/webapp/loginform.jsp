@@ -9,7 +9,18 @@
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-	h3 {font-size: 20px;}
+	#loginform-container {margin-bottom: 100px;}
+	h3 {font-size: 18px; font-weight: bold;}
+	#login {border: 1px solid #eee; border-top: 3px solid #000; width: 80%; margin: 0 auto; padding: 30px; margin-top: 100px;}
+	#login-box {width: 40%; margin: 0 auto;}
+	#login-h3 {border-bottom: 1px solid #eee; line-height: 40px;}
+	#login-form {margin-top: 20px;}
+	#login-id {width: 100%; margin-bottom: 5px;}
+	#login-pw {width: 100%;}
+	#security p {line-height: 40px; margin-bottom: 0; font-size: 15px; color: #757575;}
+	#login-button {width: 100%;}
+	#login-register {background-color: #f9f9f9; margin-top: 40px;}
+	#login-register p {line-height: 50px; font-size: 13px; color: #999; padding-left: 40px;}
 </style>
 </head>
 <body>
@@ -19,33 +30,44 @@
 </jsp:include>
 
 <!-- content -->
-<div class="container">
-	<div>
-		<h3>LOGIN</h3>
-		<%
-			String fail = request.getParameter("fail");
-		%>
-			<!--
-				아이디 혹은 비밀번호가 일치하지 않는 경우
-			-->
-		<%
-			if ("invalid".equals(fail)) {
-		%>
-			<div class="alert alert-danger">
-				<strong>로그인 실패</strong> 아이디 혹은 비밀번호가 올바르지 않습니다.
-			</div>
-		<%
-			}
-		%>
-		<form method="post" action="login.jsp" onsubmit="return loginForm()">
-			<div>
-				<input type="text" placeholder="아이디" name="id">
-				<input type="password" placeholder="비밀번호" name="password">
-			</div>
-			<div>
-				<button type="submit" class="btn btn-dark">로그인</button>
-			</div>
-		</form>
+<div class="container" id="loginform-container">
+	<div id="login">
+		<div id="login-box">
+			<h3 id="login-h3">LOGIN</h3>
+			<%
+				String fail = request.getParameter("fail");
+			%>
+				<!--
+					아이디 혹은 비밀번호가 일치하지 않는 경우
+				-->
+			<%
+				if ("invalid".equals(fail)) {
+			%>
+				<div class="alert alert-danger">
+					<strong>로그인 실패</strong> 아이디 혹은 비밀번호가 올바르지 않습니다.
+				</div>
+			<%
+				}
+			%>
+			<form method="post" action="login.jsp" onsubmit="return loginForm()">
+				<div id="login-form">
+					<input id="login-id" type="text" placeholder="아이디" name="id">
+					<input id="login-pw" type="password" placeholder="비밀번호" name="password">
+				</div>
+				<div id="security">
+					<p>
+						<img src="images/login/security.gif">
+						보안접속
+					</p>
+				</div>
+				<div>
+					<button id="login-button" type="submit" class="btn btn-dark">로그인</button>
+				</div>
+			</form>
+		</div>
+		<div id="login-register">
+			<p>가입하시면 다양한 혜택이 준비되어 있습니다. <span><a href="registerform.jsp">회원가입</a></span></p>
+		</div>
 	</div>
 </div>
 

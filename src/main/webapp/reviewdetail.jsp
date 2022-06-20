@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col-2">
 					<!-- 상품이미지 -->
-					<img style="width: 100%; height: 100%;" src="images/catogory-flower/Sample1_ConfessionSunflower.jpg">
+					<img style="width: 100%; height: 100%;" src="images/category/Sample1_ConfessionSunflower.jpg">
 				</div>
 				<div class="col-10">
 					<div>
@@ -87,7 +87,7 @@
 	</div>
 	<div>
 		<div>
-			<a class="btn btn-secondary" href="review.jsp">목록</a>
+			<a class="btn btn-secondary" href="reviewlist.jsp">목록</a>
 		</div>
 	</div>
 </div>
