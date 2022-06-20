@@ -47,6 +47,12 @@ public class ReviewDao {
 		});
 	}
 	
+	/**
+	 * 전체 리뷰 갯수 (키워드)
+	 * @param keyword
+	 * @return
+	 * @throws SQLException
+	 */
 	public int getTotalRows(String keyword) throws SQLException {
 		String sql = "select count(*) cnt "
 					+ "from semi_reviews "
@@ -58,7 +64,7 @@ public class ReviewDao {
 	}
 	
 	/**
-	 * 
+	 * 페이징
 	 * @param beginIndex
 	 * @param endIndex
 	 * @return
@@ -98,6 +104,14 @@ public class ReviewDao {
 		}, beginIndex, endIndex);
 	}
 	
+	/**
+	 * 페이징 (키워드)
+	 * @param beginIndex
+	 * @param endIndex
+	 * @param keyword
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Review> getReviews(int beginIndex, int endIndex, String keyword) throws SQLException {
 		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
 					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "

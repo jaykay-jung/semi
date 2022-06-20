@@ -58,6 +58,7 @@
 		} else {
 			reviewList = reviewDao.getReviews(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);
 		}
+		
 	%>
 	<div>
 		<div>
@@ -111,13 +112,42 @@
 			</div>
 		</div>
 	</div>
+	 
+	 <!-- 페이징 -->
+	 <div class="row">
+	 	<div class="col">
+		 	<nav>
+		 		<ul class="pagination justify-content-center">
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="review.jsp?page=<%=pagination.getCurrentPage() - 1 %>">&lt;</a>
+		 			</li>
+		 		<%
+		 			for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+		 		%>
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == num ? "active" : "" %>" href="review.jsp?page=<%=num %>"><%=num %></a>
+		 			</li>
+		 		<%
+		 			}
+		 		%>
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="review.jsp?page=<%=pagination.getCurrentPage() + 1 %>">&gt;</a>
+		 			</li>
+		 		</ul>
+		 	</nav>
+	 	</div>
+	 </div>
 	
 	<!-- 검색 -->
 	<div class="row">
-		<div class="col">
-			<form>
-				<input type="text" name="keyword">
+		<div class="col-9">
+			<form id="search-form" method="get" action="review.jsp">
+				<input type="hidden" name="page">
+				<input type="text" name="<%=keyword %>" placeholder="검색">
 			</form>
+		</div>
+		<div class="col-3">
+			<button type="button" onclick="searchKeyword">검색</button>
 		</div>
 	</div>
 </div>
@@ -127,5 +157,11 @@
 	<jsp:param name="footer" value="review"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	function searchKeyword() {
+		document.querySelector("input[name=page]").value = 1;
+		document.getElementById("search-form").submit;
+	}
+</script>
 </body>
 </html>
