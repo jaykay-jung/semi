@@ -72,7 +72,7 @@ public class ReviewDao {
 	 * @throws SQLException
 	 */
 	public List<Review> getReviews(int beginIndex, int endIndex) throws SQLException {
-		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
+		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
 					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "
 					+ "		 		row_number() over (order by review_no desc) row_number "
 					+ "		 from semi_reviews "
@@ -89,6 +89,7 @@ public class ReviewDao {
 			Product product = new Product();
 			product.setNo(rs.getInt("product_no"));
 			product.setName(rs.getString("product_name"));
+			product.setImageName(rs.getString("product_image_name"));
 			review.setProduct(product);
 			
 			review.setTitle(rs.getString("review_title"));
@@ -114,14 +115,14 @@ public class ReviewDao {
 	 * @throws SQLException
 	 */
 	public List<Review> getReviews(int beginIndex, int endIndex, String keyword) throws SQLException {
-		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
+		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
 					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "
 					+ "		 		row_number() over (order by review_no desc) row_number "
 					+ "		 from semi_reviews "
 					+ "		 where review_deleted = 'N' and review_title like '%' || ? || '%') R, semi_users U, semi_products P "
 					+ "where R.row_number >= ? and R.row_number <= ? "
 					+ "and R.user_no = U.user_no "
-					+ "and R.product_no = P.category_no "
+					+ "and R.product_no = P.product_no "
 					+ "order by R.review_no desc ";
 		
 		return helper.selectList(sql, rs -> {
@@ -131,6 +132,7 @@ public class ReviewDao {
 			Product product = new Product();
 			product.setNo(rs.getInt("product_no"));
 			product.setName(rs.getString("product_name"));
+			product.setImageName(rs.getString("product_image_name"));
 			review.setProduct(product);
 			
 			review.setTitle(rs.getString("review_title"));

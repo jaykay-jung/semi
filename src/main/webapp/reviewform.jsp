@@ -42,20 +42,20 @@
 	</div>
 	
 	<div>
-		<form action="">
+		<form method="post" action="review.jsp">
 			<table class="table">
 				<tbody>
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" placeholder="수정사항 : 왼쪽으로 정렬">
+							<input type="text" name="title" placeholder="수정사항 : 왼쪽으로 정렬">
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<!-- 리뷰 내용 -->
 			<div id="input-content">
-				<input type="text" placeholder="수정 사항 : 엔터 안 됨, 위에서부터 입력 시키기">
+				<input type="text" name="content" placeholder="수정 사항 : 엔터 안 됨, 위에서부터 입력 시키기">
 			</div>
 		</form>
 	</div>
