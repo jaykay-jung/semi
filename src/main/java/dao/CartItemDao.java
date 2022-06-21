@@ -38,27 +38,22 @@ public class CartItemDao {
      * @throws SQLException
      */
     public List<CartItem> getCartItemsByUserNo(int userNo) throws SQLException {
-        String sql = "select c.cart_item_no, p.product_no, p.product_name, p.product_sell_price, p.product_deposit_point, p.product_delivery_fee, c.cart_item_quantity, "
-                   + "(p.product_sell_price * c.cart_item_quantity) + p.product_delivery_fee as order_price "
-                   + "from semi_cart_items c, semi_products p "
-                   + "where c.product_no = p.product_no "
-                   + "and c.user_no = ? "
-                   + "order by c.cart_item_no desc ";
+    	String sql = "select * "
+				   + "from semi_cart_items "
+				   + "where user_no = ? ";
 
         return helper.selectList(sql, rs -> {
-            CartItem cartItem = new CartItem();
+        	CartItem cartItem = new CartItem();
             cartItem.setNo(rs.getInt("cart_item_no"));
             cartItem.setQuantity(rs.getInt("cart_item_quantity"));
 
+            User user = new User();
+            user.setNo(rs.getInt("user_no"));
+            cartItem.setUser(user);
+            
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
-            product.setName(rs.getString("product_name"));
-            product.setSellPrice(rs.getInt("product_sell_price"));
-            product.setDepositPoint(rs.getInt("product_deposit_point"));
-            product.setDeliveryFee(rs.getInt("product_delivery_fee"));
             cartItem.setProduct(product);
-
-            cartItem.setOrderPrice(rs.getInt("order_price"));
             
             return cartItem;
         }, userNo);
@@ -80,12 +75,12 @@ public class CartItemDao {
             cartItem.setNo(rs.getInt("cart_item_no"));
             cartItem.setQuantity(rs.getInt("cart_item_quantity"));
 
+            User user = new User();
+            user.setNo(rs.getInt("user_no"));
+            cartItem.setUser(user);
+            
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
-            product.setName(rs.getString("product_name"));
-            product.setSellPrice(rs.getInt("sell_price"));
-            product.setDepositPoint(rs.getInt("deposit_point"));
-            product.setDeliveryFee(rs.getInt("delivery_fee"));
             cartItem.setProduct(product);
             
             return cartItem;
@@ -127,14 +122,14 @@ public class CartItemDao {
 
     /**
      * 아이템번호를 전달받아 일치하는 장바구니 아이템을 삭제하는 메소드
-     * @param itemNo
+     * @param productNo
      * @throws SQLException
      */
-    public void deleteCartItem(int itemNo) throws SQLException {
+    public void deleteCartItem(int productNo) throws SQLException {
 		String sql = "delete from semi_cart_items "
 				   + "where cart_item_no = ? ";
 		
-		helper.delete(sql, itemNo);
+		helper.delete(sql, productNo);
 	} 
 
 

@@ -17,6 +17,7 @@ public class Order {
     private User user;
     private Product product;
     private Address address;
+    private int orderQuantity;
     
     public Order() {}
 
@@ -122,6 +123,14 @@ public class Order {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public int getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
 	}
 
 }

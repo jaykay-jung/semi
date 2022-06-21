@@ -3,6 +3,7 @@ package dao;
 import java.sql.SQLException;
 
 import helper.DaoHelper;
+import vo.Point;
 import vo.User;
 
 public class UserDao {
@@ -56,6 +57,10 @@ public class UserDao {
             user.setCreatedDate(rs.getDate("user_created_date"));
             user.setCreatedDate(rs.getDate("user_updated_date"));
             user.setGrade(rs.getString("user_grade"));
+            
+            Point point = new Point();
+            point.setNo(rs.getInt("user_point_no"));
+            user.setPoint(point);
 
             return user;
         }, id);
@@ -88,6 +93,10 @@ public class UserDao {
             user.setCreatedDate(rs.getDate("user_created_date"));
             user.setCreatedDate(rs.getDate("user_updated_date"));
             user.setGrade(rs.getString("user_grade"));
+            
+            Point point = new Point();
+            point.setNo(rs.getInt("user_point_no"));
+            user.setPoint(point);
 
             return user;
         }, email);
