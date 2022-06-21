@@ -38,8 +38,8 @@ public class CartItemDao {
      * @throws SQLException
      */
     public List<CartItem> getCartItemsByUserNo(int userNo) throws SQLException {
-        String sql = "select c.cart_item_no, p.product_no, p.product_name, p.sell_price, p.deposit_point, p.delivery_fee, p.cart_item_quantity "
-                   + "(p.sell_price * c.cart_item_quantity) + p.delivery_fee as order_price "
+        String sql = "select c.cart_item_no, p.product_no, p.product_name, p.product_sell_price, p.product_deposit_point, p.product_delivery_fee, c.cart_item_quantity, "
+                   + "(p.product_sell_price * c.cart_item_quantity) + p.product_delivery_fee as order_price "
                    + "from semi_cart_items c, semi_products p "
                    + "where c.product_no = p.product_no "
                    + "and c.user_no = ? "
@@ -53,9 +53,9 @@ public class CartItemDao {
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
             product.setName(rs.getString("product_name"));
-            product.setSellPrice(rs.getInt("sell_price"));
-            product.setDepositPoint(rs.getInt("deposit_point"));
-            product.setDeliveryFee(rs.getInt("delivery_fee"));
+            product.setSellPrice(rs.getInt("product_sell_price"));
+            product.setDepositPoint(rs.getInt("product_deposit_point"));
+            product.setDeliveryFee(rs.getInt("product_delivery_fee"));
             cartItem.setProduct(product);
 
             cartItem.setOrderPrice(rs.getInt("order_price"));
@@ -145,7 +145,7 @@ public class CartItemDao {
 	 * @throws SQLException
 	 */
 	public List<CartItem> getAllCartItemByUserNo(int userNo) throws SQLException {
-		String sql = "SELECT C.CART_ITEM_NO, C.CART_ITEM_QUANTITY, C.USER_NO, U.USER_NAME, C.PRODUCT_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
+		String sql = "SELECT C.CART_ITEM_NO, C.CART_ITEM_QUANTITY , C.USER_NO, U.USER_NAME, C.PRODUCT_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
 				+ "FROM SEMI_CART_ITEMS C, SEMI_USERS U, SEMI_PRODUCTS P "
 				+ "WHERE C.USER_NO = ? "
 				+ "AND C.USER_NO = U.USER_NO "
