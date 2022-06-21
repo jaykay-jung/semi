@@ -17,7 +17,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	h3 {font-size: 20px;}
+	h3 {font-size: 18px; font-weight: bold;}
+	#noticelist-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
 	table {text-align: center; font-size: 15px;}
 	table tbody {font-size: 13px;}
 </style>
@@ -25,14 +26,14 @@
 <body>
 <!-- header -->
 <jsp:include page="common/nav.jsp">
-	<jsp:param name="menu" value="notice"/>
+	<jsp:param name="menu" value="noticelist"/>
 </jsp:include>
 
 <!-- content -->
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<h3>NOTICE</h3>
+			<h3 id="noticelist-h3">NOTICE</h3>
 		</div>
 	</div>
 	<%
@@ -76,9 +77,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-					</tr>
+				
 				</tbody>
 			</table>
 		</div>
@@ -87,7 +86,7 @@
 
 <!-- footer -->
 <jsp:include page="common/footer.jsp">
-	<jsp:param name="footer" value="notice"/>
+	<jsp:param name="footer" value="noticelist"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

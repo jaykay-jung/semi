@@ -8,14 +8,14 @@
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 <style>
 	* {margin: 0; padding: 0;}
+	#nav-container ul li a {font-size: 13px;}
 	ul li {list-style: none; float: left;}
-	div {}
-	.navTop a {color: #999; height: 45px;}
+	.navTop a {color: #999; height: 45px; padding: 10px;;}
 	.navMain ul {height: 45px; margin: 20px 0 10px 0;}
 	.navMain a {color: #222; padding: 0px 15px;}
 </style>
 <nav class="">
-	<div class="container">
+	<div class="container" id="nav-container">
 		<!-- 최상단 nav -->
 		<div class="nav justify-content-end">
 			<div class="navTop">
@@ -57,7 +57,7 @@
 						<a class="nav-link" href="/semi/reviewlist.jsp">REVIEW</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/notice.jsp">NOTICE</a>
+						<a class="nav-link" href="/semi/noticelist.jsp">NOTICE</a>
 					</li>
 				</ul>
 			</div>

@@ -14,8 +14,17 @@
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-	h3 {font-size: 20px;}
+	#review-detail-container {margin-bottom: 100px;}
+	h3 {font-size: 18px; font-weight: bold;}
+	#review {border-bottom: 1px solid #eee; margin-bottom: 30px;}
 	.reviewContent {font-size: 15px; line-height: 50px;}
+	#review-product-container {border: 5px solid #eee; width: 100%; height: 150px;}
+	#review-image-container {width: 150px; height: 150px; padding:20px;}
+	#review-image-container img {width: 100%; height: 100%;}
+	#review-product-info h4 {font-size: 18px; font-weight: bold; padding-top: 20px;}
+	.table {margin-top: 20px; font-size: 15px; }
+	.table th {background-color: #fbfbfb;}
+	#back-button {width: 10%;}
 </style>
 </head>
 <body>
@@ -25,7 +34,7 @@
 </jsp:include>
 
 <!-- content -->
-<div class="container">
+<div class="container" id="review-detail-container">
 	<%
 		// detail.jsp?no=199
 		// 리뷰 번호 조회
@@ -37,20 +46,20 @@
 		Review review = reviewDao.getReviewByNo(reviewNo);
 	%>
 	<div class="row">
-		<div class="col">
+		<div class="col" id="review">
 			<h3>REVIEW</h3>
 		</div>
 	</div>
 	<!-- 상품정보 출력 -->
 	<div class="row">
-		<div class="col" style="border: 3px solid #eee; width: 100%; height: 150px;">
+		<div class="col" id="review-product-container">
 			<div class="row">
-				<div class="col-2">
+				<div class="col-2" id="review-image-container">
 					<!-- 상품이미지 -->
-					<img style="width: 100%; height: 100%;" src="images/category/Sample1_ConfessionSunflower.jpg">
+					<img src="images/category/Sample1_ConfessionSunflower.jpg">
 				</div>
 				<div class="col-10">
-					<div>
+					<div id="review-product-info">
 						<h4>상품 이름</h4>
 						<p>상품 가격</p>
 					</div>
@@ -68,15 +77,15 @@
 			<table class="table">
 				<tbody>
 					<tr>
-						<th>제목</th>
+						<th class="table-background">제목</th>
 						<td><%=review.getTitle() %></td>
 					</tr>
 					<tr>
-						<th>작성자</th>
+						<th class="table-background">작성자</th>
 						<td><%=review.getUser().getName() %></td>
 					</tr>
 					<tr>
-						<th colspan="2">작성일 <small><%=review.getCreatedDate() %></small></th>
+						<th colspan="2" style="background-color: #fff;">작성일 <small><%=review.getCreatedDate() %></small></th>
 					</tr>
 					<tr class="reviewContent">
 						<td colspan="2" ><%=review.getContent() %></td>
@@ -87,7 +96,7 @@
 	</div>
 	<div>
 		<div>
-			<a class="btn btn-secondary" href="reviewlist.jsp">목록</a>
+			<a class="btn btn-outline-secondary" id="back-button" href="reviewlist.jsp">목록</a>
 		</div>
 	</div>
 </div>
