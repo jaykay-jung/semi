@@ -6,6 +6,7 @@ import java.util.List;
 import helper.DaoHelper;
 import vo.Address;
 import vo.Order;
+import vo.Product;
 import vo.User;
 
 public class OrderDao {
@@ -27,12 +28,12 @@ public class OrderDao {
         String sql = "insert into semi_orders "
                    + "(order_no, order_created_date, order_status, "
                    + "order_total_price, used_point, total_payment_price, deposit_point, "
-                   + "payment_type, receive_date, user_no, address_no) "
+                   + "payment_type, receive_date, user_no, address_no, product_no) "
                    + "values "
                    + "(semi_orders_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         
-        helper.insert(sql, order.getCreatedDate(), order.getStatus(), order.getTotalPrice(), order.getUsedPoint(), order.getTotalpay(), 
-                    order.getDepositPoint(), order.getPayType(), order.getReceiveDate(), order.getUser().getNo(), order.getAddress().getNo());
+        helper.insert(sql, order.getCreatedDate(), order.getStatus(), order.getTotalPrice(), order.getUsedPoint(), order.getTotalpay(), order.getDepositPoint(),
+            order.getPayType(), order.getReceiveDate(), order.getUser().getNo(), order.getAddress().getNo(), order.getProduct().getNo());
     }
 
     /**
@@ -67,6 +68,10 @@ public class OrderDao {
             Address address = new Address();
             address.setNo(rs.getInt("address_no"));
             order.setAddress(address);
+            
+            Product product = new Product();
+            product.setNo(rs.getInt("product_no"));
+            order.setProduct(product);
 
             return order;
         }, userNo);

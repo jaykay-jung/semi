@@ -1,13 +1,15 @@
+<%@page import="vo.Order"%>
+<%@page import="dao.OrderDao"%>
+<%@page import="java.util.List"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	/*
-	User user = (User) session.getAttribute("LOGINED_USER"); 
+	User user = (User) session.getAttribute("LOGINED_USER");
 	if (user == null) {
-		throw new RuntimeException("로그인 후 사용가능한 서비스입니다.");
+		response.sendRedirect("../loginform.jsp?fail=deny");
+		return;
 	}
-	*/
 %>
 <!DOCTYPE html>
 <html>
@@ -24,19 +26,35 @@
    	#h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
    	#product-table tr {text-align: center; vertical-align: middle;}
     #radio-list {list-style-type: none; margin-right: 50px;}
-    #payment-method div {border: 1px solid black; padding:10px;}
+    #payment-method {border: 1px solid black; padding:10px;}
     img {width: 100px; height: 100px;}
 
 </style>
 </head>
 <body>
 <!-- header -->
-<jsp:include page="common/nav.jsp">
-    <jsp:param name="menu" value="orderform"/>
+<jsp:include page="../common/nav.jsp">
+    <jsp:param name="menu" value="order"/>
 </jsp:include>
 
 <!-- content -->
 <div class="container">
+<%
+	String fail = request.getParameter("fail");
+%>
+<%
+	if ("invalid".equals("fail")) {
+%>
+	<div class="alert alert-danger">
+		<strong>오류</strong> 유효한 요청이 아닙니다.
+	</div>
+<%
+	}
+%>
+<%
+	OrderDao orderDao = OrderDao.getInstance();
+	List<Order> orders = orderDao.getOrdersByUserNo(user.getNo());
+%>
     <div class="row">
 		<div class="col" style="margin-top: 10px;">
 			<h1 class="fs-4 borderless p-2"></h1>
@@ -47,15 +65,13 @@
     </div>
     <div id="div-h">
         <table id="h_table" class="table">
-            <tbody>
-                <tr>
-                	<td id="h1" rowspan="2"><strong>혜택정보</strong></td>
-                    <td><strong>손동훈</strong> 님은 [일반] 회원입니다.</td>
-                </tr>
-                <tr>
-                    <td>가용적립금:<strong>1000원</strong></td>
-                </tr>
-            </tbody>
+            <tr>
+            	<td id="h1" rowspan="2"><strong>혜택정보</strong></td>
+                <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
+            </tr>
+            <tr>
+                <td>가용적립금:<strong>원</strong></td>
+            </tr>
         </table>
     </div>
     
@@ -68,7 +84,7 @@
             <tr class="table-secondary">
                 <td><strong>배송상품 주문내역</strong></td>
                 <td>
-					<button type="button" class="btn btn-secondary" style="float:right;">이전페이지</button>
+					<a href="../cart/form.jsp"><button type="button" class="btn btn-secondary" style="float:right;">이전페이지</button></a>
                 </td>
             </tr>
         </table>
@@ -89,7 +105,17 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><img src="images/catogory-flower/Sample2_JanaRoseBunch.jpg" alt="자나장미"></td>
+                    <td><img src="../images/category/" alt="이미지"></td>
+                    <td></td>
+                    <td><strong>100000원</strong></td>
+                    <td>10</td>
+                    <td>300원</td>
+                    <td>개별배송</td>
+                    <td>3000원</td>
+                    <td><strong>103000원</strong></td>
+                </tr>
+                <tr>
+                    <td><img src="../images/category/Sample2_JanaRoseBunch.jpg" alt="자나장미"></td>
                     <td>자나장미 꽃다발 100송이장미, 50송이 150송이 생화</td>
                     <td><strong>100000원</strong></td>
                     <td>10</td>
@@ -99,17 +125,7 @@
                     <td><strong>103000원</strong></td>
                 </tr>
                 <tr>
-                    <td><img src="images/catogory-flower/Sample2_JanaRoseBunch.jpg" alt="자나장미"></td>
-                    <td>자나장미 꽃다발 100송이장미, 50송이 150송이 생화</td>
-                    <td><strong>100000원</strong></td>
-                    <td>10</td>
-                    <td>300원</td>
-                    <td>개별배송</td>
-                    <td>3000원</td>
-                    <td><strong>103000원</strong></td>
-                </tr>
-                <tr>
-                    <td><img src="images/catogory-flower/Sample2_JanaRoseBunch.jpg" alt="자나장미"></td>
+                    <td><img src="../images/category/Sample2_JanaRoseBunch.jpg" alt="자나장미"></td>
                     <td>자나장미 꽃다발 100송이장미, 50송이 150송이 생화</td>
                     <td><strong>100000원</strong></td>
                     <td>10</td>
@@ -137,6 +153,7 @@
 	</div>
 	<hr style="border: solid 1px black"> 
     <div>
+     <form>
         <table class="table">
         	<thead>
                 <tr>
@@ -148,11 +165,11 @@
                 <tr>
                     <td>배송지 선택</td>
                     <td>
-                        <div id="radio-list" class="form-check">
+                        <div id="radio-list" class="form-check-inline">
                             <input class="form-check-input" type="radio" name="userAddressRadio" id="radio">
                             <label class="form-check-label" for="radio">회원 정보와 동일</label>
                         </div>
-                        <div id="radio-list" class="form-check">
+                        <div id="radio-list" class="form-check-inline">
                             <input class="form-check-input" type="radio" name="newAddressRadio" id="radio">
                             <label class="form-check-label" for="radio">새로운 배송지</label>
                         </div>
@@ -170,10 +187,11 @@
                     <td>주소 <span style="color:Red;">*</span></td>
                     <td>
                         <div class="col-sm-2">
-                            <p><input type="text" class="form-control" id="postInput" name="postNum"><button type="button" class="btn btn-light btn-sm">우편번호</button></p>
+                            <input type="text" class="form-control" id="postInput" name="postNum"><button type="button" class="btn btn-light btn-sm">우편번호</button>
+                            
                         </div>
-                        <div class="col-sm-6">
-                            <p><input type="text" class="form-control" id="addressInput" name="address1"> 기본주소</p>
+                        <div class="col-sm-6 form-inline">
+                           	<p><input type="text" class="form-control" id="addressInput" name="address1">기본주소</p>
                             <p><input type="text" class="form-control" id="addressInput" name="address2"> 나머지주소(선택입력가능)</p>
                         </div>
                     </td>
@@ -192,8 +210,10 @@
                        	<div class="mb-3 col-sm-3">
 						  <input type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com">
 						</div>
-                        <p id="p-content"><small>- 이메일을 통해 주문처리과정을 보내드립니다.</small></p>
-                        <p id="p-content"><small>- 이메일 주소란에는 반드시 수신가능한 이메일 주소를 입력해 주세요.</small></p>
+						<div class="form-text">
+						  <p>- 이메일을 통해 주문처리과정을 보내드립니다.</p>
+						  <p>- 이메일 주소란에는 반드시 수신가능한 이메일 주소를 입력해 주세요.</p>
+						</div>
                     </td>
                 </tr>
                 <tr>
@@ -206,6 +226,7 @@
                 </tr>
             </tbody>
         </table>
+     </form>
     </div>
     
     <div class="row">
@@ -303,13 +324,18 @@
             <p>회원 적립금 : 0원</p>
             <p>쿠폰 적립금 : 원</p>
         </div>
-    </div>
+        <div>
+            <table>
+
+            </table>
+        </div>
     </div>
     
 </div>
+    
 
 <!-- footer -->
-<jsp:include page="common/footer.jsp">
+<jsp:include page="../common/footer.jsp">
 	<jsp:param name="footer" value="orderform.jsp"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

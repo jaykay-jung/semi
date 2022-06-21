@@ -15,12 +15,13 @@ public class Order {
     private Date updatedDate;
     private Date receiveDate;
     private User user;
+    private Product product;
     private Address address;
     
     public Order() {}
 
 	public int getNo() {
-		return this.no;
+		return no;
 	}
 
 	public void setNo(int no) {
@@ -28,7 +29,7 @@ public class Order {
 	}
 
 	public Date getCreatedDate() {
-		return this.createdDate;
+		return createdDate;
 	}
 
 	public void setCreatedDate(Date createdDate) {
@@ -36,7 +37,7 @@ public class Order {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
@@ -44,7 +45,7 @@ public class Order {
 	}
 
 	public int getTotalPrice() {
-		return this.totalPrice;
+		return totalPrice;
 	}
 
 	public void setTotalPrice(int totalPrice) {
@@ -52,7 +53,7 @@ public class Order {
 	}
 
 	public int getUsedPoint() {
-		return this.usedPoint;
+		return usedPoint;
 	}
 
 	public void setUsedPoint(int usedPoint) {
@@ -60,7 +61,7 @@ public class Order {
 	}
 
 	public int getDepositPoint() {
-		return this.depositPoint;
+		return depositPoint;
 	}
 
 	public void setDepositPoint(int depositPoint) {
@@ -68,7 +69,7 @@ public class Order {
 	}
 
 	public int getTotalpay() {
-		return this.totalpay;
+		return totalpay;
 	}
 
 	public void setTotalpay(int totalpay) {
@@ -76,7 +77,7 @@ public class Order {
 	}
 
 	public String getPayType() {
-		return this.payType;
+		return payType;
 	}
 
 	public void setPayType(String payType) {
@@ -84,7 +85,7 @@ public class Order {
 	}
 
 	public Date getUpdatedDate() {
-		return this.updatedDate;
+		return updatedDate;
 	}
 
 	public void setUpdatedDate(Date updatedDate) {
@@ -92,7 +93,7 @@ public class Order {
 	}
 
 	public Date getReceiveDate() {
-		return this.receiveDate;
+		return receiveDate;
 	}
 
 	public void setReceiveDate(Date receiveDate) {
@@ -100,21 +101,28 @@ public class Order {
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	public Address getAddress() {
-		return this.address;
+		return address;
 	}
 
 	public void setAddress(Address address) {
 		this.address = address;
-
-	}	
+	}
 
 }
 
