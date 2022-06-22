@@ -334,34 +334,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 
-	function submitModifyForm() {
-		let userNameField = document.querySelector("input[name=userName]");
-		if (userNameField.value === '') {
-			alert("받으시는 분은 필수입력값입니다.");
-			userNameField.focus();
-			return false;
-		}
-		let addressField = document.querySelector("input[name=address1]");
-		if (addressField.value === '') {
-			alert("주소는 필수입력값입니다.");
-			addressField.focus();
-			return false;
-		}
-		let phoneField = document.querySelector("input[name=phone]");
-		if (addressField.value === '') {
-			alert("전화번호는 필수입력값입니다.");
-			addressField.focus();
-			return false;
-		}
-		let emailField = document.querySelector("input[name=email]");
-		if (emailField.value === '') {
-			alert("이메일은 필수입력값입니다.");
-			emailField.focus();
-			return false;
-		}
-		return true;
-	}
-
 </script>
 </body>
 </html>

@@ -116,22 +116,22 @@
 					for (CartItem item : cartItems) {
 			%>
 		                <tr>
-		                    <td><input class="form-check-input" type="checkbox" name="productNo"></td>
-		                    <td><a href="../flowerdetail.jsp?no=<%=item.getProduct().getNo() %>"><img src="../images/category/<%=item.getProduct().getImageName() %>" alt="이미지"></a></td>
-		                    <td><%=item.getProduct().getName() %></td>
-		                    <td><strong><%=item.getProduct().getSellPrice() %>원</strong></td>
+		                    <td><input id="product-number" class="form-check-input" type="checkbox" name="checkNo" value="<%=item.getProduct().getNo() %>" onchange="updateProductPrice(); updateDeliveryPrice(); updateTotalPrice();"></td>
+		                    <td><a href="../flowerdetail.jsp?no=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName()%>" alt="이미지"></a></td>
+		                    <td><%=item.getProduct().getName()%></td>
+		                    <td><strong id="product-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()%>원</strong></td>
 		                    <td id="content-height">
-		                        <p><input type="number" name="quantity" maxlength="5" value="<%=item.getQuantity() %>"></p>
-		                        <p><button type="button" class="btn btn-light btn-sm">변경</button></p>
+		                        <p><input id="quantity-input-<%=item.getProduct().getNo() %>" type="number" name="quantityNo" maxlength="5" value="<%=item.getQuantity()%>"></p>
+		                        <p><a href=""><button id="change-quantity" type="button" class="btn btn-light btn-sm" onclick="changeQuantity();">변경</button></a></p>
 		                    </td>
-		                    <td><%=item.getProduct().getDepositPoint() %>원</td>
+		                    <td><%=item.getProduct().getDepositPoint()%>원</td>
 		                    <td>개별배송</td>
-		                    <td><%=item.getProduct().getDeliveryFee() %>원</td>
-		                    <td><strong><%=item.getOrderPrice() %>원</strong></td>
+		                    <td id="delivery-fee-<%=item.getProduct().getNo() %>"><%=item.getProduct().getDeliveryFee()%>원</td>
+		                    <td><strong id="order-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice() + item.getProduct().getDeliveryFee()%>원</strong></td>
 		                    <td>
-		                    	<p><a href="purchase.jsp?productNo=<%=item.getNo() %>&price=<%=item.getOrderPrice() %>&quantity=<%=item.getQuantity() %>"><button type="button" class="btn btn-dark btn-sm">주문하기</button></a></p>
+		                    	<p><a href="purchase.jsp?productNo=<%=item.getNo()%>"><button type="button" class="btn btn-dark btn-sm">주문하기</button></a></p>
 		                    	<p><a href="../mypage/wishlist/add.jsp?productNo=<%=item.getNo() %>"><button type="button" class="btn btn-light btn-sm">관심상품등록</button></a></p>
-		                    	<p><a href="delete.jsp?productNo=<%=item.getNo() %>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
+		                    	<p><a href="delete.jsp?productNo=<%=item.getNo()%>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
 		                    </td>
 		                </tr>
              <%
@@ -146,7 +146,7 @@
         <table class="table">
             <tr class="table-secondary">
                 <td>[개별배송]</td>
-                <td style="text-align: right;">상품구매금액 <strong></strong> + 배송비 9,000 = 합계: <strong><span style="font-size: x-large;">1314142</span>원</strong></td>
+                <td style="text-align: right;">상품구매금액 <strong id="total-product-price"></strong> + 배송비 <span id="total-delivery-fee"></span> = 합계: <strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
             </tr>
             <tr>
                 <td><span style="color:Red;">!</span><span style="font-size: small;"> 할인 적용 금액은 주문서작성의 결제예정금액에서 확인 가능합니다.</span></td>
@@ -189,18 +189,18 @@
             </thead>
             <tbody>
                 <tr class="text-center">
-                    <td><strong><span style="font-size: x-large;">1314142</span>원</strong></td>
+                    <td><strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
                     <td><strong>-<span style="font-size: x-large;">0</span>원</strong></td>
-                    <td><strong>=<span style="font-size: x-large;">1314142</span>원</strong></td>
+                    <td><strong>=<span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
                 </tr>
             </tbody>
         </table> 
     </form>
     </div>
     <div style="padding-top: 10px; padding-bottom: 70px; text-align: center; padding-left: 120px;">
-        <button type="button" class="btn btn-dark">전체상품주문</button>
-        <button type="button" class="btn btn-secondary">선택상품주문</button>
-        <button type="button" class="btn btn-outline-dark" style="float: right;">쇼핑계속하기</button>
+        <a href="../order/order.jsp"><button type="button" class="btn btn-dark">전체상품주문</button></a>
+        <a href="../order/order.jsp"><button type="button" class="btn btn-secondary">선택상품주문</button></a>
+        <a href="../flowercategory.jsp"><button type="button" class="btn btn-outline-dark" style="float: right;">쇼핑계속하기</button></a>
     </div>
 </div>
 
@@ -211,17 +211,77 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
+	
+	// 전체 체크박스 제어
 	function toggleCheckbox() {
-	    let checkboxToggleCheckedState = document.getElementById('checkbox-toggle').checked;
-	    let productCheckboxs = document.querySelectorAll('input[name=productNo]');
-	    
-	    for (let index = 0; index < productCheckboxs.length; index++) {
-	        let productCheckboxs = productCheckboxs[index];
-	        productCheckboxs.checked = checkboxToggleCheckedState;
-	    }
+		let checkAllboxCheckStatus = document.getElementById("checkbox-toggle").checked;
+		// NodeList
+        let productCheckboxList = document.querySelectorAll("input[name=checkNo]:checked");
+        for (let index = 0; index < productCheckboxList.length; index++){
+            let productCheckbox = productCheckboxList[index];
+            productCheckbox.checked = checkAllboxCheckStatus;
+        }
 	}
-
+	
+	// 체크박스로 선택한 상품 금액 합계
+	function updateProductPrice() {
+		let totalProductPrice = 0;
+		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		
+		for (let i = 0; i<checkboxes.length; i++) {
+			let checkbox = checkboxes[i];
+			let checkNo = checkbox.value;
+			let strong = document.querySelector("#product-price-" + checkNo);
+			let productPrice = parseInt(strong.textContent);
+			
+			totalProductPrice += productPrice;
+		}
+		document.querySelector("#total-product-price").textContent = totalProductPrice;
+	}
+	
+	// 체크박스로 선택한 상품 배달비용 합계
+	function updateDeliveryPrice() {
+		let totalDeliveryFee = 0;
+		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		
+		for (let i = 0; i<checkboxes.length; i++) {
+			let checkbox = checkboxes[i];
+			let checkNo = checkbox.value;
+			let strong = document.querySelector("#delivery-fee-" + checkNo);
+			let deliveryFee = parseInt(strong.textContent);
+			
+			totalDeliveryFee += deliveryFee;
+		}
+		document.querySelector("#total-delivery-fee").textContent = totalDeliveryFee;
+	}	
+	
+	// 체크박스로 선택한 상품 총 주문금액 합계
+	function updateTotalPrice() {
+		let totalOrderPrice = 0;
+		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		
+		for (let i = 0; i<checkboxes.length; i++) {
+			let checkbox = checkboxes[i];
+			let checkNo = checkbox.value;
+			let strong = document.querySelector("#order-price-" + checkNo);
+			let orderPrice = parseInt(strong.textContent);
+			
+			totalOrderPrice += orderPrice;
+		}
+		document.querySelector("#total-order-price").textContent = totalOrderPrice;
+	}
+	
+	// 입력폼에 입력된 값을 받아 상품 수량을 변경
+	function changeQuantity() {
+		let inputQuantity = document.getElementById("quantity-input-").value;
+		let quantity = inputQuantity;
+		
+		let checkbox = document.getElementById("product-number").value;
+		let productNo = checkbox;
+		
+		document.getElementById("quantity-input-").href = "update.jsp?productNo=" + productNo + "&quantity=" + quantity;
+	}
+	
 </script>
 </body>
 </html>
