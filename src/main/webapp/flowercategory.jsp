@@ -1,3 +1,8 @@
+<%@page import="util.StringUtil"%>
+<%@page import="dao.ProductDao"%>
+<%@page import="vo.Pagination"%>
+<%@page import="vo.Product"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,6 +26,31 @@
 </jsp:include>
 
 <div class="container">
+<%
+			int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
+			int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
+			String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
+			
+			ProductDao productDao = ProductDao.getInstance();
+			// 전체 데이터의 수를 조회
+			int totalRows = 0;
+			if (keyword.isEmpty()) {
+				totalRows = productDao.getTotalRows();
+			} else {
+				totalRows = productDao.getTotalRows(keyword);
+			}
+			// 페이징처리에 필요한 정보 제공 객체 생성
+			Pagination pagination = new Pagination(rows, totalRows, currentPage);
+			
+			// 요청한 페이지번호에 해당하는 데이터 조회하기
+			List<Product> productList = null;
+			if (keyword.isEmpty()) {
+				productList = productDao.getProductByIndex(pagination.getBeginIndex(), pagination.getEndIndex());
+			} else {
+				productList = productDao.getProductByIndexNKeyword(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);				
+			}
+		%>
+
 	<div id="categoryname">
 		<h6>플라워</h6><!--카테고리 명칭을 입력-->
 	</div>
@@ -40,26 +70,31 @@
   			</li>
 		</ul>
 	</div>
-	<!-- for문을 돌려야 함. 지금 col-4 3개 적어놓은 것은 단순히 잘 보이는지 확인하기 위함 -->
+	<!-- 카드 형식으로 데이터 나열 for문으로  -->
 	<div class="row mb-3"> 
-				
+		<%
+			for (Product product : productList) {
+		%>		
 		<div class="col-3 mb-3">
 			<div class="card">
-  				<a href="http://localhost/semi/flowerdetail.jsp ">
-  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="..."> <!--"images/category/파일명.jpg -->
-  				</a>
+				<a href="flowerdetail.jsp?productNo=<%=product.getNo() %>&page=<%=pagination.getCurrentPage() %>"><img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="...">
   				<div class="card-body">
-  					<h5 class="card-title fs-6"><small>고백 해바라기 꽃다발 생화</small></h5>
-    				<p class="card-text mt-2 mb-1"><small><del class="text-muted">35000원</del></small></p> 
-    				<p class="text-danger"><small><strong>22900원</strong></small></p>
-    				<p class="card-text mb-1"><small  class="text-muted">여름하면 생각나는 꽃 해바라기입니다.</small></p>
+  					<h5 class="card-title fs-6"><small><%=product.getName() %></small></h5>
+    				<p class="card-text mt-2 mb-1"><small><del class="text-muted"><%=product.getCustomerPrice() %>원</del></small></p> 
+    				<p class="text-danger"><small><strong><%=product.getSellPrice() %>원</strong></small></p>
+    				<p class="card-text mb-1"><small  class="text-muted"><%=product.getDescription() %></small></p>
   				</div>	
 			</div>
+			
 		</div>
+		<%
+			}
+		%>
+		<!--  
 		<div class="col-3 mb-3">
 			<div class="card">
   				<a href="http://localhost/semi/flowerdetail.jsp ">
-  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="..."> <!--"images/category/파일명.jpg -->
+  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="...">
   				</a>
   				<div class="card-body">
   					<h5 class="card-title fs-6"><small>고백 해바라기 꽃다발 생화</small></h5>
@@ -72,7 +107,7 @@
 		<div class="col-3 mb-3">
 			<div class="card">
   				<a href="http://localhost/semi/flowerdetail.jsp ">
-  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="..."> <!--"images/category/파일명.jpg -->
+  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="..."> 
   				</a>
   				<div class="card-body">
   					<h5 class="card-title fs-6"><small>고백 해바라기 꽃다발 생화</small></h5>
@@ -82,6 +117,7 @@
   				</div>	
 			</div>
 		</div>
+		-->
 		
 	</div>
 	
@@ -118,5 +154,24 @@
 	<jsp:param name="footer" value="flowercategory"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	function changeRows() {
+		document.querySelector("input[name=page]").value = 1;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+	
+	function clickPageNo(pageNo) {
+		document.querySelector("input[name=page]").value = pageNo;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+	
+	function searchKeyword() {
+		document.querySelector("input[name=page]").value = 1;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+</script>
 </body>
 </html>

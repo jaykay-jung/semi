@@ -18,7 +18,8 @@ public class Product {
     private Date updatedDate;
     private int categoryNo;
     private String deleted;
-
+    private Category category;
+    
     public Product() {}
 
 	public int getNo() {
@@ -131,6 +132,14 @@ public class Product {
 
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
     
