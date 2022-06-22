@@ -14,14 +14,14 @@
 	}
 	
 	// 요청파라미터 이름으로 값 조회
-	String value = request.getParameter("itemNo");
+	String value = request.getParameter("productNo");
 	// 스트링으로 읽히기 때문에 정수형으로 형변환
-	int itemNo = Integer.parseInt(value);
+	int productNo = Integer.parseInt(value);
 	
 	CartItemDao cartItemDao = CartItemDao.getInstance();
 	
 	// 장바구니 아이템번호에 해당하는 장바구니 아이템 정보 조회
-	CartItem item = cartItemDao.getCartItemByItemNo(itemNo);
+	CartItem item = cartItemDao.getCartItemByItemNo(productNo);
 	// 장바구니 아이템정보가 존재하지 않으면 장바구니 목록을 재요청하는 URL을 응답으로 보내기
 	if (item == null) {
 		response.sendRedirect("form.jsp?fail=invalid");
@@ -32,6 +32,8 @@
 		response.sendRedirect("form.jsp?fail=deny");
 		return;
 	}
+	
+	cartItemDao.deleteCartItem(productNo);
 	
 	// 작업 후에 장바구니 목록 URL 재요청
 	response.sendRedirect("form.jsp");

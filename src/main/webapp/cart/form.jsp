@@ -76,7 +76,7 @@
                 <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
             </tr>
             <tr>
-                <td>가용적립금:<strong>원</strong></td>
+                <td>가용적립금: <strong><%=user.getPoint().getAvailble() %>원</strong></td>
             </tr>
         </table>
     </div>
@@ -92,7 +92,7 @@
         <table class="table">
 			<thead>
                 <tr>
-                    <th><input class="form-check-input" type="radio" name="checkAll" id="radio"></th>
+                    <th><input class="form-check-input" type="checkbox" name="checkAll" id="checkbox-toggle" onchange="toggleCheckbox();"></th>
                     <th>이미지</th>
                     <th>상품정보</th>
                     <th>판매가</th>
@@ -116,12 +116,12 @@
 					for (CartItem item : cartItems) {
 			%>
 		                <tr>
-		                    <td><input class="form-check-input" type="radio" name="check" id="radio"></td>
-		                    <td><img src="../images/category/<%=item.getProduct().getImageName() %>" alt="이미지"></td>
+		                    <td><input class="form-check-input" type="checkbox" name="productNo"></td>
+		                    <td><a href="../flowerdetail.jsp?no=<%=item.getProduct().getNo() %>"><img src="../images/category/<%=item.getProduct().getImageName() %>" alt="이미지"></a></td>
 		                    <td><%=item.getProduct().getName() %></td>
 		                    <td><strong><%=item.getProduct().getSellPrice() %>원</strong></td>
 		                    <td id="content-height">
-		                        <p><input type="number" name="quantity" maxlength="5"><%=item.getQuantity() %></p>
+		                        <p><input type="number" name="quantity" maxlength="5" value="<%=item.getQuantity() %>"></p>
 		                        <p><button type="button" class="btn btn-light btn-sm">변경</button></p>
 		                    </td>
 		                    <td><%=item.getProduct().getDepositPoint() %>원</td>
@@ -129,9 +129,9 @@
 		                    <td><%=item.getProduct().getDeliveryFee() %>원</td>
 		                    <td><strong><%=item.getOrderPrice() %>원</strong></td>
 		                    <td>
-		                    	<p><button type="button" class="btn btn-dark btn-sm">주문하기</button></p>
-		                    	<p><button type="button" class="btn btn-light btn-sm">관심상품등록</button></p>
-		                    	<p><button type="button" class="btn btn-light btn-sm">삭제</button></p>
+		                    	<p><a href="purchase.jsp?productNo=<%=item.getNo() %>&price=<%=item.getOrderPrice() %>&quantity=<%=item.getQuantity() %>"><button type="button" class="btn btn-dark btn-sm">주문하기</button></a></p>
+		                    	<p><a href="../mypage/wishlist/add.jsp?productNo=<%=item.getNo() %>"><button type="button" class="btn btn-light btn-sm">관심상품등록</button></a></p>
+		                    	<p><a href="delete.jsp?productNo=<%=item.getNo() %>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
 		                    </td>
 		                </tr>
              <%
@@ -157,7 +157,7 @@
                     <strong>선택상품을 </strong><button type="button" class="btn btn-secondary btn-sm">삭제하기</button>
                 </td>
                 <td style="border-bottom: none;">
-                    <button type="button" class="btn btn-light btn-sm" style="float: right;">장바구니비우기</button>
+                    <a href="deleteAll.jsp?userNo=<%=user.getNo() %>"><button type="button" class="btn btn-light btn-sm" style="float: right;">장바구니비우기</button></a>
                 </td>
             </tr>
         </table>
@@ -208,6 +208,20 @@
 <jsp:include page="../common/footer.jsp">
 	<jsp:param name="footer" value="cartform.jsp"/>
 </jsp:include>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+	function toggleCheckbox() {
+	    let checkboxToggleCheckedState = document.getElementById('checkbox-toggle').checked;
+	    let productCheckboxs = document.querySelectorAll('input[name=productNo]');
+	    
+	    for (let index = 0; index < productCheckboxs.length; index++) {
+	        let productCheckboxs = productCheckboxs[index];
+	        productCheckboxs.checked = checkboxToggleCheckedState;
+	    }
+	}
+
+</script>
 </body>
 </html>

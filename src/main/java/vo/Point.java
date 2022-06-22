@@ -2,14 +2,22 @@ package vo;
 
 public class Point {
 
+	private int no;
 	private int tot;
 	private int used;
 	private int availble;
 	private int unUsed;
 	
-	public Point() {
+	public Point() {}
+
+	public int getNo() {
+		return no;
 	}
 
+	public void setNo(int no) {
+		this.no = no;
+	}
+	
 	public int getTot() {
 		return tot;
 	}

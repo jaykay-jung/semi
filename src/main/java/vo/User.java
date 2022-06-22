@@ -18,6 +18,7 @@ public class User {
 	private Date createdDate;
 	private Date updatedDate;
 	private String grade;
+	private Point point;
 	
 	public User() {}
 
@@ -131,6 +132,14 @@ public class User {
 
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+	
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 }

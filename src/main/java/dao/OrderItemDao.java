@@ -33,7 +33,6 @@ public class OrderItemDao {
         helper.insert(sql, orderItem.getOrder().getNo(), orderItem.getProduct().getNo(), orderItem.getQuantity(), orderItem.getPrice());
     }
     
-    
     // 사용자정보와 날짜로 검색해서 주문상세정보를 반환한다.
     public List<OrderItem> getOrdersByDate(int userNo, Date startDate, Date endDate) throws SQLException {
     	String sql = "SELECT O.ORDER_CREATED_DATE, O.TOTAL_PAYMENT_PRICE, O.ORDER_STATUS, I.ORDER_NO, I.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_IMAGE_NAME, I.ORDER_ITEM_QUANTITY "
