@@ -51,7 +51,7 @@
 						<a class="nav-link" href="/semi/order/form.jsp">ORDER</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/mypage/myhome.jsp">MYPAGE</a>
+						<a class="nav-link" href="/semi/mypage/mypage.jsp">MYPAGE</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/semi/reviewlist.jsp">REVIEW</a>
