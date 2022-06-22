@@ -9,21 +9,19 @@
 	// 사용자 인증
 	User user = (User) session.getAttribute("LOGINED_USER");
 	if (user == null) {
-		response.sendRedirect("loginform.jsp?fail=deny");
+		response.sendRedirect("../loginform.jsp?fail=deny");
 		return;
 	}
 	
 	// 상품정보 파라미터 요청
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	int price = Integer.parseInt(request.getParameter("price"));
-	int quantity = Integer.parseInt(request.getParameter("quantity"));
+	
 	
 	OrderItem orderItem = new OrderItem();
 	orderItem.setNo(productNo);
 	orderItem.setOrder(new Order());
 	orderItem.setProduct(new Product());
-	orderItem.setPrice(price);
-	orderItem.setQuantity(quantity);
+	
 	
 	OrderItemDao orderItemDao = OrderItemDao.getInstance();
 	orderItemDao.insertOrderItem(orderItem);
