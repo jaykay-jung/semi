@@ -1,15 +1,9 @@
 <%@page import="vo.User"%>
+<%@page import="vo.Address"%>
+<%@page import="dao.AddressDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	//세션에서 로그인된 사용자정보를 조회한다.
-	User user = (User) session.getAttribute("LOGINED_USER");
-	if (user == null) {
-		throw new RuntimeException("주소록 등록은 로그인 후 사용가능한 서비스 입니다.");
-	}
-%>
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -115,10 +109,36 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 		<hr style="border: gray 0.7px dotted;">	
   	</div>
   	
+  	<%
+		// 세션에서 로그인된 사용자 정보 조회하기
+		User user = (User) session.getAttribute("LOGINED_USER");
+		if (user == null) {
+			response.sendRedirect("../loginform.jsp?fail=deny");
+			return;
+		}
+
+  		// 요청파라미터값을 조회한다.
+  		int addressNo = Integer.parseInt(request.getParameter("addressNo"));
+  	
+		// 주소록을 조회한다.
+		AddressDao addressDao = AddressDao.getInstance();
+		Address address = addressDao.getAddress(addressNo);
+  	
+		// 주소정보가 없으면 재요청 URL을 응답으로 보낸다.
+		if (address == null) {
+			throw new RuntimeException("존재하지 않는 주소입니다.");
+		}
+		if (address.getUser().getNo() != user.getNo()) {
+			throw new RuntimeException("다른 사용자의 주소록은 수정할 수 없습니다.");
+		}
+		
+  	%>
+  	
+  	
   	
 <!-- 주소록 입력 퐄 -->
-
-	<form action="add.jsp" method="post">
+	<form action="modify.jsp" method="post">
+		<input type="hidden" name="addressNo" value="<%=address.getNo() %>" />		
 		<div style="border-top:1px solid #dfdfdf; color:#353535;">
 			<div class="row" style="height:40px;">
         		<div class="col" >
@@ -127,7 +147,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
         				<img src="../../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="nickname" style="width:190px; height:24px;">
+						<input type="text" name="nickname" style="width:190px; height:24px;" value="<%=address.getNickName() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -140,7 +160,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
         				<font style="line-height: 10px;margin-left: 7px;">성명</font><img src="../../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="name" style="width:190px; height:24px;">
+						<input type="text" name="name" style="width:190px; height:24px;" value="<%=address.getName() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -154,15 +174,15 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 					</div>
 					<div style="float:left; margin:5px 10px;">
 						<div style="height:29px;">
-							<input type="text" id="zip" name="zip" style="width:70px; height:24px;" readonly="readonly">
+							<input type="text" id="zip" name="zip" style="width:70px; height:24px;" readonly="readonly" value="<%=address.getZip() %>">
 							<a href="javascript:void(0);" onclick="popupZipSearch();return false;"><img src="../../images/mypage/address-zipcode.png" style="margin-left:5px; margin-bottom:6px;" ></a>
 
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr1" name="addr1" style="width:460px; height:24px;"><span style="height:15px; font-size:12px;"> 기본주소 </span>
+							<input type="text" id="addr1" name="addr1" style="width:460px; height:24px;"><span style="height:15px; font-size:12px;" value="<%=address.getCity() %>"> 기본주소 </span>
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr2" name="addr2" style="width:460px; height:24px;"><span style="height:15px;font-size:12px;">  나머지주소(선택입력가능)</span>
+							<input type="text" id="addr2" name="addr2" style="width:460px; height:24px;"><span style="height:15px;font-size:12px;" value="<%=address.getStreet() %>">  나머지주소(선택입력가능)</span>
 						</div>
 					</div><div style="clear:both:"></div>
 					
@@ -177,7 +197,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
         				<font style="line-height: 10px;margin-left: 7px;">휴대전화</font><img src="../../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="phone" style="width:190px; height:24px;">
+						<input type="text" name="phone" style="width:190px; height:24px;" value="<%=address.getTel() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -201,10 +221,11 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 					</a>
 				</div>
 		       	<div class="vertical-align-content2" style="float:right; background-color:black; ">
-					<button type="submit" style="border:0; padding: 4px 30px; background-color:black;"><font style="color:white;">등록</font></button>
+					<button type="submit" style="border:0; padding: 4px 30px; background-color:black;"><font style="color:white;">수정</font></button>
 				</div>
 			</div>
 		</div>
+		
 	</form>
 
 <!-- 배송 주의사항 -->	
