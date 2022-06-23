@@ -1,3 +1,5 @@
+<%@page import="dao.UserDao"%>
+<%@page import="vo.User"%>
 <%@page import="vo.Notice"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.Pagination"%>
@@ -21,6 +23,7 @@
 	#noticelist-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
 	table {text-align: center; font-size: 15px;}
 	table tbody {font-size: 13px;}
+	table td {vertical-align: middle; line-height: 30px;}
 </style>
 </head>
 <body>
@@ -52,19 +55,24 @@
 		}
 		
 		// 페이징 처리에 필요한 정보 제공
-		Pagination pagination = new Pagination(rows, totalRows, currentPage);
+		Pagination pagination = new Pagination(totalRows, currentPage);
 		
 		List<Notice> noticeList = null;
+		if(keyword.isEmpty()) {
+			noticeList = noticeDao.getNotices(pagination.getBeginIndex(), pagination.getEndIndex());
+		} else {
+			noticeList = noticeDao.getNotices(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);
+		}
 		
 	%>
-	<div>
-		<div>
+	<div class="row">
+		<div class="col">
 			<table class="table">
 				<colgroup>
 					<col width="5%">
 					<col width="">
 					<col width="5%">
-					<col width="5%">
+					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
@@ -77,9 +85,26 @@
 					</tr>
 				</thead>
 				<tbody>
-				
+				<%
+					for(Notice notice : noticeList) {
+				%>
+					<tr>
+						<td><%=notice.getNo() %></td>
+						<td><%=notice.getTitle() %></td>
+						<td>관리자</td>
+						<td><%=notice.getCreatedDate() %></td>
+						<td><%=notice.getViewCount() %></td>
+					</tr>
+				<%
+					}
+				%>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+	
 		</div>
 	</div>
 </div>
