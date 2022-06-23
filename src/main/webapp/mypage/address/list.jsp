@@ -1,3 +1,7 @@
+<%@page import="vo.Address"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.AddressDao"%>
+<%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,10 +30,13 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 </style>
 </head>
 <body>
+<!--  	1) 주소록 기본으로 고정하는것 아직 안함
+		2) 주소록 선택박스 선택해서, 수정버튼 누르면, form.jsp로 넘어갈때 같이 addressNo 넘어가면, 수정폼에 정보 그대로 나오도록.
 
+ -->
 <!-- header -->
 <jsp:include page="../../common/nav.jsp">
-	<jsp:param name="mypage" value="address"/>
+	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
 <!-- content -->
@@ -52,7 +59,41 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
   	</div>
   	<div class="row">
 		<div class="col">
+		<%
+			String fail = request.getParameter("fail");
+		%>
 		
+		<%
+			if ("invalid".equals(fail)) {
+		%>				
+			<div class="alert alert-danger">
+				<strong>오류</strong> 유효한 요청이 아닙니다.
+			</div>
+			
+		<%
+			} else if ("deny".equals(fail)) {
+		%>
+			<div class="alert alert-danger">
+				<strong>거부</strong> 다른 사용자의 주소록을 변경할 수 없습니다.
+			</div>
+		<%		
+			}
+		%>
+		
+
+		<%
+			// HttpSession객체에 저장된 사용자정보 조회하기
+			User user = (User) session.getAttribute("LOGINED_USER");
+			if (user == null) {
+				response.sendRedirect("../loginform.jsp?fail=deny");
+				return;
+			}
+			
+			// 사용자에 맞는 주소록 데이터 가져오기
+			AddressDao addressDao = AddressDao.getInstance();
+			List<Address> addressList = addressDao.getAllAddress(user.getNo());
+			
+		%>		
 		
 		
 			<table class="table" style="text-align:center; font-size:13px;">
@@ -79,31 +120,26 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 				</thead>
 				<tbody class="table-group-divider">
 				<%
-			//		if ()
-			//		if (cartItems.isEmpty()) {
+					if (addressList.isEmpty()) {
 				%>	
 					<tr>
 						<td colspan="6" class="text-center"><strong>주소록이 비어있습니다.</strong></td>
 					</tr>
 				<%
-			//		} else {
-			//			for (CartItemDto item : cartItems) {
+					} else {
+						for (Address address : addressList) {
 				%>
 							<tr>
 								<td><input type="checkbox" /></td>
-								<td><a href="fix.jsp?addressno=20"><img src="../../images/mypage/address-fix.png"></a></td>
-								<td><span class="text-danger"><strong></strong> 중앙HTA</span></td>
-								<td>김영희</td>
-								<td><span class="text-danger"><strong></strong> 010-4561-4561</span></td>
-								<td>(우평번호) 서울특별시 종로구 어쩌구 저쩎구 4층</td>
+								<td><a href="fix.jsp?addressNo=<%=address.getNo() %>"><img src="../../images/mypage/address-fix.png"></a></td>
+								<td><span class="text-danger"><strong></strong> <%=address.getNickName() %>></span></td>
+								<td><%=address.getName() %>></td>
+								<td><span class="text-danger"><strong></strong> <%=address.getTel() %></span></td>
+								<td>(<%=address.getZip() %>) <%=address.getCity() %> <%=address.getStreet() %></td>
 								<td>
-									<a href="form.jsp?addressno=20"><span><img src="../../images/mypage/address-modify.png"></span></a>
+									<a href="form.jsp?addressNo=<%=address.getNo() %>"><span><img src="../../images/mypage/address-modify.png"></span></a>
 								</td>
 							</tr>
-				<%	
-				//		}
-				//	}
-				%>
 				</tbody>
 			</table>
 			
@@ -111,7 +147,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div class="row">
 				<div class="col">
 			       	<div style="float:left; border:1px solid red; width:50%; height:40px;">
-						<a href="delete.jsp?addressno=20"><img src="../../images/mypage/address-delete.png"></a>
+						<a href="delete.jsp?addressNo=<%=address.getNo() %>"><img src="../../images/mypage/address-delete.png"></a>
 					</div>
 			       	<div class="vertical-align-content2" style="float:right; background-color:black; ">
 			       		<a class="nolinelink" href="form.jsp" style="color:white;">
@@ -120,6 +156,10 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 					</div>
 				</div>
 			</div>
+				<%	
+						}
+					}
+				%>
 		</div>
 	</div>
 

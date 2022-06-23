@@ -5,6 +5,7 @@ import java.util.Date;
 public class Address {
 
 	private int no;
+	private String nickName;
 	private String name;
 	private int zip;
 	private String city;
@@ -23,6 +24,16 @@ public class Address {
 	public void setNo(int no) {
 		this.no = no;
 	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 
 	public String getName() {
 		return name;

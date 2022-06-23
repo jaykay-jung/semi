@@ -32,7 +32,7 @@ font {font-size:13px;}
 
 <!-- header -->
 <jsp:include page="../../common/nav.jsp">
-	<jsp:param name="mypage" value="wishlist"/>
+	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
 <!-- content -->
