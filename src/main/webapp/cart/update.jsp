@@ -10,9 +10,9 @@
 		return;
 	}
 	
-	// 상품번호 파라미터 요청
+	// 상품번호, 수량 파라미터 요청
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	int quantity = Integer.parseInt(request.getParameter("quantity"));
+	int quantity = Integer.parseInt(request.getParameter("quantityNo"));
 
 	// 장바구니 아이템정보를 전달하여 수량을 변경 혹은 저장
 	CartItemDao cartItemDao = CartItemDao.getInstance();

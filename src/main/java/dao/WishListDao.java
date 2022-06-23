@@ -30,7 +30,7 @@ public class WishListDao {
 					+ "values "
 					+ "(SEMI_WISH_PRODUCTS_seq.nextval, ?, ?) ";
 		
-		helper.insert(sql, wishList.getUser().getName(), wishList.getProduct().getNo());
+		helper.insert(sql, wishList.getUser().getNo(), wishList.getProduct().getNo());
 	}
 	
 
