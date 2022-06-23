@@ -110,7 +110,7 @@
 			
 			// 해당 상품번호로 정보 조회하기
 			ProductDao productDao = ProductDao.getInstance();
-			Product product = productDao.getAllProductByNo(productNo);
+			Product product = productDao.getProductByNo(productNo);
 			
 			if (product == null) {
 				throw new RuntimeException("게시글 정보가 존재하지 않습니다.");
