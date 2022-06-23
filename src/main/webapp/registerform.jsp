@@ -128,7 +128,7 @@
 				<div>
 					<p>
 						<small>이용약관에 동의하십니까?</small>
-						<input type="checkbox">
+						<input type="checkbox" required="required">
 						<label>동의함</label>
 					</p>
 				</div>

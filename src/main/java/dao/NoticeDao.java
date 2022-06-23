@@ -58,6 +58,8 @@ public class NoticeDao {
 		}, keyword);
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @param beginIndex
