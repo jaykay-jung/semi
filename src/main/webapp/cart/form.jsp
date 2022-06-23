@@ -89,6 +89,7 @@
         </table>
     </div>
     <div id="product-table">
+    <form action="../order/form.jsp" id="cart-form">
         <table class="table">
 			<thead>
                 <tr>
@@ -116,31 +117,31 @@
 					for (CartItem item : cartItems) {
 			%>
 		                <tr>
-		                    <td><input id="product-number" class="form-check-input" type="checkbox" name="checkNo" value="<%=item.getProduct().getNo() %>" onchange="updateProductPrice(); updateDeliveryPrice(); updateTotalPrice();"></td>
+		                    <td><input id="product-number" class="form-check-input" type="checkbox" name="productNo" value="<%=item.getProduct().getNo() %>" onchange="updateProductPrice(); updateDeliveryPrice(); updateTotalPrice();"></td>
 		                    <td><a href="../flowerdetail.jsp?no=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName()%>" alt="이미지"></a></td>
 		                    <td><%=item.getProduct().getName()%></td>
 		                    <td><strong id="product-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()%>원</strong></td>
 		                    <td id="content-height">
-		                        <p><input id="quantity-input-<%=item.getProduct().getNo() %>" type="number" name="quantityNo" maxlength="5" value="<%=item.getQuantity()%>"></p>
-		                        <p><a href=""><button id="change-quantity" type="button" class="btn btn-light btn-sm" onclick="changeQuantity();">변경</button></a></p>
+		                        <p><input id="quantity-<%=item.getNo() %>" type="number" maxlength="5" name="quantity" value="<%=item.getQuantity()%>"></p>
+		                        <p><button id="change-quantity" type="submit" class="btn btn-light btn-sm">변경</button></p>
 		                    </td>
 		                    <td><%=item.getProduct().getDepositPoint()%>원</td>
 		                    <td>개별배송</td>
 		                    <td id="delivery-fee-<%=item.getProduct().getNo() %>"><%=item.getProduct().getDeliveryFee()%>원</td>
 		                    <td><strong id="order-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice() + item.getProduct().getDeliveryFee()%>원</strong></td>
 		                    <td>
-		                    	<p><a href="purchase.jsp?productNo=<%=item.getNo()%>"><button type="button" class="btn btn-dark btn-sm">주문하기</button></a></p>
-		                    	<p><a href="../mypage/wishlist/add.jsp?productNo=<%=item.getNo() %>"><button type="button" class="btn btn-light btn-sm">관심상품등록</button></a></p>
-		                    	<p><a href="delete.jsp?productNo=<%=item.getNo()%>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
+		                    	<p><button type="button" class="btn btn-dark btn-sm" onclick="buy(<%=item.getProduct().getNo() %>, this);" data-item-no="<%=item.getNo() %>">주문하기</button></p>
+		                    	<p><a href="addwish.jsp?productNo=<%=item.getProduct().getNo() %>"><button type="button" class="btn btn-light btn-sm">관심상품등록</button></a></p>
+		                    	<p><a href="delete.jsp?itemNo=<%=item.getNo()%>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
 		                    </td>
 		                </tr>
              <%
 					}
 				}
              %>
-                
             </tbody>
         </table>
+    </form>
     </div>
     <div>
         <table class="table">
@@ -169,11 +170,9 @@
 		</div>
 	</div>
 	    <hr style="border: solid 1px black"> 
-    <div>
         <div style="margin-top: 30px;">
             <p ><strong>결제 예정 금액</strong></p>
         </div>
-        <form action="">
         <table class="table">
         <colgroup>
         	<col style="width:33%">
@@ -195,15 +194,13 @@
                 </tr>
             </tbody>
         </table> 
-    </form>
-    </div>
-    <div style="padding-top: 10px; padding-bottom: 70px; text-align: center; padding-left: 120px;">
-        <a href="../order/order.jsp"><button type="button" class="btn btn-dark">전체상품주문</button></a>
-        <a href="../order/order.jsp"><button type="button" class="btn btn-secondary">선택상품주문</button></a>
-        <a href="../flowercategory.jsp"><button type="button" class="btn btn-outline-dark" style="float: right;">쇼핑계속하기</button></a>
-    </div>
+        <div style="padding-top: 10px; padding-bottom: 70px; text-align: center; padding-left: 120px;">
+        	<button type="button" class="btn btn-dark" onclick="buyAll();">전체상품주문</button>
+        	<button type="button" class="btn btn-secondary">선택상품주문</button>
+        	<a href="../flowercategory.jsp"><button type="button" class="btn btn-outline-dark" style="float: right;">쇼핑계속하기</button></a>
+    	</div>
 </div>
-
+    
 <!-- footer -->
 <jsp:include page="../common/footer.jsp">
 	<jsp:param name="footer" value="cartform.jsp"/>
@@ -216,7 +213,7 @@
 	function toggleCheckbox() {
 		let checkAllboxCheckStatus = document.getElementById("checkbox-toggle").checked;
 		// NodeList
-        let productCheckboxList = document.querySelectorAll("input[name=checkNo]:checked");
+        let productCheckboxList = document.querySelectorAll("input[name=productNo]:checked");
         for (let index = 0; index < productCheckboxList.length; index++){
             let productCheckbox = productCheckboxList[index];
             productCheckbox.checked = checkAllboxCheckStatus;
@@ -226,12 +223,12 @@
 	// 체크박스로 선택한 상품 금액 합계
 	function updateProductPrice() {
 		let totalProductPrice = 0;
-		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
 		
 		for (let i = 0; i<checkboxes.length; i++) {
 			let checkbox = checkboxes[i];
-			let checkNo = checkbox.value;
-			let strong = document.querySelector("#product-price-" + checkNo);
+			let productNo = checkbox.value;
+			let strong = document.querySelector("#product-price-" + productNo);
 			let productPrice = parseInt(strong.textContent);
 			
 			totalProductPrice += productPrice;
@@ -242,12 +239,12 @@
 	// 체크박스로 선택한 상품 배달비용 합계
 	function updateDeliveryPrice() {
 		let totalDeliveryFee = 0;
-		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
 		
 		for (let i = 0; i<checkboxes.length; i++) {
 			let checkbox = checkboxes[i];
-			let checkNo = checkbox.value;
-			let strong = document.querySelector("#delivery-fee-" + checkNo);
+			let productNo = checkbox.value;
+			let strong = document.querySelector("#delivery-fee-" + productNo);
 			let deliveryFee = parseInt(strong.textContent);
 			
 			totalDeliveryFee += deliveryFee;
@@ -258,12 +255,12 @@
 	// 체크박스로 선택한 상품 총 주문금액 합계
 	function updateTotalPrice() {
 		let totalOrderPrice = 0;
-		let checkboxes = document.querySelectorAll("input[name=checkNo]:checked");
+		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
 		
 		for (let i = 0; i<checkboxes.length; i++) {
 			let checkbox = checkboxes[i];
-			let checkNo = checkbox.value;
-			let strong = document.querySelector("#order-price-" + checkNo);
+			let productNo = checkbox.value;
+			let strong = document.querySelector("#order-price-" + productNo);
 			let orderPrice = parseInt(strong.textContent);
 			
 			totalOrderPrice += orderPrice;
@@ -271,15 +268,33 @@
 		document.querySelector("#total-order-price").textContent = totalOrderPrice;
 	}
 	
-	// 입력폼에 입력된 값을 받아 상품 수량을 변경
-	function changeQuantity() {
-		let inputQuantity = document.getElementById("quantity-input-").value;
-		let quantity = inputQuantity;
+	// 상품 하나만 주문하기 (상품 오른쪽 주문버튼)
+	// productNo 주문할 상품번호
+	// btn this로 호출한 자기자신의 엘리먼트 (버튼)
+	function buy(productNo, btn) {
+		// btn엘리먼트의 data속성(장바구니아이템번호)를 가져오기
+		let itemNo = btn.getAttribute("data-item-no");
+		// id가 'quantity-장바구니아이템번호' 인 엘리먼트 가져오기
+		let input = document.getElementById("quantity-" + itemNo);
+		// 가져온 엘리먼트의 값을 변수에 넣기
+		let quantity = input.value;
 		
-		let checkbox = document.getElementById("product-number").value;
-		let productNo = checkbox;
-		
-		document.getElementById("quantity-input-").href = "update.jsp?productNo=" + productNo + "&quantity=" + quantity;
+		// location.href = "ㅁㄴㅇㄹㅁㄴㅇ" -> 해당 주소링크로 이동하는 메소드
+		// productNo 인자값으로 받아온 상품번호
+		// quantity 인자값 btn의 data속성과 같은 아이템 번호를 가진 엘리먼트의 값 (아이템 수량)
+		location.href = "../order/form.jsp?productNo="+ productNo+"&quantity="+quantity;
+	}
+	
+	// 전체상품주문
+	function buyAll() {
+		// productNo 이름을 가진 모든 체크박스 엘리먼트 조회
+		let checkboxes = document.querySelectorAll("input[name='productNo']");
+		// 조회된 모든 체크박스 체크하기
+		for (let i=0; i<checkboxes.length; i++) {
+			checkboxes[i].checked = true;
+		}
+		// id가 cart-form인 엘리먼트의 submit() 메소드 실행
+		document.getElementById("cart-form").submit();
 	}
 	
 </script>

@@ -1,3 +1,6 @@
+<%@page import="vo.Product"%>
+<%@page import="util.StringUtil"%>
+<%@page import="dao.ProductDao"%>
 <%@page import="dao.OrderDao"%>
 <%@page import="vo.Order"%>
 <%@page import="java.util.List"%>
@@ -53,8 +56,12 @@
 	}
 %>
 <%
-	OrderDao orderDao = OrderDao.getInstance();
-	List<Order> orders = orderDao.getOrdersByUserNo(user.getNo());
+	// 장바구니폼에서 보내준 productNo의 value값 가져오기 (List형식)
+	String[] productNoValues = request.getParameterValues("productNo");
+	// 장바구니폼에서 보내준 quantity의 value값 가져오기 (List형식)
+	String[] quantityValues = request.getParameterValues("quantity");
+	
+	ProductDao productDao = ProductDao.getInstance();
 %>
     <div class="row">
 		<div class="col" style="margin-top: 10px;">
@@ -106,17 +113,26 @@
             </thead>
             <tbody>
             <%
-            	for (Order order : orders) {
+            	for (int i = 0; i<productNoValues.length; i++) {
+            		// productNoValues 리스트에서 상품번호를 꺼내 productNo 변수에 담기 (+ 형변환 필요)
+            		int productNo = StringUtil.stringToInt(productNoValues[i]);
+            		// quantityValues 리스트에서 주문수량을 꺼내 quantity 변수에 담기 (+ 형변환 필요)
+            		int quantity = StringUtil.stringToInt(quantityValues[i]);
+            		
+            		// 꺼낸 상품번호로 Dao메소드를 사용. 상품정보 불러오기
+            		Product product = productDao.getAllProductByNo(productNo);
+            		
+            		// 테이블에 값 사용
             %>
 	                <tr>
-	                    <td><a href="../flowerdetail.jsp?no=<%=order.getProduct().getNo() %>"><img src="../images/category/<%=order.getProduct().getImageName() %>" alt="상품이미지"></a></td>
-	                    <td><%=order.getProduct().getName()%></td>
-	                    <td><strong><%=order.getProduct().getSellPrice() %>원</strong></td>
-	                    <td><%=order.getOrderQuantity() %></td>
-	                    <td><%=order.getProduct().getSellPrice() %>원</td>
+	                    <td><a href="../flowerdetail.jsp?no=<%=product.getNo() %>"><img src="../images/category/<%=product.getImageName() %>" alt="상품이미지"></a></td>
+	                    <td><%=product.getName()%></td>
+	                    <td><strong><%=product.getSellPrice() %>원</strong></td>
+	                    <td><%=quantity %></td>
+	                    <td><%=product.getDepositPoint() %>원</td>
 	                    <td>개별배송</td>
-	                    <td><%=order.getProduct().getDeliveryFee() %>원</td>
-	                    <td><strong><%=order.getTotalPrice() %>원</strong></td>
+	                    <td><%=product.getDeliveryFee() %>원</td>
+	                    <td><strong><%=product.getSellPrice()*quantity + product.getDeliveryFee() %>원</strong></td>
 	                </tr>
              <%
             	}
