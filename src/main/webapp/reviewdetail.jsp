@@ -56,15 +56,15 @@
 			<div class="row">
 				<div class="col-2" id="review-image-container">
 					<!-- 상품이미지 -->
-					<img src="images/category/Sample1_ConfessionSunflower.jpg">
+					<img src="images/category/<%=review.getProduct().getImageName() %>">
 				</div>
 				<div class="col-10">
 					<div id="review-product-info">
-						<h4>상품 이름</h4>
-						<p>상품 가격</p>
+						<h4><%=review.getProduct().getName() %></h4>
+						<p><%=review.getProduct().getSellPrice() %> 원</p>
 					</div>
 					<div>
-						<a class="btn btn-dark" href="#">상품상세보기<small> ></small></a>
+						<a class="btn btn-dark" href="flowerdetail.jsp">상품상세보기<small> ></small></a>
 					</div>		
 				</div>
 			</div>
@@ -98,6 +98,7 @@
 		<div>
 			<a class="btn btn-outline-secondary" id="back-button" href="reviewlist.jsp">목록</a>
 		</div>
+		
 	</div>
 </div>
 
