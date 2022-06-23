@@ -61,21 +61,56 @@ public class NoticeDao {
 	
 	
 	/**
-	 * 
+	 * 공지 페이징 처리
 	 * @param beginIndex
 	 * @param endIndex
 	 * @return
 	 * @throws SQLException
 	 */
 	public List<Notice> getNotices(int beginIndex, int endIndex) throws SQLException {
-		String sql = "select "
-					+ "from ";
+		String sql = "select * "
+					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
+					+ "		 from semi_notices "
+					+" 		 where notice_deleted = 'N') "
+					+ "where row_number >= ? and row_number <= ? ";
 		
 		return helper.selectList(sql, rs -> {
 			Notice notice = new Notice();
+			notice.setNo(rs.getInt("notice_no"));
+			notice.setTitle(rs.getString("notice_title"));
+			notice.setContent(rs.getString("notice_content"));
+			notice.setCreatedDate(rs.getDate("notice_created_date"));
+			notice.setViewCount(rs.getInt("notice_view_count"));
 			
 			return notice;
 		}, beginIndex, endIndex);
+	}
+	
+	/**
+	 * 공지 페이징처리 (키워드)
+	 * @param beginIndex
+	 * @param endIndex
+	 * @param keyword
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Notice> getNotices(int beginIndex, int endIndex, String keyword) throws SQLException {
+		String sql = "select * "
+					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
+					+ "		 from semi_notices "
+					+" 		 where notice_deleted = 'N' and notice_title like '%' || ? || '%') "
+					+ "where row_number >= ? and row_number <= ? ";
+		
+		return helper.selectList(sql, rs -> {
+			Notice notice = new Notice();
+			notice.setNo(rs.getInt("notice_no"));
+			notice.setTitle(rs.getString("notice_title"));
+			notice.setContent(rs.getString("notice_content"));
+			notice.setCreatedDate(rs.getDate("notice_created_date"));
+			notice.setViewCount(rs.getInt("notice_view_count"));
+			
+			return notice;
+		}, keyword, beginIndex, endIndex);
 	}
 	
 }
