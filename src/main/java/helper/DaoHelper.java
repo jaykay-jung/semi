@@ -194,7 +194,7 @@ public class DaoHelper {
 	}
 	
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER_NAME = "semi";
+	private static final String USER_NAME = "hr";
 	private static final String PASSWORD = "zxcv1234";
 	
 	static {
@@ -225,39 +225,4 @@ public class DaoHelper {
 		 */
 		T mapRow(ResultSet rs) throws SQLException;
 	}
-	   /**
-	    * CLOB 타입의 값을 읽어서 문자열로 반환합니다.
-	    * <pre>
-	    *    public List<Blog> getAllBlogs() throws SQLException {
-	    *       String sql = "select * from blog";
-	    *       return helper.selectList(sql, rs -> {
-	    *          Blog blog = new Blog();
-	    *          blog.setNo(rs.getInt("blog_no"));
-	    *          blog.setTitle(rs.getString("blog_title"));
-	    *          // blog_content는 Oracle DataType이 CLOB로 설정된 컬럼이다.
-	    *          blog.setContent(DaoHelper.clobToString(rs.getClob("blog_content")));
-	    *          blog.setCreatedDate(rs.getDate("blog_created_date"));
-	    *          
-	    *          return blog;
-	    *       });
-	    *    }
-	    * </pre>
-	    * @param clob CLOB 데이터
-	    * @return 문자열
-	    * @throws SQLException
-	    */
-	   public static String clobToString(Clob clob) throws SQLException {
-	      if (clob == null) {
-		 return null;
-	      }
-	      StringBuilder builder = new StringBuilder();
-
-	      try (BufferedReader reader = new BufferedReader(clob.getCharacterStream())) {
-		 reader.lines().forEach(text -> builder.append(text).append(System.lineSeparator()));
-		 return builder.toString();
-	      } catch (IOException e) {
-		 return null;
-	      }
-	   } 	
-	
 }
