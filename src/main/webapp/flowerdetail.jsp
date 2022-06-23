@@ -1,3 +1,5 @@
+<%@page import="vo.Product"%>
+<%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -101,8 +103,22 @@
 		</script>
    		
    		<div class="col">
+   		
+   		<%
+			// 요청파라미터에서 상품번호 조회하기
+			int productNo = Integer.parseInt(request.getParameter("productNo"));
+			
+			// 해당 상품번호로 정보 조회하기
+			ProductDao productDao = ProductDao.getInstance();
+			Product product = productDao.getAllProductByNo(productNo);
+			
+			if (product == null) {
+				throw new RuntimeException("게시글 정보가 존재하지 않습니다.");
+			}
+		%>
+		
    			<div id="productname">
-   			<h6><strong>고백 해바라기 꽃다발 생화</strong></h6> <!--  &nbsp;<h6>고백 해바라기 꽃다발 생화</h6> -->
+   			<h6><strong><%=product.getName() %></strong></h6> 
    			</div>
    			
    			<div id="productinfo">
@@ -114,23 +130,23 @@
 	    			
 		    		<tr>
 		        		<td>소비자가</td>
-		        		<td><del>35000원</del></td>
+		        		<td><del><%=product.getCustomerPrice() %>원</del></td>
 		        		<td></td>
 		        		
 		    		</tr>
 			    	<tr>
 		        		<td><strong>판매가</strong></td>
-		        		<td><strong>22900원</strong></td>
+		        		<td><strong><%=product.getSellPrice() %>원</strong></td>
 		        		
 		    		</tr>
 		    		<tr>
 		        		<td>적립금</td>
-		        		<td><img src="images/category-detail/card.gif">229원</td>
+		        		<td><img src="images/category-detail/card.gif"><%=product.getDepositPoint() %>원</td>
 		        		
 		    		</tr>
 					<tr>
 		        		<td>상품번호</td>
-		        		<td>testNum</td>
+		        		<td><%=product.getNo() %></td>
 		        	
 		    		</tr>
 		    		<tr>
@@ -145,7 +161,7 @@
 		    		</tr>
 		    		<tr>
 		        		<td>배송비</td>
-		        		<td>3000원</td>
+		        		<td><%=product.getDeliveryFee() %></td>
 	        	
 	    			</tr>
 	    			<tr>

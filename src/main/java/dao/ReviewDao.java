@@ -157,7 +157,7 @@ public class ReviewDao {
 	 * @throws SQLException
 	 */
 	public Review getReviewByNo(int reviewNo) throws SQLException {
-		String sql = "select R.review_no, R.product_no, P.product_name, R.review_title, R.user_no, U.user_name, "
+		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, "
 					+ "		 R.review_content, R.review_deleted, R.review_created_date "
 					+ "from semi_reviews R, semi_users U, semi_products P "
 					+ "where R.review_no = ? "
@@ -173,6 +173,12 @@ public class ReviewDao {
 			user.setNo(rs.getInt("user_no"));
 			user.setName(rs.getString("user_name"));
 			review.setUser(user);
+
+			Product product = new Product();
+			product.setNo(rs.getInt("product_no"));
+			product.setName(rs.getString("product_name"));
+			product.setImageName(rs.getString("product_image_name"));
+			review.setProduct(product);
 			
 			review.setContent(rs.getString("review_content"));
 			review.setDeleted(rs.getString("review_deleted"));

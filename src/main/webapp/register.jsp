@@ -42,6 +42,11 @@
 	// 사용자 정보를 데이터베이스에 저장
 	userDao.insertUser(user);
 	
+	// 세션객체에 저장
+	session.setAttribute("id", id);
+	session.setAttribute("email", email);
+	session.setAttribute("name", name);
+	
 	// 재요청 URL
 	response.sendRedirect("complete.jsp");
 	

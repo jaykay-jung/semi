@@ -38,9 +38,10 @@ public class CartItemDao {
      * @throws SQLException
      */
     public List<CartItem> getCartItemsByUserNo(int userNo) throws SQLException {
-    	String sql = "select * "
-				   + "from semi_cart_items "
-				   + "where user_no = ? ";
+    	String sql = "select C.cart_item_no, C.cart_item_quantity, C.user_no, C.product_no, P.product_name, P.product_customer_price, P.product_sell_price, P.product_image_name, P.product_deposit_point, P.product_delivery_fee "
+				   + "from semi_cart_items C, semi_products P "
+				   + "where C.user_no = ?"
+				   + "and C.product_no = P.product_no ";
 
         return helper.selectList(sql, rs -> {
         	CartItem cartItem = new CartItem();
@@ -53,6 +54,12 @@ public class CartItemDao {
             
             Product product = new Product();
             product.setNo(rs.getInt("product_no"));
+            product.setName(rs.getString("product_name"));
+            product.setCustomerPrice(rs.getInt("product_customer_price"));
+            product.setSellPrice(rs.getInt("product_sell_price"));
+            product.setImageName(rs.getString("product_image_name"));
+            product.setDepositPoint(rs.getInt("product_deposit_point"));
+            product.setDeliveryFee(rs.getInt("product_delivery_fee"));
             cartItem.setProduct(product);
             
             return cartItem;
@@ -132,6 +139,19 @@ public class CartItemDao {
 		helper.delete(sql, productNo);
 	} 
 
+    /**
+     * 상품수량, 상품번호를 전달받아 일치하는 장바구니 아이템의 수량을 변경하는 메소드
+     * @param quantity 상품수량
+     * @param productNo 상품번호
+     * @throws SQLException
+     */
+    public void updateCartItemQuantity(int quantity, int productNo) throws SQLException{
+    	String sql = "update semi_cart_items "
+    			   + "set cart_item_quantity = ? "
+    			   + "where product_no = ? ";
+    	
+    	helper.update(sql, quantity, productNo);
+    }
 
 	/**
 	 * 사용자번호를 전달받아 저장된 장바구니 상품들을 조회한다.
