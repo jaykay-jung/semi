@@ -16,12 +16,12 @@
 	// 상품번호 파라미터 요청
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
+	// 상품번호로 상품정보를 가진 Product 객체 생성
 	ProductDao productDao = ProductDao.getInstance();
-	Product product = productDao.getAllProductByNo(productNo);
+	Product product = productDao.getProductByNo(productNo);
 	
 	// WishList 객체를 생성하여 관심상품 정보 저장
-	WishList wishList = new  WishList();
-	
+	WishList wishList = new  WishList();	
 	wishList.setUser(user);
 	wishList.setProduct(product);
 	
