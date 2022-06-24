@@ -79,7 +79,7 @@ font {font-size:13px;}
 					<br><font>123456 원</font>
 				</div>
 	        	<div style="float:right; width:10%;margin-top:25px;">
-					<a href="point/list.jsp" style="color:gray; text-decoration:none;"><button type="button" class="btn btn-outline-secondary btn-sm">조회</button></a>
+					<a href="point/historylist.jsp" style="color:gray; text-decoration:none;"><button type="button" class="btn btn-outline-secondary btn-sm">조회</button></a>
 				</div>
 			</div>
 			<div class="col" style="float:left; width:50%;">	
@@ -157,17 +157,17 @@ font {font-size:13px;}
 		<div class="row" style="margin:0px 5px; height:120px;">
 			<div class="col" style="border-top:1px solid gainsboro;">
         		<div style="float:left; width:40%; height:auto;margin:25px 10px;">
-					<a class="nolinelink" href="modify.jsp">
+					<a class="nolinelink" href="modifyinfo.jsp">
 						<font style="font-weight:bold; font-size:20px; line-height:30px; ">profile </font>
 						<font>  회원정보  </font>
 					</a>
-					<a class="over" href="modify.jsp">
+					<a class="over" href="modifyinfo.jsp">
 						<br><font style="color:gray;">회원이신 고객님의 개인정보를 관리하는 공간입니다.</font>
 						<br><font style="color:gray;">개인정보를 최신 정보로 유지하시면 보다 간편히 쇼핑을 즐기실 수 있습니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
-				   <a class="nolinelink" href="modify.jsp"><img src="../images/mypage/information.png" height="80">></a>
+				   <a class="nolinelink" href="modifyinfo.jsp"><img src="../images/mypage/information.png" height="80">></a>
 				</div><div style="clear:both:"></div>
 			</div>	
     	</div>
@@ -191,17 +191,17 @@ font {font-size:13px;}
 		<div class="row" style="margin:0px 5px; height:120px;">
 			<div class="col" style="border-top:1px solid gainsboro;">
         		<div style="float:left; width:40%; height:auto; margin:25px 10px; ">
-					<a class="nolinelink" href="point.jsp">
+					<a class="nolinelink" href="point/historylist.jsp">
 						<font style="font-weight:bold; font-size:20px; line-height:30px; ">mileage </font>
 						<font>  적림급  </font>
 					</a>
-					<a class="over" href="point.jsp">
+					<a class="over" href="point/historylist.jsp">
 						<br><font style="color:gray;">적립금은 상품 구매 시 사용하실 수 있습니다.</font>
 						<br><font style="color:gray;">적립된 금액은 현금으로 환불되지 않습니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
-				    <a class="nolinelink" href="point.jsp"><img src="../images/mypage/mileage.png" height="80">></a>
+				    <a class="nolinelink" href="point/historylist.jsp"><img src="../images/mypage/mileage.png" height="80">></a>
 				</div><div style="clear:both:"></div>
 			</div>	
     	</div>
@@ -246,7 +246,7 @@ font {font-size:13px;}
 
 <!-- footer -->
 <jsp:include page="../common/footer.jsp">
-	<jsp:param name="footer" value="register"/>
+	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

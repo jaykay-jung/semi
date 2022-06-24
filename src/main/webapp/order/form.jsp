@@ -120,7 +120,7 @@
             		int quantity = StringUtil.stringToInt(quantityValues[i]);
             		
             		// 꺼낸 상품번호로 Dao메소드를 사용. 상품정보 불러오기
-            		Product product = productDao.getAllProductByNo(productNo);
+            		Product product = productDao.getProductByNo(productNo);
             		
             		// 테이블에 값 사용
             %>
