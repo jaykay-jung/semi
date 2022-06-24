@@ -5,8 +5,7 @@ public class OrderItem {
 	private int no;
     private Order order;
     private Product product;
-    private int quantity;
-    private int price;
+    private User user;
     
     public OrderItem() {}    
     
@@ -28,20 +27,17 @@ public class OrderItem {
 	public Product getProduct() {
 		return product;
 	}
+	
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	public int getQuantity() {
-		return quantity;
+	
+	public User getUser() {
+		return user;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

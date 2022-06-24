@@ -17,7 +17,6 @@
 	
 	// CartItem 객체를 생성하여 장바구니 아이템 정보 저장
 	CartItem cartItem = new CartItem();
-	cartItem.setNo(productNo);
 	cartItem.setUser(user);
 	cartItem.setQuantity(1);
 	

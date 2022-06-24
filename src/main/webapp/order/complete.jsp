@@ -23,7 +23,7 @@
    		<h1 class="display-5 fw-bold">결제 완료</h1>
    		<p class="fs-4">결제가 완료되었습니다.</p>
    		<a href="../home.jsp" class="btn btn-primary byn-lg">HOME</a>	
-   		<a href="../mypage/order/list.jsp" class="btn btn-primary byn-lg">주문내역</a>	
+   		<a href="list.jsp" class="btn btn-primary byn-lg">주문내역</a>	
    	</div>
    </div>
 </div>
