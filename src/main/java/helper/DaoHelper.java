@@ -194,7 +194,7 @@ public class DaoHelper {
 	}
 	
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER_NAME = "hr";
+	private static final String USER_NAME = "semi";
 	private static final String PASSWORD = "zxcv1234";
 	
 	static {
