@@ -107,7 +107,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div style="float: right; width:300px; height:auto; text-align:right; color:gray;">	
 				<font><a class="nolinelink" href="../../home.jsp" style="color:gray;">홈</a></font>
 				<font><strong>》</strong></font>
-				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이쇼핑</a></font>
+				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이페이지</a></font>
 				<font><strong>》</strong></font>
 				<font><strong>배송 주소록 관리</strong></font>
 			</div><div style="clear:both:"></div>
@@ -229,7 +229,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 
 <!-- footer -->
 <jsp:include page="../../common/footer.jsp">
-	<jsp:param name="footer" value="register"/>
+	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

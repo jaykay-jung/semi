@@ -18,7 +18,7 @@
   
 	// Product 객체 생성, 전달받은 번호로 필드값 대입
 	ProductDao productDao = ProductDao.getInstance();
-	Product product = productDao.getAllProductByNo(productNo);
+	Product product = productDao.getProductByNo(productNo);
 	
 	// WishList 객체를 생성하여 관심상품 정보 저장
 	WishList wishList = new  WishList();
