@@ -157,11 +157,6 @@
 		 	</nav>
 	 	</div>
 	 </div>
-	
-	<!-- 검색 -->
-	<div class="row">
-		
-	</div>
 </div>
 
 <!-- footer -->
