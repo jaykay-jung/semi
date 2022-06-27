@@ -56,7 +56,7 @@ public class ProductDao {
 	}
 	
 	
-	// 상품 번호로 등록된 상품의 모든 정보 조회하여 product에 담기  (이미지 4개에 대한 처리 고민))
+	// 상품 번호를 이용해서 등록된 상품의 모든 정보 조회하여 product에 담기  (이미지 4개에 대한 처리 고민))
 	public Product getProductByNo(int product_no) throws SQLException {
 	String sql = "select p.product_no, p.product_name, p.product_image_name, p.product_description, p.product_customer_price, p.product_sell_price, p.product_deposit_point, p.product_delivery_fee, p.product_stock, p.product_on_sell, p.product_deleted, p.product_created_date, p.product_updated_date, c.category_no, c.category_name "      
 			   + "from semi_products p, semi_product_category c  "	
@@ -97,6 +97,7 @@ public class ProductDao {
 				   + "from semi_products "
 				   + "where product_deleted = 'N' ";
 		
+		
 		return helper.selectOne(sql, rs -> {
 			return rs.getInt("cnt");
 		});
@@ -105,11 +106,11 @@ public class ProductDao {
 	
 	//카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
 	public List<Product> getProducts(int beginIndex, int endIndex) throws SQLException {
-		String sql = "select p.product_no, p.category_no, C.category_name, p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
-				   + "from (select product_no, category_no, product_name, product_customer_price, product_sell_price, product_description, "
+		String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name, p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
+				   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
 				   + "             row_number() over (order by product_no desc) row_number "
 				   + "      from semi_products "
-				   + "      where product_deleted = 'N' and product_on_sell = 'Y') p, semi_product_category c "
+				   + "      where product_deleted = 'N') p, semi_product_category c "
 				   + "where p.row_number >= ? and p.row_number <= ? "
 				   + "and p.category_no = c.category_no "
 				   + "order by p.product_no desc ";
@@ -123,6 +124,7 @@ public class ProductDao {
 			category.setName(rs.getString("category_name"));
 			product.setCategory(category);
 			
+			product.setImageName(rs.getString("product_image_name"));
 			product.setName(rs.getString("product_name"));
 			product.setCustomerPrice(rs.getInt("product_customer_price"));
 			product.setSellPrice(rs.getInt("product_sell_price"));
@@ -151,11 +153,11 @@ public class ProductDao {
 	
 	//특정 키워드(상품 이름)에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
 	public List<Product> getProducts(int beginIndex, int endIndex, String keyword) throws SQLException {
-		String sql = "select p.product_no, p.category_no, C.category_name, p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
-				   + "from (select product_no, category_no, product_name, product_customer_price, product_sell_price, product_description, "
+		String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name,  p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
+				   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
 				   + "             row_number() over (order by product_no desc) row_number "
 				   + "      from semi_products "
-				   + "      where product_deleted = 'N' and product_on_sell = 'Y' and product_title like '%' || ? || '%') p, semi_product_category c "
+				   + "      where product_deleted = 'N' and product_title like '%' || ? || '%') p, semi_product_category c "
 				   + "where p.row_number >= ? and p.row_number <= ? "
 				   + "and p.category_no = c.category_no "
 				   + "order by p.product_no desc ";
@@ -169,6 +171,7 @@ public class ProductDao {
 			category.setName(rs.getString("category_name"));
 			product.setCategory(category);
 			
+			product.setImageName(rs.getString("product_image_name"));
 			product.setName(rs.getString("product_name"));
 			product.setCustomerPrice(rs.getInt("product_customer_price"));
 			product.setSellPrice(rs.getInt("product_sell_price"));
