@@ -140,7 +140,7 @@ public class CartItemDao {
                    + "  insert (cart_item_no, user_no, product_no, cart_item_quantity) "
                    + "  values (semi_cart_items_seq.nextval, ?, ?, 1) ";
 
-        helper.insert(sql, cartItem.getUser().getNo(), cartItem.getProduct().getNo());
+        helper.insert(sql, cartItem.getUser().getNo(), cartItem.getProduct().getNo(), cartItem.getUser().getNo(), cartItem.getProduct().getNo());
     }
 
     /**

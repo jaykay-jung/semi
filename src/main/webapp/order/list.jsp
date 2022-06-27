@@ -28,6 +28,8 @@
    	#h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
    	.form-select {width: 170px;}
    	#product-image img {width: 100px; height: 100px;}
+   	th {text-align: center;}
+   	td {vertical-align: middle; text-align: center;}
 </style>
 <body>
 <!-- header -->
@@ -100,10 +102,16 @@
 			<table class="table">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="%">
-					<col width="10%">
-					<col width="10%">
+					<col width="7%">
+					<col width="20%">
+					<col width="5%">
+					<col width="5%">
+					<col width="7%">
+					<col width="5%">
+					<col width="5%">
+					<col width="5%">
+					<col width="7%">
+					<col width="7%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -123,16 +131,18 @@
 				<tbody>
 				<%
 					for(OrderItem item : orderItemList) {
+						// 구매 적립 포인트
+						int depositPoint = item.getProduct().getDepositPoint() * item.getOrder().getOrderQuantity();
 				%>
 					<tr>
 						<td><%=item.getOrder().getNo() %></td>
 						<td id="product-image"><a href="../flowerdetail.jsp?productNo=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName() %>"></a></td>
 						<td><%=item.getProduct().getName() %></td>
 						<td><%=item.getOrder().getOrderQuantity() %></td>
-						<td><%=item.getOrder().getDepositPoint() %></td>
-						<td><%=item.getOrder().getUsedPoint() %></td>
+						<td><%=depositPoint %>원</td>
+						<td><%=item.getOrder().getUsedPoint() %>원</td>
 						<td>개별배송</td>
-						<td><%=item.getOrder().getTotalpay() %></td>
+						<td><%=item.getOrder().getTotalpay() %>원</td>
 						<td><%=item.getOrder().getPayType() %></td>
 						<td><%=item.getOrder().getCreatedDate() %></td>
 						<td><%=item.getOrder().getReceiveDate() %></td>

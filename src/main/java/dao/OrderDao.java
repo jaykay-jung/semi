@@ -28,12 +28,12 @@ public class OrderDao {
         String sql = "insert into semi_orders "
                    + "(order_no, order_status, order_total_price, "
                    + "used_point, total_payment_price, deposit_point, "
-                   + "payment_type, receive_date, user_no, product_no, order_quantity) "
+                   + "payment_type, user_no, address_no, product_no, order_quantity) "
                    + "values "
                    + "(semi_orders_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         
         helper.insert(sql, order.getStatus(), order.getTotalPrice(), order.getUsedPoint(), order.getTotalpay(), order.getDepositPoint(),
-            order.getPayType(), order.getReceiveDate(), order.getUser().getNo(), order.getAddress().getNo(), order.getProduct().getNo(), order.getOrderQuantity());
+            order.getPayType(), order.getUser().getNo(), order.getAddress().getNo(), order.getProduct().getNo(), order.getOrderQuantity());
     }
 
     /**
