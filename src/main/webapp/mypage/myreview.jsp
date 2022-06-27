@@ -40,7 +40,7 @@
 			<div style="width:300px; height:40px; line-height:30px; color=gray; font-weight:bold; font-size:12px; border:1px solid green; float: right; text-align:right; ">	
 				<a href="../home.jsp" style="color:gray; text-decoration:none; hover:underline;">홈</a>
 				<h6 style="color:gray;">>></h6>
-				<a href="myhome.jsp" style="color:gray; text-decoration:none;">마이쇼핑</a>
+				<a href="myhome.jsp" style="color:gray; text-decoration:none;">마이페이지</a>
 				<h6 style="color:gray;">>></h6>
 				<h6 style="color:gray;">게시물관리</h6>
 			</div><div style="clear:both:"></div>

@@ -77,4 +77,24 @@ public class OrderDao {
         }, userNo);
     }
     
+    /**
+     * 총 구매금액과 총 주문건수를 반환하는 메소드를 작성, totalpay와 no가 아니지만, 잠시 order객체를 이용...
+     * @param userNo
+     * @return
+     * @throws SQLException
+     */
+    public Order getOrderSummaryByUserNo(int userNo) throws SQLException {
+    	String sql = "SELECT SUM(TOTAL_PAYMENT_PRICE), COUNT(*) CNT "
+    				+ "FROM SEMI_ORDERS "
+    				+ "WHERE USER_NO=1 ";
+    	return helper.selectOne(sql, rs -> {
+    		Order order = new Order();
+    		order.setTotalpay(rs.getInt("SUM(TOTAL_PAYMENT_PRICE)"));
+    		order.setNo(rs.getInt("CNT"));
+    		return order;
+    		
+    	}, userNo);
+    }
+    
+    
 }

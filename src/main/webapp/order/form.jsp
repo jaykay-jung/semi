@@ -63,6 +63,7 @@
 	
 %>
 
+
 	<form action="complete.jsp" id="order-form" method="post" onsubmit="return inputCheck()">
 
 	    <div class="row">
@@ -360,6 +361,7 @@
 		 	</div>
 		 </div>
 	</form>
+
 </div>
 
 <!-- footer -->
