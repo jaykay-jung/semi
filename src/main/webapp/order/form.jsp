@@ -63,7 +63,9 @@
 	Point point = pointDao.getPointByUserNo(user.getNo());
 	
 %>
+
 	<form action="" id="order-form" method="post" onsubmit="return inputCheck()">
+
 	    <div class="row">
 			<div class="col" style="margin-top: 10px;">
 				<h1 id="title" class="fs-4 borderless p-2">주문서 작성</h1>
@@ -345,6 +347,7 @@
 		 	</div>
 		 </div>
 	</form>
+
 </div>
 
 <!-- footer -->

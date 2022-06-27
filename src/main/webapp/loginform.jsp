@@ -51,7 +51,7 @@
 			%>
 			<form method="post" action="login.jsp" onsubmit="return loginForm()">
 				<div id="login-form">
-					<input id="login-id" type="text" placeholder="아이디" name="id">
+					<input id="login-id" type="text" placeholder="아이디" name="id" autofocus="autofocus">
 					<input id="login-pw" type="password" placeholder="비밀번호" name="password">
 				</div>
 				<div id="security">

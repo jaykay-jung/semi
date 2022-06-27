@@ -1,5 +1,20 @@
+<%@page import="vo.Order"%>
+<%@page import="dao.OrderDao"%>
+<%@page import="vo.Point"%>
+<%@page import="dao.PointDao"%>
+<%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	// 세션에서 로그인된 사용자정보를 조회한다.
+	User user = (User) session.getAttribute("LOGINED_USER");
+	if (user == null) {
+		throw new RuntimeException("마이페이지는 로그인 후 사용가능한 서비스 입니다.");
+	} 
+%>
+    
+    
 <!doctype html>
 <html lang="ko">
 
@@ -27,7 +42,7 @@ font {font-size:13px;}
 <body>
 
 <!-- header -->
-<jsp:include page="../common/nav.jsp">
+<jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
@@ -48,7 +63,8 @@ font {font-size:13px;}
 		<hr style="border: gray 0.7px dotted;">	
   	</div>
   	
-<!-- 회원이름과 등급 -->				
+<!-- 회원이름과 등급 -->
+		
 	<div style="margin:20px 5px; border:1px solid gainsboro; ">
 		<div class="row" style="margin:10px; height:auto;">
         	<div class="col">
@@ -57,9 +73,9 @@ font {font-size:13px;}
 				</div>
 				<div style="float:left; width:80%; margin:30px 10px; color:gray;">	
 					<font> 저희 쇼핑몰을 이용해주셔서 감사합니다.</font>
-					<font><strong> 누리봄 </strong></font>
+					<font><strong> <%=user.getName() %> </strong></font>
 					<font>님은</font>
-					<font><strong>[일반회원]</strong></font>
+					<font><strong>[<%=user.getGrade() %>]</strong></font>
 					<font>이십니다.</font>
 				</div><div style="clear:both:"></div>
 			</div>
@@ -67,6 +83,22 @@ font {font-size:13px;}
 	</div>
 
 <!-- 회원적립금내역 -->
+
+
+<%
+	// 포인트를 조회한다.
+	int userNo = user.getNo();
+	PointDao pointDao = PointDao.getInstance();
+	Point point = pointDao.getPointByUserNo(userNo);
+	
+	// 주문을 조회한다.
+	OrderDao orderDao = OrderDao.getInstance();
+	Order order = orderDao.getOrderSummaryByUserNo(userNo);
+	
+	
+%>
+
+
 	<div style="margin:20px 5px; border:5px solid gainsboro; height:auto; line-height:180%;">
 		<div class="row" style="margin:0px 5px; height:100px;">
 			<div class="col" style="float:left; width:50%; border-right:1px solid gainsboro;">
@@ -75,11 +107,11 @@ font {font-size:13px;}
 					<br><font>>사용적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px;">
-					<font style="color:#008bcc;">1000 원</font>
-					<br><font>123456 원</font>
+					<font style="color:#008bcc;"><%=point.getAvailble() %>원</font>
+					<br><font><%=point.getUsed() %>원</font>
 				</div>
 	        	<div style="float:right; width:10%;margin-top:25px;">
-					<a href="point/list.jsp" style="color:gray; text-decoration:none;"><button type="button" class="btn btn-outline-secondary btn-sm">조회</button></a>
+					<a href="point/historylist.jsp" style="color:gray; text-decoration:none;"><button type="button" class="btn btn-outline-secondary btn-sm">조회</button></a>
 				</div>
 			</div>
 			<div class="col" style="float:left; width:50%;">	
@@ -89,14 +121,21 @@ font {font-size:13px;}
 					
 				</div>
 	        	<div style="float:left; width:30%;margin-top:25px;">
-					<font>123456 원</font>
-					<br><font>123456 원</font>
+					<font><%=point.getTot() %>원</font>
+					<br><font><%=order.getTotalpay() %>원 (<%=order.getNo() %>회)</font>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 <!-- 회원주문처리현황 -->	
+
+<%
+	// 주문내역 조회 -> order 덮어씌우자
+	orderDao.getOrdersByUserNo(userNo);
+	
+
+%>
 	<div style="border:1px solid; margin:20px 5px;"> 	
 		<div class="row" style="margin:0; background-color:#f0f0f0; ">
         	<div style="height:auto; line-height:30px; margin:5px;">
@@ -145,7 +184,7 @@ font {font-size:13px;}
 					</a>
 					<a class="over" href="../order/list.jsp">
 						<br><font style="color:gray;">고객님께서 주문하신 상품의 주문내역을 확인하실 수 있습니다.</font>
-						<br><font style="color:gray;">비회원의 경우, 11주문서의 주문번호와 비밀번호로 주문조회가 가능합니다.</font>
+						<br><font style="color:gray;">비회원의 경우, 주문서의 주문번호와 비밀번호로 주문조회가 가능합니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
@@ -157,17 +196,17 @@ font {font-size:13px;}
 		<div class="row" style="margin:0px 5px; height:120px;">
 			<div class="col" style="border-top:1px solid gainsboro;">
         		<div style="float:left; width:40%; height:auto;margin:25px 10px;">
-					<a class="nolinelink" href="modify.jsp">
+					<a class="nolinelink" href="modifyinfo.jsp">
 						<font style="font-weight:bold; font-size:20px; line-height:30px; ">profile </font>
 						<font>  회원정보  </font>
 					</a>
-					<a class="over" href="modify.jsp">
+					<a class="over" href="modifyinfo.jsp">
 						<br><font style="color:gray;">회원이신 고객님의 개인정보를 관리하는 공간입니다.</font>
 						<br><font style="color:gray;">개인정보를 최신 정보로 유지하시면 보다 간편히 쇼핑을 즐기실 수 있습니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
-				   <a class="nolinelink" href="modify.jsp"><img src="../images/mypage/information.png" height="80">></a>
+				   <a class="nolinelink" href="modifyinfo.jsp"><img src="../images/mypage/information.png" height="80">></a>
 				</div><div style="clear:both:"></div>
 			</div>	
     	</div>
@@ -191,17 +230,17 @@ font {font-size:13px;}
 		<div class="row" style="margin:0px 5px; height:120px;">
 			<div class="col" style="border-top:1px solid gainsboro;">
         		<div style="float:left; width:40%; height:auto; margin:25px 10px; ">
-					<a class="nolinelink" href="point.jsp">
+					<a class="nolinelink" href="point/historylist.jsp">
 						<font style="font-weight:bold; font-size:20px; line-height:30px; ">mileage </font>
 						<font>  적림급  </font>
 					</a>
-					<a class="over" href="point.jsp">
+					<a class="over" href="point/historylist.jsp">
 						<br><font style="color:gray;">적립금은 상품 구매 시 사용하실 수 있습니다.</font>
 						<br><font style="color:gray;">적립된 금액은 현금으로 환불되지 않습니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
-				    <a class="nolinelink" href="point.jsp"><img src="../images/mypage/mileage.png" height="80">></a>
+				    <a class="nolinelink" href="point/historylist.jsp"><img src="../images/mypage/mileage.png" height="80">></a>
 				</div><div style="clear:both:"></div>
 			</div>	
     	</div>
@@ -246,7 +285,7 @@ font {font-size:13px;}
 
 <!-- footer -->
 <jsp:include page="../common/footer.jsp">
-	<jsp:param name="footer" value="register"/>
+	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

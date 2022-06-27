@@ -20,8 +20,9 @@
 	#complete-h2 {font-size: 23px; font-weight: bold; text-align: center;}
 	#complete-info {margin-bottom: 30px;}
 	table {margin: 0 auto; border: 1px solid #eee; width: 40%;}
+	tbody {padding: 20px 0;}
 	thead th {background: #fbfbfb url("images/important.gif") no-repeat 10px center; padding: 10px 30px; font-size: 15px;}
-	table td {padding: 8px 50px; font-size: 13px;}
+	table td {padding: 8px 30px; font-size: 13px;}
 	table .arrow-image {background: url("images/arrow.png") no-repeat 7px;}
 	
 	#complete-bottom {margin: 0 auto; width: 30%;}
@@ -48,6 +49,7 @@
 		</div>
 		<div id="complete-info">
 		<%
+			User user = (User) session.getAttribute("NEW_USER");
 			
 		%>
 			<!-- 고객정보 출력 -->
@@ -64,15 +66,15 @@
 								<img src="images/member_image.gif">
 							</td>
 							<td class="arrow-image">아이디</td>
-							<td></td>
+							<td><%=user.getId() %></td>
 						</tr>
 						<tr>
 							<td class="arrow-image">이름</td>
-							<td></td>
+							<td><%=user.getName() %></td>
 						</tr>
 						<tr>
 							<td class="arrow-image">이메일</td>
-							<td></td>
+							<td><%=user.getEmail() %></td>
 						</tr>
 					</tbody>
 				</table>
@@ -80,7 +82,7 @@
 		</div>
 		<div id="complete-bottom">
 			<div>
-				<p>임소연 님은 [일반회원] 회원이십니다.</p>
+				<p><%=user.getName() %> 님은 [ <%=user.getGrade() %> ] 회원이십니다.</p>
 			</div>
 			<div class="row">
 				<div class="col-6">

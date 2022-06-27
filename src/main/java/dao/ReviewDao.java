@@ -187,6 +187,16 @@ public class ReviewDao {
 			return review;
 		}, reviewNo);
 	}
+	
+	public void updatedReview(Review review) throws SQLException {
+		String sql = "update semi_reviews "
+					+ "set "
+					+ "		review_title = ?, "
+					+ "		review_content = ?, "
+					+ "		review_deleted = ? "
+					+ "where review_no = ? ";
+		helper.update(sql, review.getTitle(), review.getContent(), review.getDeleted(), review.getNo());;
+	}
   
 
 }

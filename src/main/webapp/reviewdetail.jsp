@@ -1,3 +1,4 @@
+<%@page import="vo.User"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.ProductDao"%>
 <%@page import="vo.Review"%>
@@ -24,7 +25,8 @@
 	#review-product-info h4 {font-size: 18px; font-weight: bold; padding-top: 20px;}
 	.table {margin-top: 20px; font-size: 15px; }
 	.table th {background-color: #fbfbfb;}
-	#back-button {width: 10%;}
+	#back-button {width: 20%;}
+	#personal-button {width: 20%;}
 </style>
 </head>
 <body>
@@ -44,6 +46,8 @@
 		// 게시글 정보 조회하기
 		ReviewDao reviewDao = ReviewDao.getInstance();
 		Review review = reviewDao.getReviewByNo(reviewNo);
+		
+		User user = (User) session.getAttribute("LOGINED_USER");
 	%>
 	<div class="row">
 		<div class="col" id="review">
@@ -94,10 +98,23 @@
 			</table>
 		</div>
 	</div>
-	<div>
-		<div>
+	<div class="row">
+		<div class="col-6">
 			<a class="btn btn-outline-secondary" id="back-button" href="reviewlist.jsp">목록</a>
 		</div>
+	<%
+		// 비활성화 여부
+		boolean isDisabled = true;
+	
+		// 사용자 정보가 존재하고, 리뷰 작성자 번호와 사용자 번호 일치하면 수정, 삭제버튼 활성화
+		if (user != null && review.getUser().getNo() == user.getNo()) {
+	%>	
+		<div class="col-6 text-end">
+			<a href="deleted.jsp?no=<%=review.getNo() %>" class="btn btn-danger" id="personal-button">삭제</a>
+		</div>
+	<%		
+		}
+	%>
 		
 	</div>
 </div>

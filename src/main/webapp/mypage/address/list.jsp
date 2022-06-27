@@ -50,7 +50,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div style="float: right; width:300px; height:auto; text-align:right; color:gray;">	
 				<font><a class="nolinelink" href="../../home.jsp" style="color:gray;">홈</a></font>
 				<font><strong>》</strong></font>
-				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이쇼핑</a></font>
+				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이페이지</a></font>
 				<font><strong>》</strong></font>
 				<font><strong>배송 주소록 관리</strong></font>
 			</div><div style="clear:both:"></div>
