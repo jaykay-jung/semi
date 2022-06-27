@@ -68,33 +68,33 @@
 					<tr>
 						<th>아아디 <img src="images/require.gif"></th>
 						<td>
-							<input type="text" name="id" placeholder="아이디">
+							<input type="text" name="id" placeholder="아이디" required="required" autofocus="autofocus">
 							<span>(조건)</span>
 						</td>
 					</tr>
 					<tr>
 						<th>비밀번호 <img src="images/require.gif"></th>
 						<td>
-							<input type="password" name="password" placeholder="비밀번호">
+							<input type="password" name="password" placeholder="비밀번호" required="required">
 							<span>(조건)</span>
 						</td>
 					</tr>
 					<tr>
 						<th>이름 <img src="images/require.gif"></th>
 						<td>
-							<input type="text" name="name" placeholder="이름">
+							<input type="text" name="name" placeholder="이름" required="required">
 						</td>
 					</tr>
 					<tr>
 						<th>휴대전화 <img src="images/require.gif"></th>
 						<td>
-							<input type="text" name="phone" placeholder="핸드폰번호">
+							<input type="text" name="phone" placeholder="핸드폰번호" required="required">
 						</td>
 					</tr>
 					<tr>
 						<th>이메일 <img src="images/require.gif"></th>
 						<td>
-							<input type="email" name="email" placeholder="이메일">
+							<input type="email" name="email" placeholder="이메일" required="required">
 						</td>
 					</tr>
 				</tbody>

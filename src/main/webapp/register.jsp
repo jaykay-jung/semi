@@ -43,9 +43,7 @@
 	userDao.insertUser(user);
 	
 	// 세션객체에 저장
-	session.setAttribute("id", id);
-	session.setAttribute("email", email);
-	session.setAttribute("name", name);
+	session.setAttribute("NEW_USER", user);
 	
 	// 가입서비스 포인트제공 기능을 가진 jsp로 이동
 	response.sendRedirect("registerpoint.jsp");
