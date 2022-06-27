@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -10,6 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 	h3 {font-size: 18px; font-weight: bold;}
+	textarea {width: 100%;}
 	#noticeform-container {margin-bottom: 100px;}
 	#h3-box {margin-bottom: 20px;}
 	#notice-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
@@ -33,19 +34,19 @@
 		</div>
 	</div>
 	
+	<form method="post" action="notice.jsp" onsubmit="return submitNoticeForm()" enctype="multipart/form-data">
 	<div>
-		<form method="post" action="notice.jsp">
 			<table class="table">
 				<tbody>
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" name="title" placeholder="제목입력, 첨부파일 추가">
+							<input type="text" name="title" placeholder="제목입력">
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input id="notice-content" type="text" name="content" placeholder="내용입력">
+							<textarea rows="10" name="content"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -56,18 +57,16 @@
 					</tr>
 				</tbody>
 			</table>
-		</form>
 	</div>
 	<div class="row">
 		<div class="col-6">
 			<a href="noticelist.jsp" class="btn btn-outline-secondary">목록</a>
 		</div>
 		<div class="col-6 text-end">
-			<form action="notice.jsp" method="post">
-				<button type="submit" class="btn btn-dark ">등록</button>
-			</form>
+			<button type="submit" class="btn btn-dark ">등록</button>
 		</div>
 	</div>
+	</form>
 </div>
 
 <!-- footer -->
@@ -75,5 +74,22 @@
 	<jsp:param name="footer" value="noticeform"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	function submitNoticeForm() {
+		let titleField = document.querySelector("input[name=title]");
+		if (titleField.value === '') {
+			alert("제목은 필수 입력값입니다.");
+			titleField.focus();
+			return false;
+		}
+		let contentField = document.querySelector("textarea[name=content]");
+		if(contentField.value === ''){
+			alert("내용은 필수 입력값입니다.");
+			contentField.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="util.MultipartRequest"%>
 <%@page import="dao.NoticeDao"%>
 <%@page import="vo.Notice"%>
 <%@page import="vo.User"%>
@@ -8,9 +9,11 @@
 	// 사용자정보 조회
 	User user = (User) session.getAttribute("LOGINED_USER");
 
+	MultipartRequest mr = new MultipartRequest(request, "");
+
 	// 요청 파라미터값 조회
-	String title = request.getParameter("title");
-	String content = request.getParameter("content");
+	String title = mr.getParameter("title");
+	String content = mr.getParameter("content");
 	
 	// 게시글 정보 저장
 	Notice notice = new Notice();

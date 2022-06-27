@@ -122,10 +122,15 @@
 			</form>
 		</div>
 		<div class="col text-end">
-			<%
-				User user = (User) session.getAttribute("LOGINED_USER");
-			%>
+		<%
+			User user = (User) session.getAttribute("LOGINED_USER");
+		
+			if(user != null && "Y".equals(user.getAdmin())){
+		%>
 			<a href="noticeform.jsp" class="btn btn-dark btn-sm">글쓰기</a>
+		<%
+			}
+		%>
 		</div>
 	</div>
 	
