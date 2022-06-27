@@ -92,15 +92,16 @@ public class ProductDao {
 	
 	
 	// 등록된 상품 정보 목록의 수를 카운트 (완료)
-	public int getTotalRows() throws SQLException { 
+	public int getTotalRows(int categoryNo) throws SQLException { 
 		String sql = "select count(*) cnt "
 				   + "from semi_products "
-				   + "where product_deleted = 'N' ";
+				   + "where product_deleted = 'N' "
+				   + "and category_no = ? ";
 		
 		
 		return helper.selectOne(sql, rs -> {
 			return rs.getInt("cnt");
-		});
+		}, categoryNo);
 	}
 		
 	
@@ -152,12 +153,13 @@ public class ProductDao {
 
 	
 	//특정 키워드(상품 이름)에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
-	public List<Product> getProducts(int beginIndex, int endIndex, String keyword) throws SQLException {
+	public List<Product> getProducts(int categoryNo, int beginIndex, int endIndex) throws SQLException {
 		String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name,  p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
 				   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
 				   + "             row_number() over (order by product_no desc) row_number "
 				   + "      from semi_products "
-				   + "      where product_deleted = 'N' and product_title like '%' || ? || '%') p, semi_product_category c "
+				   + "      where product_deleted = 'N' "
+				   + "      and category_no = ?) p, semi_product_category c "
 				   + "where p.row_number >= ? and p.row_number <= ? "
 				   + "and p.category_no = c.category_no "
 				   + "order by p.product_no desc ";
@@ -178,7 +180,7 @@ public class ProductDao {
 			product.setDescription(rs.getString("product_description"));
 			
 			return product;
-		}, keyword, beginIndex, endIndex);
+		}, categoryNo, beginIndex, endIndex);
 	}
 
 	
