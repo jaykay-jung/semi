@@ -230,7 +230,7 @@
 	   		</div>
 	   		
 	   		<div id="buttonlist">
-	   			<a href="orderform.jsp"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
+	   			<a href="cart/add.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
 	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-dark" style="width: 100%;">장바구니</button></a>
 	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
 	   		</div>

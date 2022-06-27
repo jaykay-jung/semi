@@ -1,3 +1,6 @@
+<%@page import="vo.Category"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.CategoryDao"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -84,27 +87,25 @@
 		</div>
 		
 		<!-- nav -->
-		<div class="navMain">
-			<div>
+		<div class="row justify-content-center">
+			<div class="col-6">
 				<ul class="nav justify-content-center">
-					<li class="nav-item">
-						<a class="nav-link" href="">정기구독</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/semi/flowercategory.jsp">플라워</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">드라이플라워</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">실크플라워</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">소품</a>
-					</li>
+			<%
+			CategoryDao categoryDao = CategoryDao.getInstance();
+			List<Category> categoryList = null;
+			categoryList = categoryDao.getCategoryList();
+			for (Category category : categoryList) {
+			%>
+				<li class="nav-item">	
+						<a style="color:black;" class="nav-link" href="/semi/flowercategory.jsp?categoryNo=<%=category.getNo() %>&page=1"><%=category.getName() %></a>
+				</li>
+			<%
+			}
+			%>
 				</ul>
 			</div>
 		</div>
+		
 	</div>
 </nav>
 

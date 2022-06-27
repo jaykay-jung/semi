@@ -1,3 +1,5 @@
+<%@page import="vo.Category"%>
+<%@page import="dao.CategoryDao"%>
 <%@page import="util.StringUtil"%>
 <%@page import="dao.ProductDao"%>
 <%@page import="vo.Pagination"%>
@@ -22,28 +24,51 @@
 </head>
 <body>
 <jsp:include page="common/nav.jsp">
-	<jsp:param name="menu" value="flowercategory" />
+	<jsp:param name="menu" value="flowercategory"/>
 </jsp:include>
 
 <div class="container">
-<%
+		<%
+		
+			/*
+			// 요청파라미터에서 카테고리 번호 조회하기
+			int categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
+		
+			// 해당 카테고리 번호로 정보 조회하기
+			CategoryDao categoryDao = CategoryDao.getInstance();
+			Category category = categoryDao.getCategoryByNo(categoryNo);
+		
+			if (category == null) {
+			throw new RuntimeException("카테고리 정보가 존재하지 않습니다.");
+			}
+			*/
+			
 			int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
-			int rows = StringUtil.stringToInt(request.getParameter("rows"), 3);
+			int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
 			String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
 			
 			ProductDao productDao = ProductDao.getInstance();
+			
 			// 전체 데이터의 수를 조회
 			int totalRows = 0;
+			
+																//totalRows = productDao.getTotalRows();
+			
 			if (keyword.isEmpty()) {
 				totalRows = productDao.getTotalRows();
-			} else {
+			} else { 
 				totalRows = productDao.getTotalRows(keyword);
 			}
+			
+			
 			// 페이징처리에 필요한 정보 제공 객체 생성
 			Pagination pagination = new Pagination(rows, totalRows, currentPage);
 			
 			// 요청한 페이지번호에 해당하는 데이터 조회하기
 			List<Product> productList = null;
+			
+																//productList = productDao.getProducts(pagination.getBeginIndex(), pagination.getEndIndex());
+			
 			if (keyword.isEmpty()) {
 				productList = productDao.getProducts(pagination.getBeginIndex(), pagination.getEndIndex());
 			} else {
@@ -77,7 +102,9 @@
 		%>		
 		<div class="col-3 mb-3">
 			<div class="card">
-				<a href="flowerdetail.jsp?productNo=<%=product.getNo() %>&page=<%=pagination.getCurrentPage() %>"><img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="..."></a>
+				<a href="flowerdetail.jsp?productNo=<%=product.getNo() %>&page=<%=pagination.getCurrentPage() %>">
+				<img src="images/category/<%=product.getImageName() %>" class="card-img-top" alt="...">
+				</a>
   				<div class="card-body">
   					<h5 class="card-title fs-6"><small><%=product.getName() %></small></h5>
     				<p class="card-text mt-2 mb-1"><small><del class="text-muted"><%=product.getCustomerPrice() %>원</del></small></p> 
@@ -90,39 +117,25 @@
 		<%
 			}
 		%>
-		<!--  
-		<div class="col-3 mb-3">
-			<div class="card">
-  				<a href="http://localhost/semi/flowerdetail.jsp ">
-  					<img src="images/category/Sample1_ConfessionSunflower.jpg" class="card-img-top" alt="...">
-  				</a>
-  				<div class="card-body">
-  					<h5 class="card-title fs-6"><small>고백 해바라기 꽃다발 생화</small></h5>
-    				<p class="card-text mt-2 mb-1"><small><del class="text-muted">35000원</del> <strong class="text-danger float-end">35000원</strong></small></p>
-    				<p class="card-text mb-1"><small  class="text-muted">여름하면 생각나는 꽃 해바라기입니다.</small></p>
-  				</div>	
-			</div>
-		</div>
-		
-		-->
 		
 	</div>
 	
 	<div class="row mb-3">
 		<div class="col-12">
-			<nav aria-label="pagenavigation">
+		
+			 <nav aria-label="pagenavigation">
 	  			<ul class="pagination justify-content-center">
 	    			<li class="page-item">
-	      			<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() - 1 %>)" aria-label="Previous">
-	        			<span aria-hidden="true">&laquo;</span>
-	      			</a>
+	      				<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() - 1 %>)" aria-label="Previous">
+	        				<span aria-hidden="true">&laquo;</span>
+	      				</a>
 	      			</li>
 	      		<%
 					for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 				%>
 	    			<li class="page-item">
-	    			<a class="page-link <%=pagination.getCurrentPage() == num ? "active" : "" %>" href="javascript:clickPageNo(<%=num %>)"><%=num %>
-	    			</a>
+	    				<a class="page-link <%=pagination.getCurrentPage() == num ? "active" : "" %>" href="javascript:clickPageNo(<%=num %>)"><%=num %>
+	    				</a>
 	    			</li>
 	    		<%
 					}
@@ -134,6 +147,7 @@
 	    			</li>
 	  			</ul>
 			</nav>
+			
 		</div>
 	</div>
 </div>
@@ -142,15 +156,11 @@
 	<jsp:param name="footer" value="flowercategory"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script type="text/javascript">
+/*
 	function changeRows() {
 		document.querySelector("input[name=page]").value = 1;
-		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
-		document.getElementById("search-form").submit();
-	}
-	
-	function clickPageNo(pageNo) {
-		document.querySelector("input[name=page]").value = pageNo;
 		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
 		document.getElementById("search-form").submit();
 	}
@@ -160,6 +170,14 @@
 		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
 		document.getElementById("search-form").submit();
 	}
+*/
+
+	function clickPageNo(pageNo) {
+		document.querySelector("input[name=page]").value = pageNo;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+	
 </script>
 </body>
 </html>
