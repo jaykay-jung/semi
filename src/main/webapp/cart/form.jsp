@@ -29,7 +29,7 @@
     #product-table tr {text-align: center; vertical-align: middle;}
    	#h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
     #payment-Method {list-style-type: none; margin-left: 50px;}
-    img {width: 100px; height: 100px;}
+    .table img {width: 100px; height: 100px;}
     hr {border: solid 1px black; margin-top: 70px;}
 </style>
 </head>
@@ -97,30 +97,25 @@
 					<%
 						} else {
 							for (CartItem item : cartItems) {
+								// 적립금
+								int depositPoint = item.getProduct().getDepositPoint() * item.getQuantity();
 					%>
 				                <tr>
-
 				                    <td><input id="product-number" class="form-check-input" type="checkbox" name="productNo" value="<%=item.getProduct().getNo() %>" data-item-value="<%=item.getNo() %>" onchange="updateTotalPrice();"></td>
-
-				                 
 				                    <td><a href="../flowerdetail.jsp?productNo=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName()%>" alt="이미지"></a></td>
 				                    <td><%=item.getProduct().getName()%></td>
 				                    <td><strong id="product-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()%>원</strong></td>
 				                    <td id="content-height">
-
 				                        <p><input id="quantity-<%=item.getNo() %>" type="number" min="0" maxlength="3" name="quantity" value="<%=item.getQuantity()%>"></p>
 				                        <p><button id="change-quantity" type="button" class="btn btn-light btn-sm" value="<%=item.getNo() %>" onclick="updateQuantity(<%=item.getNo() %>)">변경</button></p>
-
 				                    </td>
-				                    <td><%=item.getProduct().getDepositPoint()%>원</td>
+				                    <td><span id="deposit-point"><%=depositPoint %></span>원</td>
 				                    <td>개별배송</td>
 				                    <td id="delivery-fee-<%=item.getProduct().getNo() %>"><%=item.getProduct().getDeliveryFee()%>원</td>
-
 				                    <td><strong id="order-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()*item.getQuantity() + item.getProduct().getDeliveryFee()%></strong>원</td>
 				                    <td>
 				                    	<p><button id="order-button" type="button" class="btn btn-dark btn-sm" onclick="buy(<%=item.getProduct().getNo() %>, this);" data-item-no="<%=item.getNo() %>">주문하기</button></p>
-
-				                    	<p><a href="addwish.jsp?productNo=<%=item.getProduct().getNo() %>"><button type="button" class="btn btn-light btn-sm">관심상품등록</button></a></p>
+				                    	<p><button type="button" class="btn btn-light btn-sm" value="<%=item.getProduct().getNo() %>" onclick="addWish(this);">관심상품등록</button></p>
 				                    	<p><a href="delete.jsp?itemNo=<%=item.getNo()%>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
 				                    </td>
 				                </tr>
@@ -148,7 +143,7 @@
 
 		                </td>
 		                <td style="border-bottom: none;">
-		                    <a href="deleteAll.jsp?userNo=<%=user.getNo() %>"><button type="button" class="btn btn-light btn-sm" style="float: right;">장바구니비우기</button></a>
+		                    <button type="button" class="btn btn-light btn-sm" style="float: right;" value="<%=user.getNo() %>" onclick="deleteAll(this)">장바구니비우기</button>
 		                </td>
 		            </tr>
 		        </table>
@@ -176,9 +171,9 @@
 		            </tr>
 			    </table>
 		    </div>
-		    <div style="padding-top: 30px; padding-bottom: 70px; text-align: center; padding-left: 120px;">
+		    <div style="padding-top: 30px; padding-bottom: 70px; text-align: center; padding-left: 105px;">
 		        <button type="button" class="btn btn-dark" onclick="buyAll();">전체상품주문</button>
-	        	<button type="button" class="btn btn-secondary">선택상품주문</button>
+	        	<button type="button" class="btn btn-secondary" onclick="buyChecked()">선택상품주문</button>
 	        	<button type="button" class="btn btn-outline-dark" style="float: right;" onclick="keepShoping()">쇼핑계속하기</button>
 			</div>
 		</div>
@@ -186,7 +181,7 @@
 </div>
 <!-- footer -->
 <jsp:include page="../common/footer.jsp">
-	<jsp:param name="footer" value="cartform.jsp"/>
+	<jsp:param name="footer" value="cart"/>
 </jsp:include>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -254,7 +249,6 @@
 	}	
 	
 	// 체크박스로 선택한 상품 총 주문금액 합계
-
 	function updateTotalPrice(check) {
 
 		// 합계 담을 변수
@@ -299,17 +293,33 @@
 		updateProductPrice();
 	}
 	
-	// 상품 선택 삭제 (구현중)
+	// 상품 선택 삭제 버튼 메소드
 	function deleteCheckItems() {
 		
 		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
-		let itemNo = '';
+		
+		if (checkboxes.length == 0) {
+			alert("상품을 선택하세요");
+			return;
+		}
 		
 		for (let i = 0; i < checkboxes.length; i++) {
 			let checkbox = checkboxes[i];
-			itemNo = checkbox.getAttribute('data-item-value');
+			let itemNo = checkbox.getAttribute('data-item-value');
+			location.href = "delete.jsp?itemNo="+itemNo;
 		}
-		location.href = "delete.jsp?itemNo="+itemNo;
+		
+	}
+	
+	// 장바구니비우기 버튼 메소드
+	function deleteAll(user) {
+		let userNo = user.value;
+		
+		if (confirm("장바구니를 비우시겠습니까?") == true) {
+			location.href = "deleteAll.jsp?userNo="+userNo;
+		} else {
+			return false;
+		}
 	}
 	
 	// 장바구니 상품 수량 변경 메소드 (DB에 기록) 
@@ -322,9 +332,7 @@
 			alert("상품 수량은 1개 이상이어야 합니다");
 			return;
 		}
-		
 		location.href = "update.jsp?itemNo="+itemNo+"&quantity="+quantity;
-
 	}
 	
 	// 상품 하나만 주문하기 (상품 오른쪽 주문버튼)
@@ -341,9 +349,32 @@
 		// location.href = "../asdfasdf" -> 해당 주소링크로 이동하는 메소드
 		// productNo : 인자값으로 받아온 상품번호
 		// quantity : 인자값 btn의 data속성과 같은 아이템 번호를 가진 엘리먼트의 값 (아이템 수량)
-
 		location.href = "../order/form.jsp?productNo="+ productNo +"&quantity="+quantity;
-
+	}
+	
+	// 관심상품등록 버튼
+	function addWish(product) {
+		let productNo = product.value;
+		
+		if (confirm("관심상품에 등록하시겠습니까?") == true) {
+			alert("관심상품에 등록합니다");
+			location.href = "addwish.jsp?productNo="+productNo;
+		} else {
+			return false;
+		}
+	}
+	
+	// 선택상품주문 버튼
+	function buyChecked() {
+		// productNo 이름을 가진 모든 체크박스 엘리먼트 조회
+		let checkboxes = document.querySelectorAll("input[name='productNo']:checked");
+		
+		if (checkboxes.length == 0) {
+			alert("상품을 선택하세요");
+			return;
+		}
+		// id가 cart-form인 form엘리먼트의 submit() 메소드 실행하여 선택상품의 값 보내기
+		document.getElementById("cart-form").submit();
 	}
 	
 	// 전체상품주문 버튼
@@ -354,7 +385,7 @@
 		for (let i=0; i<checkboxes.length; i++) {
 			checkboxes[i].checked = true;
 		}
-		// id가 cart-form인 form엘리먼트의 submit() 메소드 실행
+		// id가 cart-form인 form엘리먼트의 submit() 메소드 실행하여 모든 상품 값 보내기
 		document.getElementById("cart-form").submit();
 	}
 	
