@@ -62,7 +62,9 @@
 	Point point = pointDao.getPointByUserNo(user.getNo());
 	
 %>
+
 	<form action="complete.jsp" id="order-form" method="post" onsubmit="return inputCheck()">
+
 	    <div class="row">
 			<div class="col" style="margin-top: 10px;">
 				<h1 id="title" class="fs-4 borderless p-2">주문서 작성</h1>
@@ -172,6 +174,7 @@
 				                        </div>
 				                        <div id="radio-list" class="form-check-inline">
 				                            <input class="form-check-input" type="radio" name="radioAddress" id="radio-address" onclick="getNewInfo();">
+
 				                            <label class="form-check-label" for="radio">새로운 배송지</label>
 				                        </div>
 				                    </td>
@@ -180,7 +183,9 @@
 				                    <td>받으시는 분 <span style="color:Red;">*</span></td>
 				                    <td>
 					                    <div class="col-sm-3">
+
 					                    	<input type="text" class="form-control" id="name-input" name="userName" placeholder="이름" value="">
+
 					                    </div>
 				                    </td>
 				                </tr>
@@ -188,6 +193,7 @@
 				                    <td>주소 <span style="color:Red;">*</span></td>
 				                    <td>
 				                        <div class="col-sm-2">
+
 				                            <input type="text" class="form-control" style="float:left;" id="post-code" name="postNo" value="" placeholder="우편번호" disabled>
 				                        </div>
 				                        <div class="col-sm-3">
@@ -196,6 +202,7 @@
 				                        <div class="col-sm-6">
 				                           	<p><input type="text" class="form-control" id="road-address" name="roadAddress" value="" placeholder="기본주소" disabled></p>
 				                            <p><input type="text" class="form-control" id="detail-address" name="detailAddress" value="" placeholder="나머지주소 (선택입력)"></p>
+
 				                        </div>
 				                    </td>
 				                </tr>
@@ -203,7 +210,9 @@
 				                    <td>휴대전화 <span style="color:Red;">*</span></td>
 				                    <td>
 				                    	<div class="mb-3 col-sm-3">
+
 				                            <input type="text" class="form-control" id="phone-input" name="phone" value="" placeholder="010-0000-0000">
+
 										</div>
 				                    </td>
 				                </tr>
@@ -211,7 +220,9 @@
 				                    <td>이메일 <span style="color:Red;">*</span></td>
 				                    <td>
 				                       	<div class="mb-3 col-sm-3">
+
 										  <input type="email" class="form-control" id="email-input" name="email" value="" placeholder="name@example.com">
+
 										</div>
 										<div class="form-text">
 										  <p>- 이메일을 통해 주문처리과정을 보내드립니다.</p>
@@ -223,7 +234,9 @@
 				                    <td>배송메시지</td>
 				                    <td>
 				                    	<div class="mb-3">
+
 										  <textarea class="form-control" id="message-input" name="message" rows="3" placeholder="배송메시지를 입력하세요"></textarea>
+
 										</div>
 				                    </td>
 				                </tr>
@@ -260,12 +273,16 @@
 					            </tr>
 					            <tr>
 					                <td><strong>총 부가결제금액</strong></td>
+
 					            	<td colspan="2">0 원</td>
+
 					            </tr>
 					            <tr>
 					                <td>적립금</td>
 					            	<td id="p-content" colspan="2">
+
 					                    <p><input type="number" id="use-point" name="usePoint" min="0" >원(총 사용가능 적립금: <span style="color:Red;"><%=point.getAvailble()%></span>원)</p>
+
 					                    <div class="form-text">
 							  				<p>- 적립금은 최소 1,000원 이상일 때 결제가 가능합니다.</p>
 					                    	<p>- 1회 구매시 적립금 최대 사용금액은 1,000원입니다.</p>
@@ -286,17 +303,23 @@
 			    	<div class="col" style="margin-top: 10px;">
 				        <div class="mb-5" style="float: left; width: 70%;">
 				            <div id="radio-list" class="form-check-inline">
+
 				                <input class="form-check-input" type="radio" name="paymentMethod" id="radio-payment-card" onclick="displayPaymentInfo()">
+
 				                <label class="form-check-label" for="radio">카드결제</label>
 				            </div>
 				        
 				            <div id="radio-list" class="form-check-inline">
+
 				                <input class="form-check-input" type="radio" name="paymentMethod" id="radio-payment-bankbook" onclick="displayPaymentInfo()">
+
 				                <label class="form-check-label" for="radio">무통장입금</label>
 				            </div>
 				        
 				            <div id="radio-list" class="form-check-inline">
+
 				                <input class="form-check-input" type="radio" name="paymentMethod" id="radio-payment-kakaopay" onclick="displayPaymentInfo()">
+
 				                <label class="form-check-label" for="radio">카카오페이</label>
 				            </div>
 				        </div>
@@ -309,12 +332,14 @@
 				            <p>회원 적립금 : 0원</p>
 				            <p>쿠폰 적립금 : 0원</p>
 				        </div>
+
 				        <div id="payment-info-card" style="display:none;">
 				        	<p><strong>카드 결제</strong></p>
 				        	<span style="color:Red;">!</span> 소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.
 				        </div>
 				        <div id="payment-info-bankbook" class="table" style="display:none;">
 				        	<p><strong>무통장입금 결제</strong></p>
+
 				            <table id="deposit-table">
 								<tr>
 				                    <td>입금자명</td>
@@ -346,6 +371,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
+
 	// 회원정보와 동일 라디오 버튼 메소드
 	function getUserInfo(userName, userPhone, userEmail) {
 		document.getElementById("name-input").value = userName;
@@ -376,6 +402,7 @@
 
 	// 주소찾기 버튼 메소드
 	// 다음주소 API 
+
 	function daumPostAPI() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -385,8 +412,10 @@
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 let addr = ''; // 주소 변수
                 let extraAddr = ''; // 참고항목 변수
+
                 let extra = '';
                 let road = '';
+
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -411,6 +440,7 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
+
                     // document.getElementById("extraAddress").value = extraAddr;
                 } else {
                     // document.getElementById("extraAddress").value = '';
@@ -422,10 +452,12 @@
                 document.getElementById("road-address").value = addr + extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("detail-address").focus();
+
             }
         }).open();
     }
 	
+
 	// 결제수단 라디오버튼 처리
 	function displayPaymentInfo() {
 

@@ -10,6 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 	h3 {font-size: 18px; font-weight: bold;}
+	#reviewform-container {margin-bottom: 100px;}
 	#h3-box {margin-bottom: 20px;}
 	#review-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
 	table {text-align: center; font-size: 15px; border-top: 2px solid #eee;}
@@ -27,7 +28,7 @@
 </jsp:include>
 
 <!-- content -->
-<div class="container">
+<div class="container" id="reviewform-container">
 	<div class="row">
 		<div class="col" id="h3-box">
 			<h3 id="review-h3">REVIEW</h3>
