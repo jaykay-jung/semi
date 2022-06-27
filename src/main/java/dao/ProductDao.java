@@ -90,22 +90,19 @@ public class ProductDao {
 	}, product_no);
 }
 	
+	// 등록된 상품 정보 목록의 수를 카운트
+		public int getTotalRows() throws SQLException { 
+			String sql = "select count(*) cnt "
+					   + "from semi_products "
+					   + "where product_deleted = 'N' ";
+			
+			
+			return helper.selectOne(sql, rs -> {
+				return rs.getInt("cnt");
+			});
+		}
 	
-	// 등록된 상품 정보 목록의 수를 카운트 (완료)
-	public int getTotalRows(int categoryNo) throws SQLException { 
-		String sql = "select count(*) cnt "
-				   + "from semi_products "
-				   + "where product_deleted = 'N' "
-				   + "and category_no = ? ";
-		
-		
-		return helper.selectOne(sql, rs -> {
-			return rs.getInt("cnt");
-		}, categoryNo);
-	}
-		
-	
-	//카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
+	//상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
 	public List<Product> getProducts(int beginIndex, int endIndex) throws SQLException {
 		String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name, p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
 				   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
@@ -134,25 +131,21 @@ public class ProductDao {
 			return product;
 		}, beginIndex, endIndex);
 	}
-	
-	
-	
-	
-	
-	
-	// 등록된 상품 정보를 특정 키워드로 검색시 출력되는 목록의 수를 카운트 (완료)
-	public int getTotalRows(String keyword) throws SQLException { 
-		String sql = "select count(*) cnt "
-				+ "from semi_products "
-				+ "where product_deleted = 'N' and product_name like '%' || ? || '%' ";
 		
-		return helper.selectOne(sql, rs -> {
-			return rs.getInt("cnt");
-		}, keyword);
-	}
-
+	// 카테고리 번호로 조회한 등록된 상품 정보 목록의 수를 카운트 (완료)
+		public int getTotalRows(int categoryNo) throws SQLException { 
+			String sql = "select count(*) cnt "
+					   + "from semi_products "
+					   + "where product_deleted = 'N' "
+					   + "and category_no = ? ";
+			
+			
+			return helper.selectOne(sql, rs -> {
+				return rs.getInt("cnt");
+			}, categoryNo);
+		}
 	
-	//특정 키워드(상품 이름)에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
+	//카테고리 번호에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
 	public List<Product> getProducts(int categoryNo, int beginIndex, int endIndex) throws SQLException {
 		String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name,  p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
 				   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
@@ -184,39 +177,77 @@ public class ProductDao {
 	}
 
 	
+	// 등록된 상품 정보를 특정 키워드로 검색시 출력되는 목록의 수를 카운트 (완료)
+		public int getTotalRows(String keyword) throws SQLException { 
+			String sql = "select count(*) cnt "
+					+ "from semi_products "
+					+ "where product_deleted = 'N' and product_name like '%' || ? || '%' ";
+			
+			return helper.selectOne(sql, rs -> {
+				return rs.getInt("cnt");
+			}, keyword);
+		}
+		
+	//특정 키워드(상품 이름)에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
+		public List<Product> getProducts(int beginIndex, int endIndex, String keyword) throws SQLException {
+			String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name,  p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
+					   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
+					   + "             row_number() over (order by product_no desc) row_number "
+					   + "      from semi_products "
+					   + "      where product_deleted = 'N' and product_name like '%' || ? || '%') p, semi_product_category c "
+					   + "where p.row_number >= ? and p.row_number <= ? "
+					   + "and p.category_no = c.category_no "
+					   + "order by p.product_no desc ";
+			
+			return helper.selectList(sql, rs -> {
+				Product product = new Product();
+				product.setNo(rs.getInt("product_no"));
+				product.setCategoryNo(rs.getInt("category_no"));
+				
+				Category category = new Category();
+				category.setName(rs.getString("category_name"));
+				product.setCategory(category);
+				
+				product.setImageName(rs.getString("product_image_name"));
+				product.setName(rs.getString("product_name"));
+				product.setCustomerPrice(rs.getInt("product_customer_price"));
+				product.setSellPrice(rs.getInt("product_sell_price"));
+				product.setDescription(rs.getString("product_description"));
+				
+				return product;
+			}, beginIndex, endIndex, keyword);
+		}
 	
-	
-	
-	
-	
-	
-	
-//	// 제품 상세 정보 표시용 List (페이징 처리 불필요, 상품 번호로 등록된 모든 상품 정보 조회하여 product에 담은 것들중 제품 상세 정보에 필요한 항목만을 담아서 products 리스트에 담은 것) (이미지 처리에 대한 고민, p.product_deposit_point 넣지 않음)
-//	public List<Product> getAllProducts() throws SQLException {
-//		String sql = "select p.product_no, p.product_name, p.product_image_name, p.product_customer_price, p.product_sell_price, p.product_delivery_fee "      
-//				   + "from semi_products p"
-//				   + "where product_deleted ='N' "
-//				   + "order by p.product_no desc ";
-//		
-//		return helper.selectList(sql, rs -> {
-//			Product product = new Product();
-//			product.setNo(rs.getInt("product_no"));
-//			product.setName(rs.getString("product_name"));
-//			product.setImageName(rs.getString("product_image_name"));
-//			product.setCustomerPrice(rs.getInt("product_customer_price"));
-//			product.setSellPrice(rs.getInt("product_sell_price"));
-//			product.setDeliveryFee(rs.getInt("product_delivery_fee"));
-//			
-////			Category category = new Category();
-////			category.setNo(rs.getInt("category_no"));
-////			category.setName(rs.getString("category_name"));
-////			product.setCategory(category);
-//			
-//			return product;
-//			
-//			
-//		});
-//	}
+		//특정 키워드(상품 이름)에 따른 카테고리별 상품 목록 조회 출력 (해당 인덱스에 해당하는 상품들 출력, 카테고리 명칭 포함) 
+				public List<Product> getProducts(String keyword) throws SQLException {
+					String sql = "select p.product_no, p.category_no, C.category_name, p.product_image_name,  p.product_name, p.product_customer_price, p.product_sell_price, p.product_description "
+							   + "from (select product_no, category_no, product_image_name, product_name, product_customer_price, product_sell_price, product_description, "
+							   + "             row_number() over (order by product_no desc) row_number "
+							   + "      from semi_products "
+							   + "      where product_deleted = 'N' and product_name like '%' || ? || '%') p, semi_product_category c "
+							  
+							   + "and p.category_no = c.category_no "
+							   + "order by p.product_no desc ";
+					
+					return helper.selectList(sql, rs -> {
+						Product product = new Product();
+						product.setNo(rs.getInt("product_no"));
+						product.setCategoryNo(rs.getInt("category_no"));
+						
+						Category category = new Category();
+						category.setName(rs.getString("category_name"));
+						product.setCategory(category);
+						
+						product.setImageName(rs.getString("product_image_name"));
+						product.setName(rs.getString("product_name"));
+						product.setCustomerPrice(rs.getInt("product_customer_price"));
+						product.setSellPrice(rs.getInt("product_sell_price"));
+						product.setDescription(rs.getString("product_description"));
+						
+						return product;
+					}, keyword);
+				}
+
 }	
 	
 
