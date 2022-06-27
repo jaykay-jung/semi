@@ -170,52 +170,8 @@
 	        		</tr>
 				</table>
    			</div>
-   			<!-- 상품 옵션 선택란 -->
-   			<div id="productoption">
-   				<table class="table">
-   					<tr>
-   						<td>희망수령일(월/일/형식)[선택]</td>
-   						<td colspan="3">&nbsp;<input type="text" style="width:250px;">&nbsp;(<!-- 글자수 세기 -->/10)</td>
-   						
-   					</tr>
-   					<tr>
-   						<td>편지</td>
-   						<td><button type="button" class="btn btn-outline-secondary btn-sm btn text-black">선택안함</button><!--[필수]옵션을 선택해주세요--><!--[필수]선택안함--></td>
-   						<td><button type="button" class="btn btn-outline-secondary btn-sm btn text-black">선택(+2000)</button><!--[필수]선택(+2000)--></td>
-   						<td></td>
-   						
-   					</tr>
-   					
-   					<tr>
-   						<td>화병</td>
-   						<td><button type="button" class="btn btn-outline-secondary btn-sm">선택안함</button><!--[필수]옵션을 선택해주세요--><!--[필수]선택안함--></td>
-   						<td><button type="button" class="btn btn-outline-secondary btn-sm">사각화병(+2900)</button><!--[필수]사각화병(+2900)(+4,900원)--></td>
-   						<td><button type="button" class="btn btn-outline-secondary btn-sm">원형화병(+5000)</button><!--[필수]원형화병(+5000)(+7,000원)--></td>
-   						
-   					</tr>	
-   					<tr>
-	   					<td style="color:grey"><font size="1">(최소주문수량 1개 이상)</font></td>
-	   					<td></td>
-	   					<td></td>
-	   					<td></td>
-	   					
-	   				</tr>
-	   				</table>
-	   		</div>
-	   		<!-- 선택된 상품 정보 출력 -->	
-	   		<div id="productselected">
-	   			<table style="width:100%">
-	   				<tr>
-	   					<td colspan="3"><font size="1">&nbsp;위 옵션박스를 선택하시면 아래에 상품이 추가됩니다.</font></td>
-	   				</tr>
-	   				<tr>
-	   					<td><!-- 선택된 상품 정보 출력할 란 --></td>
-	   					<td></td>
-	   					<td></td>
-	   				</tr>
-	   			</table>
-	   		</div>
-	   		<!-- 선택된 상품 정보, 수량, 가격 출력 -->
+   			
+	   	<!-- 선택된 상품 정보, 수량, 가격 출력 -->
 	   		<div id="priceandquantity">
 	   			<table style="width:100%">
 	   				<tr>
@@ -230,9 +186,9 @@
 	   		</div>
 	   		
 	   		<div id="buttonlist">
-	   			<a href="orderform.jsp"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
-	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-dark" style="width: 100%;">장바구니</button></a>
-	   			<a href="<!--cart.jsp -->"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
+	   			<a href="order/form.jsp?productNo=<%=product.getNo() %>&quantity=1"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
+	   			<a href="cart/add.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-outline-dark" style="width: 100%;">장바구니</button></a>
+	   			<a href="cart/addwish.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
 	   		</div>
    					
    		</div>
@@ -242,9 +198,6 @@
 		<ul class="nav justify-content-start">
   			<li class="nav-item">
     			<a class="nav-link" href="#DETAIL">DETAIL</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
   			</li>
   			<li class="nav-item">
     			<a class="nav-link" href="#REVIEW"><strong>REVIEW</strong></a>
@@ -293,9 +246,6 @@
     			<a class="nav-link" href="#DETAIL"><strong>DETAIL</strong></a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
-  			</li>
-  			<li class="nav-item">
     			<a class="nav-link" href="#REVIEW">REVIEW</a>
   			</li>
   			<li class="nav-item">
@@ -311,34 +261,10 @@
 		<img src="images/category-detail/CommonDetail4.png">
 	</div>
 	
-	<div id="movingfunctionW">
-		<ul class="nav justify-content-center">
-  			<li class="nav-item">
-    			<a class="nav-link" href="#DETAIL">DETAIL</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#WITHITEM"><strong>WITH ITEM</strong></a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#REVIEW">REVIEW</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#QNA">Q&A</a>
-  			</li>
-		</ul>
-	</div>
-	
-	<div id="WITH ITEM">
-	<P>아직 구현하지 않았습니다.</P>
-	</div>
-	
 	<div id="movingfunctionQ">
 		<ul class="nav justify-content-center">
   			<li class="nav-item">
     			<a class="nav-link" href="#DETAIL">DETAIL</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#WITHITEM">WITH ITEM</a>
   			</li>
   			<li class="nav-item">
     			<a class="nav-link" href="#REVIEW">REVIEW</a>

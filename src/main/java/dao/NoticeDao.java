@@ -23,7 +23,7 @@ public class NoticeDao {
 	 */
 	public void insertNotice(Notice notice) throws SQLException {
 		String sql = "insert into semi_notices "
-					+ "(notice_no, notice_title, notice_content "
+					+ "(notice_no, notice_title, notice_content) "
 					+ "values "
 					+ "(semi_notices_seq.nextval, ?, ?) ";
 		helper.insert(sql, notice.getTitle(), notice.getContent());
@@ -111,6 +111,35 @@ public class NoticeDao {
 			
 			return notice;
 		}, keyword, beginIndex, endIndex);
+	}
+	
+	public Notice getNotcieByNo(int noticeNo) throws SQLException {
+		String sql = "select notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
+					+ "from semi_notices "
+					+ "where notice_no = ? ";
+		
+		return helper.selectOne(sql, rs -> {
+			Notice notice = new Notice();
+			notice.setNo(rs.getInt("notice_no"));
+			notice.setTitle(rs.getString("notice_title"));
+			notice.setContent(rs.getString("notice_content"));
+			notice.setCreatedDate(rs.getDate("notice_created_date"));
+			notice.setViewCount(rs.getInt("notice_view_count"));
+			
+			return notice;
+		}, noticeNo);
+	}
+	
+	public void updateNotice(Notice notice) throws SQLException {
+		String sql = "update semi_notices "
+					+ "set "
+					+ "		notice_title = ?, "
+					+ "		notice_content = ?, "
+					+ "		notice_view_count = ?, "
+					+ "		notice_deleted = ?, "
+					+ "where notice_no = ? ";
+		
+		helper.update(sql, notice.getTitle(), notice.getContent(), notice.getViewCount(), notice.getDeleted(), notice.getNo());			
 	}
 	
 }

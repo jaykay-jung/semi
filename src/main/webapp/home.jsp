@@ -130,7 +130,7 @@
 	</div>
 	<div class="row">
 		<div class="col text-center">
-			<a class="btn btn-light btn-outline-secondary mx-auto seemoreButton" href="">
+			<a class="btn btn-light btn-outline-secondary mx-auto seemoreButton" href="flowercategory.jsp">
 				SEEMORE
 			</a>
 		</div>

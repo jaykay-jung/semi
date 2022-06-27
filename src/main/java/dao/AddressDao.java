@@ -47,9 +47,6 @@ public class AddressDao {
 		helper.update(sql, address.getNickName(), address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo());
 	}
 	
-	
-	
-
 	/**
 	 * 주소번호를 전달받아서 주소를 반환한다.
 	 * @param addressNo
@@ -57,10 +54,9 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public Address getAddress(int addressNo) throws SQLException {
-		String sql = "SELECT A.ADDRESS_NO, A.NICKNAME, A.ADDRESS_NAME, A.POSTAL_CODE, A.ADDRESS, A.ADDRESS_DETAIL, A.TEL, A.ADDRESS_CREATED_DATE, A.USER_NO, U.USER_NAME "
-				+ "FROM SEMI_USER_ADDRESS A, SEMI_USERS U "
-				+ "WHERE A.ADDRESS_NO = ? "
-				+ "AND A.USER_NO = U.USER_NO ";
+		String sql = "select * "
+				   + "from semi_user_address"
+				   + "where addressNo = ? ";
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
@@ -75,13 +71,43 @@ public class AddressDao {
 			
 			User user = new User();
 			user.setNo(rs.getInt("USER_NO"));
-			user.setName(rs.getString("USER_NAME"));
 			address.setUser(user);
 			
 			return address;
 		
 		}, addressNo);
 				
+	}
+	
+	/**
+	 * 사용자 번호로 주소정보 반환
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Address getAddressByUserNo(int userNo) throws SQLException {
+		String sql = "select * "
+				   + "from semi_user_address "
+				   + "where user_no = ? ";
+		return helper.selectOne(sql, rs -> {
+			
+			Address address = new Address();
+			address.setNo(rs.getInt("ADDRESS_NO"));
+			address.setNickName(rs.getString("NICKNAME"));
+			address.setName(rs.getString("ADDRESS_NAME"));
+			address.setZip(rs.getInt("POSTAL_CODE"));
+			address.setCity(rs.getString("ADDRESS"));
+			address.setStreet(rs.getString("ADDRESS_DETAIL"));
+			address.setTel(rs.getString("TEL"));
+			address.setCreatedDate(rs.getDate("ADDRESS_CREATED_DATE"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("USER_NO"));
+			address.setUser(user);
+			
+			return address;
+		
+		}, userNo);
 	}
 	
 	/**

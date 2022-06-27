@@ -19,9 +19,9 @@
 	a {text-decoration: none; color: #000;}
 	h3 {font-size: 18px; font-weight: bold;}
 	#reviewlist-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
-	table {text-align: center; font-size: 15px; }
-	table tbody {font-size: 13px;}
-	table td {vertical-align: middle;}
+	
+	.table tbody {font-size: 13px;}
+	.table td {vertical-align: middle;}
 	.table img {width: 50px;}
 	#review-paging li {margin: 0 10px;}
 </style>
@@ -71,8 +71,8 @@
 			<table class="table">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="%">
+					<col width="35%">
+					<col width="*">
 					<col width="10%">
 					<col width="10%">
 				</colgroup>
@@ -95,7 +95,7 @@
 							<a href="flowerdetail.jsp">
 								<!-- 상품 이미지 출력 -->
 								<img src="images/category/<%=review.getProduct().getImageName() %>">
-								<span><%=review.getProduct().getName() %></span>
+								<span class="me-2"><%=review.getProduct().getName() %></span>
 							</a>
 						</td>
 						<td style="text-align: left; padding: 10px;">
@@ -125,10 +125,15 @@
 				</form>
 			</div>
 			<div class="col text-end">
-				<%
-					User user = (User) session.getAttribute("LOGINED_USER");
-				%>
+			<%
+				User user = (User) session.getAttribute("LOGINED_USER");
+			
+				if(user != null) {
+			%>
 				<a href="reviewform.jsp" class="btn btn-dark btn-sm <%=user == null ? "disabled" : "" %> " >글쓰기</a>
+			<%
+				}
+			%>
 			</div>
 		</div>
 	</div>
@@ -157,11 +162,6 @@
 		 	</nav>
 	 	</div>
 	 </div>
-	
-	<!-- 검색 -->
-	<div class="row">
-		
-	</div>
 </div>
 
 <!-- footer -->
