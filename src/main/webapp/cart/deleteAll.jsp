@@ -32,7 +32,7 @@
 	}
 	
 	// 장바구니 아이템 삭제 메소드 실행
-	cartItemDao.deleteCartItemByUserNo(userNo);
+	cartItemDao.deleteAllCartItemByUserNo(userNo);
 	
 	// 작업 후에 장바구니 목록 URL 재요청
 	response.sendRedirect("form.jsp");
