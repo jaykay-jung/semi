@@ -3,7 +3,6 @@ package dao;
 import java.sql.SQLException;
 
 import helper.DaoHelper;
-import vo.Point;
 import vo.User;
 
 public class UserDao {
@@ -57,10 +56,6 @@ public class UserDao {
             user.setCreatedDate(rs.getDate("user_created_date"));
             user.setCreatedDate(rs.getDate("user_updated_date"));
             user.setGrade(rs.getString("user_grade"));
-            
-            Point point = new Point();
-            point.setNo(rs.getInt("user_point_no"));
-            user.setPoint(point);
 
             return user;
         }, id);
@@ -93,13 +88,43 @@ public class UserDao {
             user.setCreatedDate(rs.getDate("user_created_date"));
             user.setCreatedDate(rs.getDate("user_updated_date"));
             user.setGrade(rs.getString("user_grade"));
-            
-            Point point = new Point();
-            point.setNo(rs.getInt("user_point_no"));
-            user.setPoint(point);
 
             return user;
         }, email);
+    }
+    
+    /**
+     * 가장 최근에 가입한 유저정보 반환
+     * @param rownum 1로 설정
+     * @return
+     * @throws SQLException
+     */
+    public User getUserByRownum(int rownum) throws SQLException {
+    	String sql = "select * "
+    			   + "from (select * "
+    			   + "		from semi_users "
+    			   + "		order by user_created_date desc) "
+    			   + "where rownum = ? ";
+    	
+    	return helper.selectOne(sql, rs -> {
+    		User user = new User();
+    		user.setNo(rs.getInt("user_no"));
+            user.setId(rs.getString("user_id"));
+            user.setPassword(rs.getString("user_password"));
+            user.setEmail(rs.getString("user_email"));
+            user.setName(rs.getString("user_name"));
+            user.setPhone(rs.getString("user_phone"));
+            user.setGender(rs.getString("user_gender"));
+            user.setBirthday(rs.getDate("user_birthday"));
+            user.setAdmin(rs.getString("user_admin"));
+            user.setAddress(rs.getString("user_address"));
+            user.setDeleted(rs.getString("user_deleted"));
+            user.setCreatedDate(rs.getDate("user_created_date"));
+            user.setCreatedDate(rs.getDate("user_updated_date"));
+            user.setGrade(rs.getString("user_grade"));
+    		
+    		return user;
+    	}, rownum);
     }
 
 }

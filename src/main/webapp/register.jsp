@@ -47,8 +47,7 @@
 	session.setAttribute("email", email);
 	session.setAttribute("name", name);
 	
-	// 재요청 URL
-	response.sendRedirect("complete.jsp");
-	
+	// 가입서비스 포인트제공 기능을 가진 jsp로 이동
+	response.sendRedirect("registerpoint.jsp");
 	
 %>

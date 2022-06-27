@@ -93,6 +93,34 @@ public class CartItemDao {
             return cartItem;
         }, itemNo);
 	}
+    
+    /**
+     * 지정된 아이템 번호와 일치하는 장바구니 아이템정보 여러개를 반환하는 메소드
+     * @param itemNo
+     * @return
+     * @throws SQLException
+     */
+    public List<CartItem> getCartItemsByItemNo(int itemNo) throws SQLException {
+    	String sql = "select * "
+    			   + "from semi_cart_items "
+    			   + "where cart_item_no = ? ";
+    	
+    	return helper.selectList(sql, rs -> {
+            CartItem cartItem = new CartItem();
+            cartItem.setNo(rs.getInt("cart_item_no"));
+            cartItem.setQuantity(rs.getInt("cart_item_quantity"));
+
+            User user = new User();
+            user.setNo(rs.getInt("user_no"));
+            cartItem.setUser(user);
+            
+            Product product = new Product();
+            product.setNo(rs.getInt("product_no"));
+            cartItem.setProduct(product);
+            
+            return cartItem;
+        }, itemNo);
+    }
 
     /**
      * 지정된 장바구니 아이템정보를 전달받아서 동일한 정보가 존재하면 수량을 증가시키고, 정보가 존재하지 않으면 추가
@@ -120,7 +148,7 @@ public class CartItemDao {
      * @param userNo 사용자번호
      * @throws SQLException
      */
-    public void deleteCartItemByUserNo(int userNo) throws SQLException {
+    public void deleteAllCartItemByUserNo(int userNo) throws SQLException {
         String sql = "delete from semi_cart_items "
                    + "where user_no = ? ";
 
@@ -132,11 +160,11 @@ public class CartItemDao {
      * @param productNo
      * @throws SQLException
      */
-    public void deleteCartItem(int productNo) throws SQLException {
+    public void deleteCartItem(int itemNo) throws SQLException {
 		String sql = "delete from semi_cart_items "
 				   + "where cart_item_no = ? ";
 		
-		helper.delete(sql, productNo);
+		helper.delete(sql, itemNo);
 	} 
 
     /**
@@ -145,12 +173,12 @@ public class CartItemDao {
      * @param productNo 상품번호
      * @throws SQLException
      */
-    public void updateCartItemQuantity(int quantity, int productNo) throws SQLException{
+    public void updateCartItemQuantity(int quantity, int itemNo) throws SQLException{
     	String sql = "update semi_cart_items "
     			   + "set cart_item_quantity = ? "
-    			   + "where product_no = ? ";
+    			   + "where cart_item_no = ? ";
     	
-    	helper.update(sql, quantity, productNo);
+    	helper.update(sql, quantity, itemNo);
     }
 
 	/**
