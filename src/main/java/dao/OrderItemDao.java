@@ -8,7 +8,6 @@ import helper.DaoHelper;
 import vo.Order;
 import vo.OrderItem;
 import vo.Product;
-import vo.User;
 
 public class OrderItemDao {
 
@@ -27,11 +26,11 @@ public class OrderItemDao {
      */
     public void insertOrderItem(OrderItem orderItem) throws SQLException {
         String sql = "insert into order_item "
-                   + "(order_item_no, order_no, product_no) "
+                   + "(order_item_no, order_no, product_no, order_item_quantity, order_item_price) "
                    + "values "
-                   + "(order_item_seq.nextval, ?, ?, ?, ?) ";
+                   + "(order_item_seq.nextval, ?, ?, ?, ? ) ";
         
-        helper.insert(sql, orderItem.getOrder().getNo(), orderItem.getProduct().getNo());
+        helper.insert(sql, orderItem.getOrder().getNo(), orderItem.getProduct().getNo(), orderItem.getQuantity(), orderItem.getPrice());
     }
     
     /**
@@ -56,20 +55,21 @@ public class OrderItemDao {
 	 * @throws SQLException
 	 */
 	public List<OrderItem> getOrderItems(int beginIndex, int endIndex) throws SQLException {
-		String sql = "select I.order_item_no, I.order_no, P.product_no, P.product_name, P.product_image_name, O.order_created_date, O.order_status, O.order_total_price, O.used_point, O.total_payment_price, O.deposit_point, O.payment_type, O.receive_date, O.user_no "
-					+ "from (select order_item_no, order_no, product_no, "
+		String sql = "select I.order_item_no, I.order_item_quantity, I.order_item_price, I.order_no, P.product_no, P.product_name, P.product_image_name, O.order_created_date, O.order_status, O.order_total_price, O.used_point, O.total_payment_price, O.deposit_point, O.payment_type, O.receive_date "
+					+ "from (select order_item_no, order_no, product_no, order_item_quantity, order_item_price, "
 					+ "		 		row_number() over (order by order_item_no desc) row_number "
-					+ "		 from order_item) I, semi_orders O, semi_products P, semi_users U "
+					+ "		 from order_item) I, semi_orders O, semi_products P "
 					+ "where I.row_number >= ? and I.row_number <= ? "
 					+ "and I.order_no = O.order_no "
 					+ "and I.product_no = P.product_no "
-					+ "and O.user_no = U.user_no "
 					+ "order by I.order_item_no desc ";
 		
 		return helper.selectList(sql, rs -> {
 			
 			OrderItem orderItem = new OrderItem();
 			orderItem.setNo(rs.getInt("order_item_no"));
+			orderItem.setQuantity(rs.getInt("order_item_quantity"));
+			orderItem.setPrice(rs.getInt("order_item_price"));
 		
 			Product product = new Product();			
 			product.setNo(rs.getInt("product_no"));
@@ -88,10 +88,6 @@ public class OrderItemDao {
 			order.setPayType(rs.getString("payment_type"));
 			order.setReceiveDate(rs.getDate("receive_date"));
 			orderItem.setOrder(order);
-	
-			User user = new User();
-			user.setNo(rs.getInt("user_no"));
-			orderItem.setUser(user);
 			
 			return orderItem;
 			

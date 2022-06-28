@@ -1,3 +1,6 @@
+<%@page import="vo.OrderItem"%>
+<%@page import="dao.OrderItemDao"%>
+<%@page import="util.StringUtil"%>
 <%@page import="vo.Address"%>
 <%@page import="dao.AddressDao"%>
 <%@page import="vo.Order"%>
@@ -16,20 +19,17 @@
 	}
 	
 	// 요청파라미터값 가져오기
-	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	String[] productNoValues = request.getParameterValues("productNo");
+	String[] quantityValues = request.getParameterValues("quantity");
 	int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 	int usedPoint = Integer.parseInt(request.getParameter("usedPoint"));
-	int totalpay = Integer.parseInt(request.getParameter("totalpay"));
+	int totalpay = Integer.parseInt(request.getParameter("totalPay"));
 	int depositPoint = Integer.parseInt(request.getParameter("depositPoint"));
 	String payType = request.getParameter("payType");
-	int orderQuantity = Integer.parseInt(request.getParameter("orderQuantity"));
-	// 주소
 	AddressDao addressDao = AddressDao.getInstance();
 	Address address = addressDao.getAddressByUserNo(user.getNo());
-	// 상품
-	ProductDao productDao = ProductDao.getInstance();
-	Product product = productDao.getProductByNo(productNo);
 	
+	// set
 	Order order = new Order();
 	order.setStatus("결제완료");
 	order.setTotalPrice(totalPrice);
@@ -39,13 +39,30 @@
 	order.setPayType(payType);
 	order.setUser(user);
 	order.setAddress(address);
-	order.setProduct(product);
-	order.setOrderQuantity(orderQuantity);
 	
-	// 주문정보 저장 메소드 실행
+	// 주문정보 저장
 	OrderDao orderDao = OrderDao.getInstance();
 	orderDao.insertOrder(order);
 	
-	// 결제완료 페이지
-	response.sendRedirect("deleteCartItem.jsp");
+	OrderItem orderItem = new OrderItem();
+	ProductDao productDao = ProductDao.getInstance();
+	int totalQuantity = 0;
+	for (int i = 0; i<productNoValues.length; i++) {
+		int productNo = StringUtil.stringToInt(productNoValues[i]);
+		Product product = productDao.getProductByNo(productNo);
+		orderItem.setProduct(product);
+		
+		int quantity = StringUtil.stringToInt(quantityValues[i]);
+		orderItem.setQuantity(quantity);
+	}
+	Order orders = orderDao.getOrderByOrderNo(order.getNo());
+	orderItem.setOrder(orders);
+	orderItem.setPrice(totalpay);
+	
+	// 주문아이템정보 저장
+	OrderItemDao orderItemDao = OrderItemDao.getInstance();
+	orderItemDao.insertOrderItem(orderItem);
+	
+	// 결제완료 후 포인트 정보 업데이트
+	response.sendRedirect("updatePoint.jsp?userNo="+user.getNo()+"&orderNo="+orders.getNo());
 %>

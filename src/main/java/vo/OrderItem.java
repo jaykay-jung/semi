@@ -5,13 +5,15 @@ public class OrderItem {
 	private int no;
     private Order order;
     private Product product;
-    private User user;
+    private int quantity;
+    private int price;
     
-    public OrderItem() {}    
-    
+    public OrderItem() {}
+
 	public int getNo() {
 		return no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
@@ -27,17 +29,25 @@ public class OrderItem {
 	public Product getProduct() {
 		return product;
 	}
-	
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public int getQuantity() {
+		return quantity;
 	}
-	
-	public void setUser(User user) {
-		this.user = user;
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}    
 
 }
