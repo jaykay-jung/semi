@@ -70,6 +70,7 @@
 			</div>
 		</div>
 		
+
       <!-- 로고, 검색창 -->
       <div class="row">
          <div class="col-7 text-end">
@@ -107,7 +108,6 @@
             </form>
          </div>
       </div>
-      
 		
 		<!-- nav -->
 		<div class="row justify-content-center" id="navMain">

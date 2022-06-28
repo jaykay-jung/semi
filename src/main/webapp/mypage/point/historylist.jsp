@@ -1,5 +1,21 @@
+<%@page import="java.util.List"%>
+<%@page import="vo.Pagination"%>
+<%@page import="util.StringUtil"%>
+<%@page import="vo.PointHistory"%>
+<%@page import="dao.PointHistoryDao"%>
+<%@page import="vo.Point"%>
+<%@page import="dao.PointDao"%>
+<%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	// 세션에서 로그인된 사용자정보를 조회한다.
+	User user = (User) session.getAttribute("LOGINED_USER");
+	if (user == null) {
+		throw new RuntimeException("포인트내역 조회는 로그인 후 사용가능한 서비스 입니다.");
+	} 
+%>    
 <!doctype html>
 <html lang="ko">
 
@@ -51,7 +67,7 @@ font {font-size:13px;}
 <body>
 
 <!-- header -->
-<jsp:include page="../../common/nav.jsp">
+<jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
@@ -74,6 +90,15 @@ font {font-size:13px;}
 		<hr style="border: gray 0.7px dotted;">	
   	</div>
 
+
+
+<%
+// 포인트를 조회한다.
+int userNo = user.getNo();
+PointDao pointDao = PointDao.getInstance();
+Point point = pointDao.getPointByUserNo(userNo);
+%>
+
 <!-- 회원적립금내역 -->
 	<div style="margin:20px 5px; border:5px solid #e8e8e8; height:auto; line-height:180%;">
 		<div class="row" style="margin:0px 5px; height:140px;">
@@ -84,8 +109,8 @@ font {font-size:13px;}
 					<br><font>>환불예정 적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px; text-align:right;">
-					<font>1,000 원</font>
-					<br><font >1,000 원</font>
+					<font><%=point.getTot() %>원</font>
+					<br><font ><%=point.getUsed() %>원</font>
 					<br><font>123,456 원</font>
 				</div>
 			</div>
@@ -95,8 +120,8 @@ font {font-size:13px;}
 					<br><font>>미가용 적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px; text-align:right;">
-					<font>123,456 원</font>
-					<br><font>123,456 원</font>
+					<font><%=point.getAvailble() %>원</font>
+					<br><font><%=point.getUnUsed() %>원</font>
 				</div>
 			</div>
 		</div>
@@ -114,8 +139,30 @@ font {font-size:13px;}
 			</div>				
     	</div>	
 	</div>
+
+<!-- 요청파라미터에서 요청한 페이지 번호를 조회하고, 페이지번호에 맞는 목록을 출력한다.
+	페이징처리에 필요한 작업을 수행한다.
+-->
+<%
+	int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
+	int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
 	
+	// 적립금내역을 조회한다.
+	PointHistoryDao pointHistoryDao = PointHistoryDao.getInstance();
 	
+	// 전체 데이터 갯수 조회
+	int totalRows = 0;
+	totalRows = pointHistoryDao.getTotalRows(userNo);
+	
+	// 페이징처리에 필요한 정보를 제공하는 객체 생성
+	Pagination pagination = new Pagination(rows, totalRows, currentPage);
+	
+	// 요청한 페이지번호에 맞는 데이터 조회하기
+	List<PointHistory> pointHistoryList = null;
+
+	pointHistoryList = pointHistoryDao.getPointHistoryByUserNo(userNo, pagination.getBeginIndex(), pagination.getEndIndex());
+
+%>	
 	
 <!-- 적립금 내역 -->
 	<div class="row">
@@ -136,19 +183,30 @@ font {font-size:13px;}
 					</tr>
 				</thead>
 				<tbody>
+				<%
+					if (pointHistoryList.isEmpty()) {
+				%>
 				
-				<%//	<tr>
-				//		<td colspan="6" class="text-center" style="height:120px; border: 1px solid #d7d5d5; padding: 50px 0; text-align: center; color: #757575; font-weight: bold;"><strong>적립금 내역이 없습니다.</strong></td>
-				//	</tr>
-				 %>
-					<tr style="border:1px solid white;">
-					
-					
-						<td>2022-06-09</td>
-						<td style="text-align:right;">1,234원</td>
-						<td>-</td>
-						<td>신규회원적립금</td>
+					<tr>
+						<td colspan="4" style="height:120px; border: 1px solid #d7d5d5; padding: 50px 0; text-align: center; color: #757575; font-weight:bold;"><strong>적립금 내역이 없습니다.</strong></td>
 					</tr>
+				 
+					<tr style="border:1px solid white;">
+				<%
+					} else {
+
+						for (PointHistory pointHis : pointHistoryList) {
+				%>	
+					
+						<td><%=pointHis.getCreatedDate() %></td>
+						<td style="text-align:right;"><%=pointHis.getPointAmount() %></td>
+						<td><%=pointHis.getOrder().getNo() %></td>
+						<td><%=pointHis.getTitle() %></td>
+					</tr>
+				<%
+						}
+					}					
+				%>
 				</tbody>
 			</table>
 		</div>
@@ -156,35 +214,33 @@ font {font-size:13px;}
 
 <!-- 페이징처리 -->
 	<div style="margin:25px 5px; height:130px; line-height:180%;">
+	
 		<nav aria-label="point navigation">
 			<ul class="pagination pagination-sm justify-content-center" >
 		  		<li class="page-item" >
-		    		<a class="page-link" href="#" aria-label="Previous">
+		    		<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() - 1 %>)" aria-label="Previous">
 		        		<span aria-hidden="true">&lt;</span>
 		      		</a>
 		    	</li>
-		  		<li class="page-item">
-		    		<a class="page-link" href="#" aria-label="First">
-		        		<span aria-hidden="true">&laquo;</span>
-		      		</a>
+		    	
+			<%
+				for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+			%>		    	
+		    	
+		    	<li class="page-item <%=pagination.getCurrentPage() == num ? "active" : "" %>">
+		    		<a class="page-link" href="javascript:clickPageNo(<%=num %>)"><%=num %></a>
 		    	</li>
-		    	<li class="page-item active"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-		    		<a class="page-link" href="#" aria-label="End">
-		        		<span aria-hidden="true">&raquo;</span>
-		      		</a>
-		    	</li>
+			<%
+				}
+			%>		    	
 		  		<li class="page-item">
-		    		<a class="page-link" href="#" aria-label="Next">
+		    		<a class="page-link <%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() + 1 %>)" aria-label="Next">
 		        		<span aria-hidden="true">&gt;</span>
 		      		</a>
 		    	</li>
 		 	</ul>
 		</nav>
 	</div>
-
 
 <!-- 적립금 안내 -->	
 	<div style="border:1px solid #e8e7e7; margin:9px 5px;">
@@ -207,9 +263,29 @@ font {font-size:13px;}
 </div>
 
 <!-- footer -->
-<jsp:include page="../../common/footer.jsp">
+<jsp:include page="/common/footer.jsp">
 	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	function changeRows() {
+		document.querySelector("input[name=page]").value = 1;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+	
+	function clickPageNo(pageNo) {
+		document.querySelector("input[name=page]").value = pageNo;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+	
+	function searchKeyword() {
+		document.querySelector("input[name=page]").value = 1;
+		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
+		document.getElementById("search-form").submit();
+	}
+</script>
+
 </body>
 </html>

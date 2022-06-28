@@ -9,6 +9,7 @@ public class PointHistory {
 	private int pointAmount;
 	private User user;
 	private Date createdDate;
+	private Order order;
 	
 	public PointHistory() {
 	}
@@ -52,5 +53,16 @@ public class PointHistory {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	
+	
+	
 }
 

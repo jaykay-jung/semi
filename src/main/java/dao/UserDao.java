@@ -127,5 +127,26 @@ public class UserDao {
     	}, rownum);
     }
 
+    /**
+     * 사용자의 정보를 업데이트한다.
+     * @param user
+     * @throws SQLException
+     */
+	public void updateUser(User user) throws SQLException {
+		String sql = "UPDATE SEMI_USERS "
+					+ "SET "
+					+ "USER_PASSWORD = ?, "
+					+ "USER_EMAIL = ?, "
+					+ "USER_PHONE = ?, "
+					+ "USER_GENDER = ?, "
+					+ "USER_BIRTHDAY = ?, "
+					+ "USER_ADDRESS = ?, "
+					+ "USER_DELETED = ?, "
+					+ "USER_UPDATED_DATE = SYSDATE "
+					+ "WHERE USER_NO = ? ";
+			
+		helper.update(sql, user.getPassword(), user.getEmail(), user.getPhone(), user.getGender(), new java.sql.Date(user.getBirthday().getTime()), user.getAddress(), user.getDeleted(), user.getNo());
+	}
+    
 }
 
