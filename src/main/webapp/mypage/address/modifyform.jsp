@@ -86,7 +86,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 <body>
 
 <!-- header -->
-<jsp:include page="../../common/nav.jsp">
+<jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
@@ -101,7 +101,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div style="float: right; width:300px; height:auto; text-align:right; color:gray;">	
 				<font><a class="nolinelink" href="../../home.jsp" style="color:gray;">홈</a></font>
 				<font><strong>》</strong></font>
-				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이쇼핑</a></font>
+				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이페이지</a></font>
 				<font><strong>》</strong></font>
 				<font><strong>배송 주소록 관리</strong></font>
 			</div><div style="clear:both:"></div>
@@ -133,6 +133,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 		}
 		
   	%>
+  	
   	
   	
   	
@@ -185,8 +186,6 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 							<input type="text" id="addr2" name="addr2" style="width:460px; height:24px;"><span style="height:15px;font-size:12px;" value="<%=address.getStreet() %>">  나머지주소(선택입력가능)</span>
 						</div>
 					</div><div style="clear:both:"></div>
-					
-					
 				</div>
 	    	</div>
 		</div>
@@ -207,7 +206,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div class="row" style="height:40px;">
         		<div class="col" >
         			<div style="float:right; width:170px; height:40px; border-right:1px solid #dfdfdf; background-color: #fbfafa; padding:7px;">
-						<input type="checkbox" name="defaultadr" style="width:13px; height:13px;">
+						<input type="checkbox" name="basic" value="T" style="width:13px; height:13px;">
         				<font style="line-height: 10px; margin-left: 7px;">기본 배송지로 저장</font>
 					</div>
 				</div>
@@ -249,7 +248,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 </div>
 
 <!-- footer -->
-<jsp:include page="../../common/footer.jsp">
+<jsp:include page="/common/footer.jsp">
 	<jsp:param name="footer" value="register"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
