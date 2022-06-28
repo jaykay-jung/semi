@@ -48,28 +48,30 @@ public class PointDao {
 	}
     
     /**
-     * 사용자 번호를 받아 포인트정보를 반환하는 메소드
+     * 사용자 번호를 받아 포인트현황정보를 반환하는 메소드
      * @param userNo
      * @return
      * @throws SQLException
      */
     public Point getPointByUserNo(int userNo) throws SQLException {
-		String sql = "select * "
-				   + "from semi_user_points "
-				   + "where user_no = ? ";
+		String sql = "SELECT USER_POINT_NO, USER_TOTAL_POINT, USER_USED_POINT, USER_AVAILABLE_POINT, USER_UNUSED_POINT, USER_NO "
+				   + "FROM SEMI_USER_POINTS "
+				   + "WEHRE USER_NO = ? ";
+		
 		return helper.selectOne(sql, rs -> {
 			Point point = new Point();
-			User user = new User();
-			user.setNo(rs.getInt("USER_NO"));
-			point.setUser(user);
-			
 			point.setNo(rs.getInt("USER_POINT_NO"));
 			point.setTot(rs.getInt("USER_TOTAL_POINT"));
 			point.setUsed(rs.getInt("USER_USED_POINT"));
 			point.setAvailble(rs.getInt("USER_AVAILABLE_POINT"));
 			point.setUnUsed(rs.getInt("USER_UNUSED_POINT"));
 			
+			User user = new User();
+			user.setNo(rs.getInt("USER_NO"));
+			point.setUser(user);
+			
 			return point;
+
 		}, userNo);
 				
 	}
