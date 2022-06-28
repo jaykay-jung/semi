@@ -46,7 +46,7 @@
 			<h3>Notice</h3>
 		</div>
 	</div>
-	<!-- 상품정보 출력 -->
+	<!-- 공지 출력 -->
 	<div class="row">
 		<div class="col">
 			<table class="table">

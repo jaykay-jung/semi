@@ -110,7 +110,7 @@
 		if (user != null && review.getUser().getNo() == user.getNo()) {
 	%>	
 		<div class="col-6 text-end">
-			<a href="deleted.jsp?no=<%=review.getNo() %>" class="btn btn-danger" id="personal-button">삭제</a>
+			<a href="reviewdeleted.jsp?no=<%=review.getNo() %>" class="btn btn-danger" id="personal-button">삭제</a>
 		</div>
 	<%		
 		}

@@ -247,6 +247,30 @@ public class ProductDao {
 						return product;
 					}, keyword);
 				}
+				
+				
+				public List<Product> getProductList() throws SQLException {
+					String sql = "select * "
+								+ "from semi_products "
+								+ "order by product_no asc ";
+					return helper.selectList(sql, rs -> {
+						Product product = new Product();
+						product.setNo(rs.getInt("product_no"));
+						product.setName(rs.getString("product_name"));
+						product.setImageName(rs.getString("product_image_name"));
+						product.setDescription(rs.getString("product_description"));
+						product.setCustomerPrice(rs.getInt("product_customer_price"));
+						product.setSellPrice(rs.getInt("product_sell_price"));
+						product.setDepositPoint(rs.getInt("product_deposit_point"));
+						product.setDeliveryFee(rs.getInt("product_delivery_fee"));
+						product.setStock(rs.getInt("product_stock"));
+						product.setOnSell(rs.getString("product_on_sell"));
+						product.setCreatedDate(rs.getDate("product_created_date"));
+						product.setUpdatedDate(rs.getDate("product_updated_date"));
+						product.setCategoryNo(rs.getInt("category_no"));
+						return product;
+					});
+				}
 
 }	
 	
