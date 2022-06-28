@@ -13,6 +13,7 @@ public class Address {
 	private String tel;
 	private Date createdDate;	
   	private User user;
+  	private String basic;
 	
 	public Address() {}
 
@@ -90,6 +91,17 @@ public class Address {
 	public void setUser(User user) {
 		this.user = user;
 	}
-		
+
+
+	public String getBasic() {
+		return basic;
+	}
+
+
+	public void setBasic(String basic) {
+		this.basic = basic;
+	}
+	
+	
 }
 

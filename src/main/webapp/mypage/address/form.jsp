@@ -92,7 +92,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 <body>
 
 <!-- header -->
-<jsp:include page="../../common/nav.jsp">
+<jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
@@ -228,7 +228,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 </div>
 
 <!-- footer -->
-<jsp:include page="../../common/footer.jsp">
+<jsp:include page="/common/footer.jsp">
 	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
