@@ -1,3 +1,8 @@
+<%@page import="vo.Product"%>
+<%@page import="dao.ProductDao"%>
+<%@page import="vo.Category"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.CategoryDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -38,7 +43,6 @@
 	<div class="row">
 		<div class="col">
 			<!--  주문상품 선택  -->
-			
 		</div>
 	</div>
 	
