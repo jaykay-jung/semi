@@ -1,3 +1,5 @@
+<%@page import="vo.OrderSummary"%>
+<%@page import="dao.OrderSummaryDao"%>
 <%@page import="vo.Order"%>
 <%@page import="dao.OrderDao"%>
 <%@page import="vo.Point"%>
@@ -5,7 +7,6 @@
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%
 	// 세션에서 로그인된 사용자정보를 조회한다.
 	User user = (User) session.getAttribute("LOGINED_USER");
@@ -13,7 +14,7 @@
 		throw new RuntimeException("마이페이지는 로그인 후 사용가능한 서비스 입니다.");
 	} 
 %>
-    
+
     
 <!doctype html>
 <html lang="ko">
@@ -48,6 +49,7 @@ font {font-size:13px;}
 
 <!-- content -->
 <div class="container">
+
 <!-- 개요 -->
 	<div class="row">
 		<div class="col">
@@ -90,15 +92,12 @@ font {font-size:13px;}
 	int userNo = user.getNo();
 	PointDao pointDao = PointDao.getInstance();
 	Point point = pointDao.getPointByUserNo(userNo);
-	
-	// 주문을 조회한다.
-	OrderDao orderDao = OrderDao.getInstance();
-	Order order = orderDao.getOrderSummaryByUserNo(userNo);
-	
+
+	// 주문내역을 조회한다.
+	OrderSummaryDao orderSummaryDao = OrderSummaryDao.getInstance();
+	OrderSummary orderSummary = orderSummaryDao.getOrderSummaryByUserNo(userNo);
 	
 %>
-
-
 	<div style="margin:20px 5px; border:5px solid gainsboro; height:auto; line-height:180%;">
 		<div class="row" style="margin:0px 5px; height:100px;">
 			<div class="col" style="float:left; width:50%; border-right:1px solid gainsboro;">
@@ -107,8 +106,8 @@ font {font-size:13px;}
 					<br><font>>사용적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px;">
-					<font style="color:#008bcc;"><%=point.getAvailble() %>원</font>
-					<br><font><%=point.getUsed() %>원</font>
+					<font style="color:#008bcc;"><%=point == null ? 0 : point.getAvailble() %>원</font>
+					<br><font><%=point == null ? 0 : point.getUsed() %>원</font>
 				</div>
 	        	<div style="float:right; width:10%;margin-top:25px;">
 					<a href="point/historylist.jsp" style="color:gray; text-decoration:none;"><button type="button" class="btn btn-outline-secondary btn-sm">조회</button></a>
@@ -121,8 +120,8 @@ font {font-size:13px;}
 					
 				</div>
 	        	<div style="float:left; width:30%;margin-top:25px;">
-					<font><%=point.getTot() %>원</font>
-					<br><font><%=order.getTotalpay() %>원 (<%=order.getNo() %>회)</font>
+					<font><%=point == null ? 0 : point.getTot() %>원</font>
+					<br><font><%=orderSummary == null ? 0 : orderSummary.getTotalPay() %>원 (<%=orderSummary == null ? 0 : orderSummary.getTotalNo() %>회)</font>
 				</div>
 			</div>
 		</div>
@@ -132,7 +131,7 @@ font {font-size:13px;}
 
 <%
 	// 주문내역 조회 -> order 덮어씌우자
-	orderDao.getOrdersByUserNo(userNo);
+	//orderDao.getOrdersByUserNo(userNo);
 	
 
 %>

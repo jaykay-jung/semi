@@ -70,7 +70,7 @@
 		<!-- 로고, 검색창 -->
 		<div class="row">
 			<div class="col-7 text-end">
-				<a href="home.jsp">
+				<a href="/semi/home.jsp">
 					<img src="/semi/images/h_logo.png" alt="로고이미지">
 				</a>
 			</div>
