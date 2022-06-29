@@ -17,8 +17,6 @@ public class OrderItemDao {
         return instance;
     }
 
-    
-    
     private DaoHelper helper = DaoHelper.getInstance();
 
     /**
