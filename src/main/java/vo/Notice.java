@@ -9,7 +9,10 @@ public class Notice {
 	private String content;
 	private Date createdDate;
 	private int viewCount;
+	private String deleted; 
+	private String filename;
 	private String deleted;
+
 	
 	public Notice() {}
 

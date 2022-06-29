@@ -6,7 +6,7 @@
     pageEncoding="UTF-8"%>
 <%
 	User user = (User) session.getAttribute("LOGINED_USER");
-
+ 
 	// 공지 번호 조회
 	int noticeNo = StringUtil.stringToInt(request.getParameter("no"));
 	

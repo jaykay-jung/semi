@@ -21,7 +21,7 @@
 </style>
 </head>
 <body>
-<!-- header -->
+<!-- header --> 
 <jsp:include page="common/nav.jsp">
 	<jsp:param name="menu" value="noticeform"/>
 </jsp:include>
