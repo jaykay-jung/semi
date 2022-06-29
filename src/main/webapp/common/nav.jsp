@@ -32,7 +32,7 @@
 					if (user != null) {
 				%>
 					<li class="nav-item">
-						<a class="nav-link" href="/semi/mypage/modifyinfo.jsp">MODIFY</a>
+						<a class="nav-link" href="/semi/mypage/form.jsp">MODIFY</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/semi/logout.jsp">LOGOUT</a>

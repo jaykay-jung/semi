@@ -162,14 +162,13 @@ font {font-size:13px;}
  	
 <!-- 회원정보 입력 퐄 -->
 
-
 <!-- 
 <form>태그에서 onsubmit 이벤트가 발생하면 submitRegisterForm() 함수가 실행된다.
 submitRegisterForm()함수가 true를 반환하면 <form>태그내의 폼 입력값이 서버(register.jsp)로 제출된다.
 submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입력값이 서버(register.jsp)로 제출되지 않는다.
 -->
 
-	<form id="user-form" method="post" action="modifyinfo.jsp">
+	<form id="user-form" method="post" action="modifyinfo.jsp" onsubmit="return submitModifyForm()">
 		<div style="border-top:1px solid #dfdfdf; color:#353535;">
 			<div class="row" style="height:40px;">
         		<div class="col" >
@@ -347,6 +346,27 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 <script type="text/javascript">
 
 
+
+	// 회원정보 수정시 필수입력값 팝업 띄우기
+	function submitModifyForm() {
+		
+		let passwordField = document.querySelector("input[name=password]");
+		if (passwordField.value === '') {
+			alert("비밀번호는 필수입력값입니다.");
+			passwordField.focus();
+			return false;
+		}
+		
+		let passwordField = document.querySelector("input[name=password2]");
+		if (passwordField.value === '') {
+			alert("비밀번호 확인은 필수입력값입니다.");
+			passwordField.focus();
+			return false;
+		}
+		return true;
+	}
+	
+
 	// 회원탈퇴 버튼 클릭시, action이 달라지는 함수
 	function deleteInfo() {
 		let form = document.getElementById("user-form");
@@ -354,8 +374,6 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 		
 		form.submit();
 	}
-
-	
 </script>
 </body>
 </html>

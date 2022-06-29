@@ -24,7 +24,7 @@
 	String phone = request.getParameter("phone");
 	String basic = request.getParameter("basic");
 	
-	// Address 객체를 생성해서 주소록에 저장하기
+	// Address 객체를 생성해서 파라미터로 받은 값을 저장하기
 	Address address = new Address();
 	address.setNickName(nickname);
 	address.setName(name);
@@ -35,20 +35,22 @@
 	address.setUser(user);
 	
 	// Address정보를 데이터베이스에 저장시킨다.
+	
+	// AddressDao 객체를 생성한다.
 	AddressDao addressDao = AddressDao.getInstance();
 	
-	if (!("F".equals(basic))) {
+	if ("T".equals(basic)) {
 		
-		
-		
-		
+		// addressDao로 사용자의 모든 주소록을 가져온다.
 		List<Address> addressList = addressDao.getAllAddress(userNo);
 		
+		// 모든 주소록의 basic 값을 F로 만든다.
 		for (Address addr : addressList) {
 			addr.setBasic("F");
 			addressDao.updateAddress(addr);
 		}
-		address.setBasic(basic);
+		// 우리가 생성했던 객체는 Basic값을 "T"로 준다. 
+		address.setBasic("T");
 		
 		//UserDao 획득
 		UserDao userDao = UserDao.getInstance();
@@ -58,8 +60,10 @@
 		// 사용자정보를 데이터베이스에 업데이트
 		userDao.updateUser(user);
 		
+	} else {
+		address.setBasic("F");
 	}
-	
+
 	addressDao.insertAddress(address);
 	
 	// 주소록 목록을 재요청 URL을 응답으로 보낸다.

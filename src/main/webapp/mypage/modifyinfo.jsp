@@ -1,3 +1,4 @@
+<%@page import="util.StringUtil"%>
 <%@page import="vo.Address"%>
 <%@page import="util.PasswordUtil"%>
 <%@page import="java.sql.Date"%>
@@ -17,7 +18,7 @@
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
 	
-	int zip = Integer.parseInt(request.getParameter("zip"));
+	int zip = StringUtil.stringToInt(request.getParameter("zip"));
 	String city = request.getParameter("addr1");
 	String street = request.getParameter("addr2");
 		
@@ -39,7 +40,6 @@
 	// 세션에서 가져온 User객체에 사용자정보를 저장한다.
 	user.setPassword(secretPassword);
 	user.setName(name);
-	
 	
 	
 	String address = "(" + zip + ")" + city + " " + street;

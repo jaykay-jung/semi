@@ -39,8 +39,6 @@
 	}
 	
 	
-	
-	
 	// Address객체의 필드를 수정된 값을 바꾼다.
 	address.setNickName(nickname);
 	address.setName(name);
@@ -66,6 +64,7 @@
 		user.setAddress(basicAddress);
 		// 사용자정보를 데이터베이스에 업데이트
 		userDao.updateUser(user);
+		
 	} else {
 		address.setBasic("F");
 	}
