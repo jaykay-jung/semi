@@ -4,7 +4,7 @@
 <%@page import="dao.UserDao"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="error/500.jsp"%>
+    pageEncoding="UTF-8" %>
 <%
 	// 세션에서 로그인된 사용자정보를 조회한다.
 	User user = (User) session.getAttribute("LOGINED_USER");
@@ -12,7 +12,7 @@
 		throw new RuntimeException("회원탈퇴는 로그인 후 사용가능한 서비스입니다.");
 	}
 	
-	
+	  
 	// 요청파라미터에서 입력한 정보를 가져온다.
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");

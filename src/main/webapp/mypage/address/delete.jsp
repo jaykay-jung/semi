@@ -8,8 +8,8 @@
 	// 요청 URL : http://localhost/semi/address/delete.jsp?addrNo=20&addrNo=15
 	// 요청 파라미터
 	//		name		value
-	//		addrNo		20
-	//		addrNo		15
+	//		addressNo		20
+	//		addressNo		15
 	
 	// 세션객체에서 로그인한 사용자 정보 조회
 	User user = (User) session.getAttribute("LOGINED_USER");
@@ -20,7 +20,7 @@
 	}	
 	
 	// 요청파라미터값 조회하기
-	String[] values = request.getParameterValues("addrNo");
+	String[] values = request.getParameterValues("addressNo");
 	for (String value : values) {
 		int addressNo = StringUtil.stringToInt(value);
 		
