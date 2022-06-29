@@ -29,8 +29,6 @@
 
 <div class="container">
 		<%
-		
-			
 			// 해당 카테고리 번호로 정보 조회하기
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			
@@ -38,8 +36,6 @@
 			
 			Category category = categoryDao.getCategoryByNo(categoryNo);
 		
-			
-			
 			
 			int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
 			int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
