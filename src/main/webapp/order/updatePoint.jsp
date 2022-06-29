@@ -29,8 +29,9 @@
 	point.setAvailble(availble);
 	point.setUnUsed(unUsed);
 	point.setTot(tot);
-	point.setNo(point.getNo());
+	point.setUser(user);
 	
+	// 업데이트 메소드 실행
 	pointDao.updatePoint(point);
 	
 	// 장바구니 아이템 삭제
