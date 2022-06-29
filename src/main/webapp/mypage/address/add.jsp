@@ -39,6 +39,9 @@
 	
 	if (!("F".equals(basic))) {
 		
+		
+		
+		
 		List<Address> addressList = addressDao.getAllAddress(userNo);
 		
 		for (Address addr : addressList) {

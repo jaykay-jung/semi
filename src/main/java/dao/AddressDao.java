@@ -15,6 +15,8 @@ public class AddressDao {
 		return instance;
 	}
 
+	
+	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
 	/**

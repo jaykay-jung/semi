@@ -31,4 +31,6 @@
 
   // 재요청할 URL
 	response.sendRedirect("list.jsp");
+  
+  
 %>

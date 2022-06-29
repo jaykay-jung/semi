@@ -35,6 +35,8 @@
 			return;
 		}
 		
+		
+		
 		// 로그인된 사용자정보와 위시리스트 번호의 사용자정보가 일치하지 않으면 다른 사람의 위시리스트를 삭제하는 것이므로, 위시리스트를 요청하는 URL을 응답으로 보내고, 요청파라미터에 오류정보를 추가한다.
 		if (user.getNo() != wishList.getUser().getNo()) {
 			response.sendRedirect("list.jsp?fail=deny");

@@ -14,6 +14,8 @@ public class OrderSummaryDao {
 		return instance;
 	}
 	
+	
+	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
     /**

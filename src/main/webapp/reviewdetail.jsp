@@ -36,6 +36,7 @@
 </jsp:include>
 
 <!-- content -->
+
 <div class="container" id="review-detail-container">
 	<%
 		// detail.jsp?no=199

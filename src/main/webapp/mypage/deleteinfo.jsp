@@ -30,5 +30,7 @@
 	
 	// 홈페이지로 재요청하는 URL을 응답으로 보낸다.
 	response.sendRedirect("/home.jsp");
-		
+	
+	
+	
 %>

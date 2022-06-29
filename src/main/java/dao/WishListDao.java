@@ -19,6 +19,8 @@ public class WishListDao {
 	private DaoHelper helper = DaoHelper.getInstance();
 	
 	
+	
+	
 	/**
 	 * 위시리스트에 등록한다.
 	 * @param wishList 위시리스트 상품정보

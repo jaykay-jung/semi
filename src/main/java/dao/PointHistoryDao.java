@@ -16,6 +16,8 @@ public class PointHistoryDao {
 	public static PointHistoryDao getInstance() {
 		return instance;
 	}
+	
+	
     
     private DaoHelper helper = DaoHelper.getInstance();
     

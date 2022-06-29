@@ -176,6 +176,7 @@
 					</div>
 				</div>			
 			</div>
+			
 			<div class="col-3">
 				<div class="card">
 					<div style="border: 1px solid #eee; margin: 25px;">					
@@ -200,3 +201,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
