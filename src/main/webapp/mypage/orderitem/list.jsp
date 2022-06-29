@@ -56,9 +56,10 @@
    				<select id="orders-status" name="orders-status" class="select">
    					<option selected="selected">전체 주문처리상태</option>
    					<option value="1">입금전</option>
-   					<option value="2">배송완료</option>
-   					<option value="3">취소</option>
-   					<option value="4">반품</option>
+   					<option value="2">배송중</option>
+   					<option value="3">배송완료</option>
+   					<option value="4">취소</option>
+   					<option value="5">반품</option>
    				</select>
    			</div>
 <%
