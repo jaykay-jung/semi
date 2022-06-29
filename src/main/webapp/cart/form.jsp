@@ -32,7 +32,7 @@
    	th {text-align: center;}
     #product-table tr {text-align: center; vertical-align: middle;}
     #payment-Method {list-style-type: none; margin-left: 50px;}
-    .table img {width: 50px; height: 50px;}
+    .table img {width: 70px; height: 70px;}
     hr {border: solid 1px black; margin-top: 70px;}
 </style>
 </head>
@@ -65,7 +65,7 @@
 	                <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
 	            </tr>
 	            <tr>
-	                <td>가용적립금: <strong><%=point == null ? 0 : point.getAvailble()%>원</strong></td>
+	                <td>가용적립금: <strong><%=point.getAvailble()%>원</strong></td>
 	            </tr>
 	        </table>
 	    </div>
