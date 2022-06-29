@@ -29,10 +29,23 @@ public class OrderDao {
                    + "used_point, total_payment_price, deposit_point, "
                    + "payment_type, user_no, address_no) "
                    + "values "
-                   + "(semi_orders_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+                   + "(?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
         
-        helper.insert(sql, order.getStatus(), order.getTotalPrice(), order.getUsedPoint(), order.getTotalpay(), order.getDepositPoint(),
+        helper.insert(sql, order.getNo(), order.getStatus(), order.getTotalPrice(), order.getUsedPoint(), order.getTotalpay(), order.getDepositPoint(),
             order.getPayType(), order.getUser().getNo(), order.getAddress().getNo());
+    }
+    
+    /**
+     * 주문정보 시퀀스(주문번호)를 반환하는 메소드
+     * @return 주문번호
+     * @throws SQLException
+     */
+    public int getSequence() throws SQLException {
+    	String sql = "select semi_orders_seq.nextval seq from dual";
+ 
+    	return helper.selectOne(sql, rs-> {
+    		return rs.getInt("seq");
+    	});
     }
 
     /**
