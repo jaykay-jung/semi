@@ -190,7 +190,7 @@ Point point = pointDao.getPointByUserNo(userNo);
 				%>
 				
 					<tr>
-						<td colspan="4" style="height:120px; border: 1px solid #d7d5d5; padding: 50px 0; text-align: center; color: #757575; font-weight:bold;"><strong>적립금 내역이 없습니다.</strong></td>
+						<td colspan="4" style="text-align: center; color: #757575; font-weight:bold;"><strong>적립금 내역이 없습니다.</strong></td>
 					</tr>
 				 
 					<tr style="border:1px solid white;">

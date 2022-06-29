@@ -99,15 +99,15 @@ font {font-size:13px;}
 		<div class="col">
 			<table class="table" style="text-align:center; vertical-align: center; font-size:13px;">
 				<colgroup>
-					<col width="2%">
-					<col width="8%">
+					<col width="3%">
+					<col width="10%">
 					<col width="*">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
+					<col width="9%">
+					<col width="9%">
+					<col width="9%">
+					<col width="9%">
+					<col width="9%">
+					<col width="9%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -136,18 +136,19 @@ font {font-size:13px;}
 
 						for (WishList item : wishList) {
 				%>						
-					<tr style="height:80px; border:1px solid black; margin:5%;">
+					<tr style="height:80px; margin:5%; vertical-align:middle;">
+					
 						<td><input type="checkbox" name="wishNo" value="<%=item.getNo() %>"/></td>
-						<td style="height:80px;"><img src="../../images/category-detail/<%=item.getProduct().getImageName() %>" ></td>
+						<td style="height:80px;"><img src="../../images/category/<%=item.getProduct().getImageName() %>" width="90px;"></td>
 						<td style="text-align:left;"><%=item.getProduct().getName() %></td>
 						<td style="text-align:right;"><%=item.getProduct().getSellPrice() %>원</td>
 						<td><%=item.getProduct().getDepositPoint() %>원</td>
 						<td>개별배송</td>
-						<td><%=item.getProduct().getDeliveryFee() == 0 ? "무료배송" : item.getProduct().getDeliveryFee() %></td>
+						<td><%=item.getProduct().getDeliveryFee() == 0 ? "무료배송" : item.getProduct().getDeliveryFee() + "원" %></td>
 						<td style="text-align:right;"><%=item.getProduct().getSellPrice() %>원</td>
 						<td>
-							<a href="../../order/form.jsp?productNo=<%=item.getProduct().getNo() %>>"><img src="../../images/mypage/wishlist-order.png" width="89px;"></a>
-							<a href="../../cart/add.jsp?productNo=<%=item.getProduct().getNo() %>"><img src="../../images/mypage/wishlist-addcart.png" width="89px;"></a>
+							<a href="../../order/form.jsp?productNo=<%=item.getProduct().getNo() %>&quantity=1>"><img src="../../images/mypage/wishlist-order.png" width="89px;"></a>
+							<a href="../../cart/add.jsp?productNo=<%=item.getProduct().getNo() %>&quantity=1"><img src="../../images/mypage/wishlist-addcart.png" width="89px;"></a>
 							<a href="delete.jsp?wishNo=<%=item.getNo() %>"><img src="../../images/mypage/wishlist-delete.png" width="89px;"></a>
 						</td>
 					</tr>
@@ -187,10 +188,10 @@ font {font-size:13px;}
 <!-- 페이징처리 -->
 	<div style="margin:25px 5px; height:130px; line-height:180%;">
 	
-		<nav aria-label="point navigation">
+		<nav id="wishlist-paging">
 			<ul class="pagination pagination-sm justify-content-center" >
 		  		<li class="page-item" >
-		    		<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() - 1 %>)" aria-label="Previous">
+		    		<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="list.jsp?page=<%=pagination.getCurrentPage() - 1 %>" aria-label="Previous">
 		        		<span aria-hidden="true">&lt;</span>
 		      		</a>
 		    	</li>
@@ -200,30 +201,19 @@ font {font-size:13px;}
 			%>		    	
 		    	
 		    	<li class="page-item <%=pagination.getCurrentPage() == num ? "active" : "" %>">
-		    		<a class="page-link" href="javascript:clickPageNo(<%=num %>)"><%=num %></a>
+		    		<a class="page-link" href="list.jsp?page=<%=num %>"><%=num %></a>
 		    	</li>
 			<%
 				}
 			%>		    	
 		  		<li class="page-item">
-		    		<a class="page-link <%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() + 1 %>)" aria-label="Next">
+		    		<a class="page-link <%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="list.jsp?page=<%=pagination.getCurrentPage() + 1 %>" aria-label="Next">
 		        		<span aria-hidden="true">&gt;</span>
 		      		</a>
 		    	</li>
 		 	</ul>
 		</nav>
 	</div>
-		<div class="col-4">
-			<form id="search-form" class="row g-3" method="get" action="list.jsp">
-				<input type="hidden" name="page" />
-				<input type="hidden" name="rows" />
-				<div class="col-9">
-				</div>
-				<div class="col-3">
-				</div>
-			</form>
-		</div>
-				
 </div>
 
 <!-- footer -->
@@ -233,7 +223,6 @@ font {font-size:13px;}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 
-
 	// id가 allcheck인 체크박스를 누르면, input type이 checkbox인 항목이 전부 선택되거나 선택해제가 된다.
 	document.getElementById('allCheck').onclick = function() {
 	    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -241,8 +230,6 @@ font {font-size:13px;}
 	        checkbox.checked = !checkbox.checked;
 	    }
 	}
-
-
 
 	// 선택박스를 누르면 delete로 wishNo가 전송된다.
 	function deleteAddress() {
@@ -261,15 +248,7 @@ font {font-size:13px;}
 		form.submit();
 	
 	}
-	
-	
-	
-	
-	function clickPageNo(pageNo) {
-		document.querySelector("input[name=page]").value = pageNo;
-		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
-		document.getElementById("search-form").submit();
-	}
+
 	
 </script>
 </body>

@@ -60,7 +60,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 				<h6><strong>배송 주소록 관리</strong></h6>
 			</div>
 			<div style="float: right; width:300px; height:auto; text-align:right; color:gray;">	
-				<font><a class="nolinelink" href="/home.jsp" style="color:gray;">홈</a></font>
+				<font><a class="nolinelink" href="../../home.jsp" style="color:gray;">홈</a></font>
 				<font><strong>》</strong></font>
 				<font><a class="nolinelink" href="../mypage.jsp" style="color:gray;">마이페이지</a></font>
 				<font><strong>》</strong></font>
@@ -71,8 +71,8 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
   	</div>
   	
 <!--  주소테이블 -->
-	<form id="formAddress" action="delete.jsp">
-  	<div style="margin:20px 5px; border:1px solid gainsboro; ">
+	<form id="form-delete-addr" action="delete.jsp">
+  	<div style="margin:20px 5px; ">
   		<%
 		String fail = request.getParameter("fail");
 	
@@ -100,17 +100,17 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 		<div>
 			<table class="table" style="text-align:center; font-size:13px;">
 				<colgroup>
-					<col width="2%">
+					<col width="3%">
 					<col width="5%">
-					<col width="8%">
+					<col width="10%">
 					<col width="8%">
 					<col width="15%">
 					<col width="*">
-					<col width="7%">
+					<col width="8%">
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="allCheck" name="all"/></th>
+						<th><input type="checkbox" id="allCheck" name="alladdrNo"/></th>
 						<th>기본</th>
 						<th>배송지명</th>
 						<th>수령인</th>
@@ -146,8 +146,8 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 						<%
 							}
 						%>
-						<td><span><%=address.getNickName() %>></span></td>
-						<td><%=address.getName() %>></td>
+						<td><span><%=address.getNickName() %></span></td>
+						<td><%=address.getName() %></td>
 						<td><%=address.getTel() %></td>
 						<td>(<%=address.getZip() %>) <%=address.getCity() %> <%=address.getStreet() %></td>
 						<td>
@@ -169,7 +169,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 		<div class="row">
 			<div class="col">
 		       	<div style="float:left; width:50%; height:40px;">
-					<button type="button" onclick="deleteAddress()">
+					<button type="button" onclick="return deleteAddress()" style="border:0;">
 						<img src="../../images/mypage/address-delete.png">
 					</button>
 				</div>
@@ -218,24 +218,22 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 	    }
 	}
 
-
-	
 	// 선택박스를 누르면 delete로 addressNo가 전송된다.
 	function deleteAddress() {
 		
 		// 이름이 addrNo인 체크박스에 체크된 항목들을 배열로 가져와서 길이반환
 		let checkedLength = document.querySelectorAll("input[name=addrNo]:checked").length;
-		if (checkedLength  === 0) {
+		if (checkedLength  == 0) {
 			alert("삭제할 주소를 선택하세요");
 			return;
 		}
 		
 		// formAddress라는 아이디 박스 안에 값들을 가져온다.
-		let form =	 document.getElementById("formAddress");
+		let form =	 document.getElementById("form-delete-addr");
 		form.submit();
 	
 	}
-	
+		
 </script>
 </body>
 </html> 	

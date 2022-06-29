@@ -78,7 +78,7 @@
 	                <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
 	            </tr>
 	            <tr>
-	                <td>가용적립금:<strong><%=point.getAvailble()%>원</strong></td>
+	                <td>가용적립금:<strong><%=point == null? 0 : point.getAvailble()%>원</strong></td>
 	            </tr>
 	        </table>
 	    </div>

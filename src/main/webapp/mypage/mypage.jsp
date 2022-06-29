@@ -132,9 +132,7 @@ font {font-size:13px;}
 <!-- 회원주문처리현황 -->	
 
 <%
-	// 주문내역 조회 -> order 덮어씌우자
-	//orderDao.getOrdersByUserNo(userNo);
-	
+ // 주문내역 조회
 
 %>
 	<div style="border:1px solid; margin:20px 5px;"> 	
