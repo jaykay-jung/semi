@@ -14,12 +14,12 @@
 	NoticeDao noticeDao = NoticeDao.getInstance();
 	Notice notice = noticeDao.getNotcieByNo(noticeNo);
 	
-	// 정보가 없을 때 재요청 URL
+	// 정보가 없을 때 
 	if (notice == null) {
 		throw new RuntimeException("게시글 정보가 존재하지 않습니다.");
 	}
 	
-	// 관리자가 아닌 사용자일 때 재요청 URL
+	// 관리자가 아닌 사용자일 때
 	if(!"Y".equals(user.getAdmin())) {
 		throw new RuntimeException("관리자 권한이 필요합니다.");
 	}

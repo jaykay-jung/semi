@@ -1,3 +1,4 @@
+<%@page import="vo.User"%>
 <%@page import="vo.Notice"%>
 <%@page import="dao.NoticeDao"%>
 <%@page import="util.StringUtil"%>
@@ -70,11 +71,45 @@
 					<tr id="notice-content">
 						<td colspan="4"><%=notice.getContent() %></td>
 					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td>
+					<%
+						if (notice.getFilename() != null) {
+					%>
+							<span><%=notice.getFilename() %></span>
+							<a href="" class="btn btn-secondary btn-sx">다운로드</a>
+					<%	
+						} else {
+					%>
+							<span>없음</span>
+					<%
+						}
+					%>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-	
+	<div class="row mb-3">
+		<div class="col text-start">
+			<a href="noticelist.jsp" class="btn btn-secondary">목록</a>
+		</div>
+		<div class="col text-end">
+		<%
+			// 비활성화 여부
+			User user = (User) session.getAttribute("LOGINED_USER");
+			boolean isDisabled = true;
+		
+			if (user != null && "Y".equals(user.getAdmin())) {
+		%>
+			<a href="noticedeleted.jsp?no=<%=notice.getNo() %>" class="btn btn-danger">삭제</a>
+		<%
+			}
+		%>
+		</div>
+	</div>
 	
 </div>
 
