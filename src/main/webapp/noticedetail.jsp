@@ -35,7 +35,7 @@
 		int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
 		
 		// 공지글 정보 조회하기
-		NoticeDao noticeDao = NoticeDao.getInstance();
+		NoticeDao noticeDao = NoticeDao.getInstance(); 
 		Notice notice = noticeDao.getNotcieByNo(noticeNo);
 		
 		// 조회수 증가시키기

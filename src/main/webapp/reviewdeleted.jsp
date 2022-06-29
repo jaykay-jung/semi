@@ -4,7 +4,7 @@
 <%@page import="util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<% 
 	User user = (User) session.getAttribute("LOGINED_USER");
 
 	// 요청파라미터에서 게시글 번호를 조회한다.

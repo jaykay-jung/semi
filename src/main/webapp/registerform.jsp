@@ -69,14 +69,14 @@
 						<th>아아디 <img src="images/require.gif"></th>
 						<td>
 							<input type="text" name="id" placeholder="아이디" required="required" autofocus="autofocus">
-							<span>(조건)</span>
+							<span></span>
 						</td>
 					</tr>
 					<tr>
 						<th>비밀번호 <img src="images/require.gif"></th>
 						<td>
 							<input type="password" name="password" placeholder="비밀번호" required="required">
-							<span>(조건)</span>
+							<span></span>
 						</td>
 					</tr>
 					<tr>

@@ -5,7 +5,7 @@ import java.util.List;
 
 import helper.DaoHelper;
 import vo.Notice;
-
+ 
 public class NoticeDao {
 
 	private static NoticeDao instance = new NoticeDao();

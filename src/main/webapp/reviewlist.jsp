@@ -39,7 +39,7 @@
 			<h3 id="reviewlist-h3">REVIEW</h3>
 		</div>
 	</div>
-	<%
+	<% 
 		int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
 		int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
 		String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
