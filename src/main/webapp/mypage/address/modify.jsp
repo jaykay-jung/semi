@@ -46,8 +46,7 @@
 	address.setStreet(addr2);
 	address.setTel(phone);
 	
-	if (!("F".equals(basic))) {
-		
+	if ("T".equals(basic)) {
 		List<Address> addressList = addressDao.getAllAddress(userNo);
 		
 		for (Address addr : addressList) {
@@ -56,6 +55,7 @@
 		}
 		address.setBasic(basic);
 		
+		
 		//UserDao 획득
 		UserDao userDao = UserDao.getInstance();
 		// 세션에서 가져온 User객체에 사용자정보를 저장(수정)한다.
@@ -63,9 +63,10 @@
 		user.setAddress(basicAddress);
 		// 사용자정보를 데이터베이스에 업데이트
 		userDao.updateUser(user);
-		
+	} else {
+		address.setBasic("F");
 	}
-	
+
 	// 갱신한 주소정보를 데이터베이스에 반영한다.
 	addressDao.updateAddress(address);
 	

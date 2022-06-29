@@ -34,6 +34,19 @@ public class WishListDao {
 	}
 	
 
+	public int getTotalRows(int userNo) throws SQLException {
+		String sql = "SELECT COUNT(*) CNT "
+					+ "FROM SEMI_WISH_PRODUCTS "
+					+ "WHERE USER_NO = ? ";
+		
+		return helper.selectOne(sql, rs -> {
+			return rs.getInt("CNT");
+		}, userNo);
+	}
+	
+	
+	
+	
 	/**
 	 * 지정된 위시리스트 번호와 일치하는 위시리스트 정보를 반환한다.
 	 * @param wishNo
@@ -73,13 +86,14 @@ public class WishListDao {
 	 * @return 위시리스트 목록
 	 * @throws SQLException
 	 */
-	public List<WishList> getAllWishList(int userNo) throws SQLException {
-		String sql = "select W.WISH_ITEM_NO, U.USER_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
-					+ "	FROM SEMI_USERS U, SEMI_WISH_PRODUCTS W, SEMI_PRODUCTS P "
-					+ "	WHERE U.USER_NO = ? "
-					+ "	AND U.USER_NO = W.USER_NO "
-					+ "	AND P.PRODUCT_NO = W.PRODUCT_NO "
-					+ "	ORDER BY W.WISH_ITEM_NO DESC ";
+	public List<WishList> getAllWishListByUserNo(int userNo, int beginIndex, int endIndex) throws SQLException {
+		String sql = "SELECT W.WISH_ITEM_NO, W.USER_NO, W.PRODUCT_NO, P.PRODUCT_IMAGE_NAME, P.PRODUCT_NAME, P.PRODUCT_SELL_PRICE, P.PRODUCT_DEPOSIT_POINT, P.PRODUCT_DELIVERY_FEE "
+					+ "FROM (SELECT WISH_ITEM_NO, USER_NO, PRODUCT_NO, ROW_NUMBER() OVER (ORDER BY WISH_ITEM_NO DESC) ROW_NUMBER "
+					+ "    FROM SEMI_WISH_PRODUCTS "
+					+ "    WHERE USER_NO = ? ) W, SEMI_PRODUCTS P "
+					+ "WHERE W.ROW_NUMBER >= ? AND W.ROW_NUMBER <= ? "
+					+ "AND W.PRODUCT_NO = P.PRODUCT_NO "
+					+ "ORDER BY W.WISH_ITEM_NO DESC ";
 
 		return helper.selectList(sql, rs -> {
 		
@@ -100,7 +114,7 @@ public class WishListDao {
 			wishList.setProduct(product);
 			
 			return wishList;			
-		}, userNo);
+		}, userNo, beginIndex, endIndex);
 	}
 	
 	/**

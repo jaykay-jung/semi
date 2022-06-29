@@ -195,17 +195,17 @@ font {font-size:13px;}
 		<div class="row" style="margin:0px 5px; height:120px;">
 			<div class="col" style="border-top:1px solid gainsboro;">
         		<div style="float:left; width:40%; height:auto;margin:25px 10px;">
-					<a class="nolinelink" href="modifyinfo.jsp">
+					<a class="nolinelink" href="form.jsp">
 						<font style="font-weight:bold; font-size:20px; line-height:30px; ">profile </font>
 						<font>  회원정보  </font>
 					</a>
-					<a class="over" href="modifyinfo.jsp">
+					<a class="over" href="form.jsp">
 						<br><font style="color:gray;">회원이신 고객님의 개인정보를 관리하는 공간입니다.</font>
 						<br><font style="color:gray;">개인정보를 최신 정보로 유지하시면 보다 간편히 쇼핑을 즐기실 수 있습니다.</font>
 					</a>
 				</div>
 				<div style="float: right; width:auto; height:auto; text-align:center; margin-top:20px;">	
-				   <a class="nolinelink" href="modifyinfo.jsp"><img src="../images/mypage/information.png" height="80">></a>
+				   <a class="nolinelink" href="form.jsp"><img src="../images/mypage/information.png" height="80">></a>
 				</div><div style="clear:both:"></div>
 			</div>	
     	</div>
@@ -283,7 +283,7 @@ font {font-size:13px;}
 </div>
 
 <!-- footer -->
-<jsp:include page="../common/footer.jsp">
+<jsp:include page="/common/footer.jsp">
 	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

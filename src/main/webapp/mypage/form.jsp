@@ -1,5 +1,19 @@
+<%@page import="vo.OrderSummary"%>
+<%@page import="dao.OrderSummaryDao"%>
+<%@page import="vo.Point"%>
+<%@page import="dao.PointDao"%>
+<%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	// 세션에서 로그인된 사용자정보를 조회한다.
+	User user = (User) session.getAttribute("LOGINED_USER");
+	if (user == null) {
+		throw new RuntimeException("마이페이지는 로그인 후 사용가능한 서비스 입니다.");
+	} 
+%>
+
 <!doctype html>
 <html lang="ko">
 
@@ -90,7 +104,7 @@ font {font-size:13px;}
 <body>
 
 <!-- header -->
-<jsp:include page="../common/nav.jsp">
+<jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
@@ -113,7 +127,18 @@ font {font-size:13px;}
 		<hr style="border: gray 0.7px dotted;">	
   	</div>
   	
-  	
+
+<%
+	// 포인트를 조회한다.
+	int userNo = user.getNo();
+	PointDao pointDao = PointDao.getInstance();
+	Point point = pointDao.getPointByUserNo(userNo);
+
+	// 주문내역을 조회한다.
+	OrderSummaryDao orderSummaryDao = OrderSummaryDao.getInstance();
+	OrderSummary orderSummary = orderSummaryDao.getOrderSummaryByUserNo(userNo);
+	
+%>  	
 <!-- 회원이름과 등급 -->				
 	<div style="margin:20px 5px; border:1px solid gainsboro; ">
 		<div class="row" style="margin:10px; height:auto;">
@@ -123,9 +148,9 @@ font {font-size:13px;}
 				</div>
 				<div style="float:left; width:80%; margin:30px 10px; color:gray;">	
 					<font> 저희 쇼핑몰을 이용해주셔서 감사합니다.</font>
-					<font><strong> 누리봄 </strong></font>
+					<font><strong> <%=user.getName() %> </strong></font>
 					<font>님은</font>
-					<font><strong>[일반회원]</strong></font>
+					<font><strong>[<%=user.getGrade() %>]</strong></font>
 					<font>이십니다.</font>
 				</div><div style="clear:both:"></div>
 			</div>
@@ -142,7 +167,7 @@ submitRegisterForm()함수가 true를 반환하면 <form>태그내의 폼 입력
 submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입력값이 서버(register.jsp)로 제출되지 않는다.
 -->
 
-	<form id="user-form" method="post" action="modifyinfo.jsp" onsubmit="return submitRegisterForm()">
+	<form id="user-form" method="post" action="modifyinfo.jsp">
 		<div style="border-top:1px solid #dfdfdf; color:#353535;">
 			<div class="row" style="height:40px;">
         		<div class="col" >
@@ -151,7 +176,7 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
         				<img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="id" style="width:136px; height:24px;" readonly="readonly"><span style="height:15px; font-size:12px;"> (영문소문자/숫자, 4~16자) </span>
+						<input type="text" name="id" style="width:136px; height:24px;" readonly="readonly"  value="<%=user.getId() %>"><span style="height:15px; font-size:12px;"> (영문소문자/숫자, 4~16자) </span>
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -189,7 +214,7 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
         				<font style="line-height: 10px;margin-left: 7px;" >이름</font><img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="name" style="width:136px; height:24px;" readonly="readonly">
+						<input type="text" name="name" style="width:136px; height:24px;" readonly="readonly"  value="<%=user.getName() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -222,7 +247,7 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
         				<font style="line-height: 10px;margin-left: 7px;">휴대전화</font><img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="phone" style="width:190px; height:24px;">
+						<input type="text" name="phone" style="width:190px; height:24px;" value="<%=user.getPhone() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -231,10 +256,10 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 			<div class="row" style="height:40px;">
         		<div class="col">
         			<div style="float:left; width:150px; height:40px; border-right:1px solid #dfdfdf; background-color: #fbfafa; padding:7px;">
-        				<font style="line-height: 10px;margin-left: 7px;">이메일</font><img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
+        				<font style="line-height: 10px;margin-left: 7px;" >이메일</font><img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="email" name="email" style="width:190px; height:24px;">
+						<input type="email" name="email" style="width:190px; height:24px;" value="<%=user.getEmail() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
@@ -319,55 +344,14 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 
-	// 회원정보 수정시 필수입력값 팝업 띄우기
-	function submitRegisterForm() {
-		
-		let passwordField = document.querySelector("input[name=password]");
-		if (passwordField.value === '') {
-			alert("비밀번호는 필수입력값입니다.");
-			passwordField.focus();
-			return false;
-		}
-		
-		let passwordField = document.querySelector("input[name=password2]");
-		if (passwordField.value === '') {
-			alert("비밀번호 확인은 필수입력값입니다.");
-			passwordField.focus();
-			return false;
-		}
-		
-		let nameField = document.querySelector("input[name=name]");
-		if (nameField.value === '') {
-			alert("이름은 필수입력값입니다.");
-			nameField.focus();
-			return false;
-		}
-		
-		let nameField = document.querySelector("input[name=phone]");
-		if (nameField.value === '') {
-			alert("휴대전화는 필수입력값입니다.");
-			nameField.focus();
-			return false;
-		}
-	
-		let emailField = document.querySelector("input[name=email]");
-		if (emailField.value === '') {
-			alert("이메일은 필수입력값입니다.");
-			emailField.focus();
-			return false;
-		}
-		
-		return true;
-	}
 
 	// 회원탈퇴 버튼 클릭시, action이 달라지는 함수
 	function deleteInfo() {
 		let form = document.getElementById("user-form");
-		form.setAttribute("action", "deleteInfo.jsp");
+		form.setAttribute("action", "deleteinfo.jsp");
 		
 		form.submit();
 	}
-	
 
 	
 </script>

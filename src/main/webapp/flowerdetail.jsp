@@ -231,7 +231,7 @@
 	   		<div id="buttonlist">
 	   			<a href="order/form.jsp?productNo=<%=product.getNo() %>&quantity=1"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
 	   			<a href="cart/add.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-outline-dark" style="width: 100%;">장바구니</button></a>
-	   			<a href="cart/addwish.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
+	   			<a href="mypage/wishlist/add.jsp?productNo=<%=product.getNo() %>"><button class="btn btn-outline-danger" style="width: 100%;">♥ wish</button></a>
 	   		</div>
    					
    		</div>
