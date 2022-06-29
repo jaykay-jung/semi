@@ -41,7 +41,7 @@
 		</div>
 		
 	</div>
-	<% 
+	<%
 		int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
 		int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
 		String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
@@ -116,7 +116,7 @@
 		<!-- 로그인 전에는 글쓰기 버튼 비활성화 -->
 		<div class="row">
 			<div class="col">
-				<form id="search-form" class="row row-cols-sm-auto g-3 " method="get" action="reviewlist.jsp">
+				<form id="search-form-review" class="row row-cols-sm-auto g-3 " method="get" action="reviewlist.jsp">
 					<input type="hidden" name="page">
 					<div class="col-12">
 						<input class="form-control" type="text" name="keyword" value="<%=keyword %>" placeholder="검색">
@@ -174,7 +174,7 @@
 <script type="text/javascript">
 	function searchKeyword() {
 		document.querySelector("input[name=page]").value = 1;
-		document.getElementById("search-form").submit();
+		document.getElementById("search-form-review").submit();
 	}
 </script>
 </body>

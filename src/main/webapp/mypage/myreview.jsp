@@ -7,6 +7,15 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    		<%
+			// HttpSession객체에 저장된 사용자정보 조회하기
+			User user = (User) session.getAttribute("LOGINED_USER");
+			if (user == null) {
+				response.sendRedirect("../loginform.jsp?fail=deny");
+				return;
+			}
+	
+		%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,7 +38,7 @@
 
 <jsp:include page="/common/nav.jsp">
 
-	<jsp:param name="mypage" value="myreview"/>
+	<jsp:param name="menu" value="mypage"/>
 </jsp:include>
 
 <!-- content -->
@@ -73,19 +82,10 @@
 			}
 		%>
 		
-		<%
-			// HttpSession객체에 저장된 사용자정보 조회하기
-			User user = (User) session.getAttribute("LOGINED_USER");
-			if (user == null) {
-				response.sendRedirect("../loginform.jsp?fail=deny");
-				return;
-			}
-	
-		%>
+
 		<%
 			int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
 			int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
-			String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
 
 			// 로그인한 사용자의 리뷰 목록 조회하기
 			MyBoardDao myBoardDao = MyBoardDao.getInstance();
@@ -93,22 +93,15 @@
 			int userNo = user.getNo();
 			// 내가 쓴 전체 게시물 갯수 조회
 			int totalRows = 0;
-			if(keyword.isEmpty()) {
-				totalRows = myBoardDao.getTotalRowsByNo(userNo);
-			} else {
-				totalRows = myBoardDao.getTotalRowsByKeyNByNo(keyword, userNo);
-			}
+			totalRows = myBoardDao.getTotalRowsByNo(userNo);
 			
 			// 페이징 처리에 필요한 정보 제공
 			Pagination pagination = new Pagination(rows, totalRows, currentPage);
 			
 			// 요청한 페이지 번호마다 맞는 데이터를 조회한다.
 			List<Review> myBoardList = null;
-			if(keyword.isEmpty()) {
-				myBoardList = myBoardDao.getReviewsByNo(pagination.getBeginIndex(), pagination.getEndIndex(), userNo);
-			} else {
-				myBoardList = myBoardDao.getReviewsByKeyNByNo(pagination.getBeginIndex(), pagination.getEndIndex(), userNo, keyword);
-			}
+			myBoardList = myBoardDao.getReviewsByNo(pagination.getBeginIndex(), pagination.getEndIndex(), userNo);
+			
 				
 		%>
 
@@ -140,8 +133,8 @@
 				%>
 						<tr>
 							<td><%=myReview.getNo() %></td>
-							<td><a href="../flowerdetail.jsp?no=<%=myReview.getProduct().getNo() %>"><%=myReview.getProduct().getName() %></a></td>
-							<td><a href="../reviewdetail.jsp?no=<%=myReview.getNo() %>"><%=myReview.getTitle() %></a></td>
+							<td><a href="/semi/images/category/productNo=<%=myReview.getProduct().getNo() %>"><%=myReview.getProduct().getName() %></a></td>
+							<td><a href="/semi/images/category/productNo=<%=myReview.getNo() %>"><%=myReview.getTitle() %></a></td>
 							<td><%=myReview.getCreatedDate() %></td>
 						</tr>
 				<%
@@ -163,15 +156,17 @@
 		 			<li class="page-item">
 		 				<a class="<%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="myreview.jsp?page=<%=pagination.getCurrentPage() - 1 %>">이전</a>
 		 			</li>
-		 		<%
-		 			for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
-		 		%>
-		 			<li class="page-item">
-		 				<a class="<%=pagination.getCurrentPage() == num ? "active" : "" %>" href="myreview.jsp?page=<%=num %>"><%=num %></a>
-		 			</li>
-		 		<%
-		 			}
-		 		%>
+
+	 				<%
+						for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+					%>		    	
+				    	
+				    	<li class="page-item <%=pagination.getCurrentPage() == num ? "active" : "" %>">
+				    		<a class="page-link" href="list.jsp?page=<%=num %>"><%=num %></a>
+				    	</li>
+					<%
+						}
+					%>	
 		 			<li class="page-item">
 		 				<a class="<%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="myreview.jsp?page=<%=pagination.getCurrentPage() + 1 %>">다음</a>
 		 			</li>
@@ -182,15 +177,11 @@
 </div>
 
 <!-- footer -->
-<jsp:include page="../common/footer.jsp">
+<jsp:include page="/common/footer.jsp">
 	<jsp:param name="footer" value="myreview"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-	function searchKeyword() {
-		document.querySelector("input[name=page]").value = 1;
-		document.getElementById("search-form").submit;
-	}
-</script>
+
+
 </body>
 </html>

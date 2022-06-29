@@ -11,7 +11,6 @@ public class Notice {
 	private int viewCount;
 	private String deleted; 
 	private String filename;
-	private String deleted;
 
 	
 	public Notice() {}

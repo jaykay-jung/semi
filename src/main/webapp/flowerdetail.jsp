@@ -1,3 +1,10 @@
+<%@page import="vo.Review"%>
+<%@page import="dao.ReviewDao"%>
+<%@page import="vo.Qa"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.QaDao"%>
+<%@page import="vo.Pagination"%>
+<%@page import="util.StringUtil"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -77,7 +84,15 @@
 	font-size : 12px;
 	border-bottom: 1px solid black;
 	}	
+
+#review-paging li {margin: 0 10px;}
+
+#review {color: #000;}
+
+#reviewlist a {text-decoration: none; color: #000;}
 </style>
+
+
 
 </head>
 <body>
@@ -242,9 +257,38 @@
 		</ul>
 	</div>
 	
+	<%
+	
+	int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
+	int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
+	String keyword = StringUtil.nullToBlank(request.getParameter("keyword"));
+	
+	ReviewDao reviewDao = ReviewDao.getInstance();
+	
+	// 전체 데이터 갯수 조회
+	int totalRows = reviewDao.getTotalRows();
+	if (keyword.isEmpty()) {
+		totalRows = reviewDao.getTotalRows();
+	} else {
+		totalRows = reviewDao.getTotalRows(keyword);
+	}
+	
+	// 페이징처리에 필요한 정보 제공 객체
+	Pagination pagination = new Pagination(totalRows, currentPage);
+	
+	// 페이지 번호에 맞는 데이터 조회
+	List<Review> reviewList = null;
+	if(keyword.isEmpty()) {
+		reviewList = reviewDao.getReviews(pagination.getBeginIndex(), pagination.getEndIndex());
+	} else {
+		reviewList = reviewDao.getReviews(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);
+	}
+	
+	%>
+	
 	<!-- 특정 상품에 대한 리뷰, for문으로 출력하기, 페이징 처리하기 -->
 	<div id="REVIEW" style="margin-top:20px;">
-		<table class="table">
+		<table class="table" style="color:black;">
 				<colgroup>
 					<col width="10%">
 					<col width="60%">
@@ -257,20 +301,51 @@
 					<th style="text-align:center;">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
+					
 				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+				<tr style="font-color:black;">
+				<%
+					for(Review review : reviewList) {
+				%>
+					<td style="font-size: 14px; color:black;"><%=review.getNo() %></td>
+					<td style="font-size: 14px; color:black;"><a id="review-title" href="reviewdetail.jsp?no=<%=review.getNo() %>"><%=review.getTitle() %></a></td>
+					<td style="font-size: 14px; color:black;"><%=review.getUser().getName() %></td>
+					<td style="font-size: 14px; color:black;"><%=review.getCreatedDate() %></td>
+					
 				</tr>
+				<%
+				}
+				%>
 		</table>
 		<div style="text-align:end">
 				<a href="reviewform.jsp"><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
 				<a href="reviewlist.jsp"><button class="btn btn-secondary" style="width: 12%;">MORE</button></a> 
 		</div>
+		
+		<div class="row mb-3">
+		<div class="col-12">
+		
+			 <nav aria-label="pagenavigation">
+	  			<ul class="pagination justify-content-center" id="review-paging" style="color:black;">
+		 			<li class="page-item" style="color:black;">
+		 				<a  style="color:black;" class="<%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="reviewlist.jsp?page=<%=pagination.getCurrentPage() - 1 %>">&lt;</a>
+		 			</li>
+		 		<%
+		 			for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+		 		%>
+		 			<li class="page-item">
+		 				<a  style="color:black;" class="<%=pagination.getCurrentPage() == num ? "active" : "" %>" href="reviewlist.jsp?page=<%=num %>"><%=num %></a>
+		 			</li>
+		 		<%
+		 			}
+		 		%>
+		 			<li class="page-item">
+		 				<a style="color:black;" class="<%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="reviewlist.jsp?page=<%=pagination.getCurrentPage() + 1 %>">&gt;</a>
+		 			</li>
+		 		</ul>
+			</nav>
+		</div>
+	</div>
 	</div>
 	
 	
@@ -309,7 +384,28 @@
 		</ul>
 	</div>
 	
+	
+	
 	<!-- 특정 상품에 대한 문의, for문으로 출력하기, 페이징 처리하기 -->
+	
+	<%
+	/*
+		int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
+		int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
+		
+		QaDao qaDao = QaDao.getInstance();
+		
+		//Qa qa = qaDao.getQaByNo(qaNo);
+		// 전체 데이터 갯수 조회
+		int totalRows = qaDao.getTotalRows(productNo);
+		
+		// 페이징처리에 필요한 정보 제공 객체
+		Pagination pagination = new Pagination(rows, totalRows, currentPage);
+		
+		// 페이지 번호에 맞는 데이터 조회
+		List<Qa> qaList = qaDao.getQas(pagination.getBeginIndex(), pagination.getEndIndex(), productNo);
+	*/	
+	%>
 	<div id="QNA" style="margin-bottom:20px;">
 		<table class="table">
 				<colgroup>
@@ -326,23 +422,47 @@
 					<th style="text-align:center;">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
-					<th>조회</th>
 				</tr>
+				<%
+					//for (Qa qa : qaList) {
+				%>	
 				<tr>
+					<td></td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
+			
 		</table>
 		<div style="text-align:end;">
-				<a href=""><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
-				<a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a>  
+				<a href="qa/qaform.jsp"><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
+				<a href="qa/qalist.jsp"><button class="btn btn-secondary" style="width: 12%;">MORE</button></a>  
+		</div>
+	<div class="row mb-3">
+		<div class="col-12">
+		
+			 <nav aria-label="pagenavigation">
+	  			<ul class="pagination justify-content-center">
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="qalist.jsp?page=<%=pagination.getCurrentPage() - 1 %>">&lt;</a>
+		 			</li>
+		 		<%
+		 			for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+		 		%>
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == num ? "active" : "" %>" href="qalist.jsp?page=<%=num %>"><%=num %></a>
+		 			</li>
+		 		<%
+		 			}
+		 		%>
+		 			<li class="page-item">
+		 				<a class="<%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="qalist.jsp?page=<%=pagination.getCurrentPage() + 1 %>">&gt;</a>
+		 			</li>
+		 		</ul>
+			</nav>
 		</div>
 	</div>
-</div>
    	   		
    	   		
 <jsp:include page="common/footer.jsp">

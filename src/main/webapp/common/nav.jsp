@@ -64,6 +64,9 @@
 						<a class="nav-link" href="/semi/reviewlist.jsp">REVIEW</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="/semi/qa/qalist.jsp">Q&A</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="/semi/noticelist.jsp">NOTICE</a>
 					</li>
 				</ul>
