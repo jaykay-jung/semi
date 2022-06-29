@@ -40,6 +40,9 @@
 			return;
 		}
 		
+		
+		
+		
 		// 주소록번호와 일치하는 주소를 주소록에서 삭제한다.
 		addressDao.deleteAddressByNo(addressNo);
 	}

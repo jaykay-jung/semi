@@ -36,6 +36,9 @@ function popupZipSearch(){
 		  } else { // 사용자가 지번 주소를 선택했을 경우(J)
 		      fullAddr = data.jibunAddress;
 		  }
+		  
+		  
+		  
 		 
 		  // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
 		  if(data.userSelectedType === 'R'){

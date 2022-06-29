@@ -1,5 +1,6 @@
 <%@page import="vo.Pagination"%>
 <%@page import="dao.ReviewDao"%>
+
 <%@page import="util.StringUtil"%>
 <%@page import="vo.User"%>
 <%@page import="vo.Review"%>
@@ -38,6 +39,7 @@
 		<div class="col">
 			<h3 id="reviewlist-h3">REVIEW</h3>
 		</div>
+		
 	</div>
 	<%
 		int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);

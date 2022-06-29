@@ -14,6 +14,8 @@ public class NoticeDao {
 		return instance;
 	}
 	
+	
+	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
 	/**

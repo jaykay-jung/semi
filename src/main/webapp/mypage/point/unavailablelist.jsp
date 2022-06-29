@@ -28,6 +28,8 @@ font {font-size:13px;}
  color: #555;
  }
 .page-link {
+
+
   color: #000; 
   background-color: #fff;
   border: 1px solid #ccc; 
@@ -73,6 +75,8 @@ font {font-size:13px;}
     	</div>
 		<hr style="border: gray 0.7px dotted;">	
   	</div>
+
+
 
 <!-- 회원적립금내역 -->
 	<div style="margin:20px 5px; border:5px solid #e8e8e8; height:auto; line-height:180%;">

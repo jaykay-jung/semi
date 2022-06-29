@@ -17,6 +17,10 @@ public class CartItemDao {
         return instance;
     }
 
+    
+    
+    
+    
     private DaoHelper helper = DaoHelper.getInstance();
 
     /**

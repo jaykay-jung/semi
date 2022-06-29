@@ -67,6 +67,8 @@ font {font-size:13px;}
 
 <body>
 
+
+
 <!-- header -->
 <jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
