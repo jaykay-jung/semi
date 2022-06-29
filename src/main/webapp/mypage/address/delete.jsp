@@ -20,9 +20,10 @@
 	}	
 	
 	// 요청파라미터값 조회하기
-	String[] values = request.getParameterValues("addrNo");
-	for (String value : values) {
-		int addressNo = StringUtil.stringToInt(value);
+	String[] addrs = request.getParameterValues("addrNo");
+	for (String addr : addrs) {
+		
+		int addressNo = StringUtil.stringToInt(addr);
 		
 		// 주소번호에 해당하는 주소정보 조회
 		AddressDao addressDao = AddressDao.getInstance();

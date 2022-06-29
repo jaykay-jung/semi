@@ -21,15 +21,18 @@
 <title>PLANANT</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-	#title {border-bottom: solid 2px rgba(0, 0, 0, 0.15); font-size: larger;}
-	#content-height {line-height: 50%;}
-	#content-height input  {width: 50px; height: 30px;}
-    #div-h {padding-top: 20px; padding-bottom: 20px;}
-    #h-table {border-style: solid; border-width: 7px;}
+	#cartform-container {margin-bottom: 100px;}
+	#cartform-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
+	h3 {font-size: 18px; font-weight: bold;}
+	#div-h {padding-top: 20px; padding-bottom: 20px;}
+    #h-table {border-style: solid; border-width: 5px;}
+    #h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
+	
+	.table tbody {font-size: 15px;}
+   	th {text-align: center;}
     #product-table tr {text-align: center; vertical-align: middle;}
-   	#h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
     #payment-Method {list-style-type: none; margin-left: 50px;}
-    .table img {width: 100px; height: 100px;}
+    .table img {width: 70px; height: 70px;}
     hr {border: solid 1px black; margin-top: 70px;}
 </style>
 </head>
@@ -40,7 +43,7 @@
 </jsp:include>
 
 <!-- content -->
-<div class="container">
+<div class="container" id="cartform-container">
 <%
 	CartItemDao cartItemDao = CartItemDao.getInstance();
 	List<CartItem> cartItems = cartItemDao.getCartItemsByUserNo(user.getNo());
@@ -50,135 +53,145 @@
 	Point point = pointDao.getPointByUserNo(user.getNo());
 %>
     <div class="row">
-		<div class="col" style="margin-top: 10px;">
-			<h1 id="title" class="fs-4 borderless p-2">장바구니</h1>
-		    <div id="div-h">
-		        <table id="h-table" class="table">
-		            <tr>
-		            	<td id="h1" rowspan="2"><strong>혜택정보</strong></td>
-		                <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
-		            </tr>
-		            <tr>
-		                <td>가용적립금: <strong><%=point.getAvailble()%>원</strong></td>
-		            </tr>
-		        </table>
-		    </div>
-		    <div>
-		        <table class="table">
-		            <tr class="table-secondary">
-		                <td><strong>일반상품</strong></td>
-		            </tr>
-		        </table>
-		    </div>
-		    <div id="product-table">
-		    <form action="../order/form.jsp" id="cart-form">
-		        <table class="table">
-					<thead>
-		                <tr>
-		                    <th><input class="form-check-input" type="checkbox" name="checkAll" id="checkbox-toggle" onchange="toggleCheckbox();"></th>
-		                    <th>이미지</th>
-		                    <th>상품정보</th>
-		                    <th>판매가</th>
-		                    <th>수량</th>
-		                    <th>적립금</th>
-		                    <th>배송구분</th>
-		                    <th>배송비</th>
-		                    <th>합계</th>
-		                    <th>선택</th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		            <%
-						if (cartItems.isEmpty()) {
-					%>
-							<tr>
-								<td colspan="10" class="text-center"><strong>장바구니가 비어있습니다.</strong></td>
-							</tr>
-					<%
-						} else {
-							for (CartItem item : cartItems) {
-								// 적립금
-								int depositPoint = item.getProduct().getDepositPoint() * item.getQuantity();
-					%>
-				                <tr>
-				                    <td><input id="product-number" class="form-check-input" type="checkbox" name="productNo" value="<%=item.getProduct().getNo() %>" data-item-value="<%=item.getNo() %>" onchange="updateTotalPrice();"></td>
-				                    <td><a href="../flowerdetail.jsp?productNo=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName()%>" alt="이미지"></a></td>
-				                    <td><%=item.getProduct().getName()%></td>
-				                    <td><strong id="product-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()%>원</strong></td>
-				                    <td id="content-height">
-				                        <p><input id="quantity-<%=item.getNo() %>" type="number" min="0" maxlength="3" name="quantity" value="<%=item.getQuantity()%>"></p>
-				                        <p><button id="change-quantity" type="button" class="btn btn-light btn-sm" value="<%=item.getNo() %>" onclick="updateQuantity(<%=item.getNo() %>)">변경</button></p>
-				                    </td>
-				                    <td><span id="deposit-point"><%=depositPoint %></span>원</td>
-				                    <td>개별배송</td>
-				                    <td id="delivery-fee-<%=item.getProduct().getNo() %>"><%=item.getProduct().getDeliveryFee()%>원</td>
-				                    <td><strong id="order-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()*item.getQuantity() + item.getProduct().getDeliveryFee()%></strong>원</td>
-				                    <td>
-				                    	<p><button id="order-button" type="button" class="btn btn-dark btn-sm" onclick="buy(<%=item.getProduct().getNo() %>, this);" data-item-no="<%=item.getNo() %>">주문하기</button></p>
-				                    	<p><button type="button" class="btn btn-light btn-sm" value="<%=item.getProduct().getNo() %>" onclick="addWish(this);">관심상품등록</button></p>
-				                    	<p><a href="delete.jsp?itemNo=<%=item.getNo()%>"><button type="button" class="btn btn-light btn-sm">삭제</button></a></p>
-				                    </td>
-				                </tr>
-		             <%
-							}
-						}
-		             %>
-		            </tbody>
-		        </table>
-		    </form>
-		    </div>
-		    <div>
-		        <table class="table">
-		            <tr class="table-secondary">
-		                <td>[개별배송]</td>
-		                <td style="text-align: right;">상품구매금액 <strong id="total-product-price"></strong> + 배송비 <span id="total-delivery-fee"></span> = 합계: <strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
-		            </tr>
-		            <tr>
-		                <td><span style="color:Red;">!</span><span style="font-size: small;"> 할인 적용 금액은 주문서작성의 결제예정금액에서 확인 가능합니다.</span></td>
-		                <td>&nbsp;</td>
-		            </tr>
-		            <tr>
-		                <td style="border-bottom: none;">
-		                    <strong>선택상품을 </strong><button type="button" class="btn btn-secondary btn-sm" onclick="deleteCheckItems()">삭제하기</button>
-
-		                </td>
-		                <td style="border-bottom: none;">
-		                    <button type="button" class="btn btn-light btn-sm" style="float: right;" value="<%=user.getNo() %>" onclick="deleteAll(this)">장바구니비우기</button>
-		                </td>
-		            </tr>
-		        </table>
-		    </div>
-			<hr> 
-		    <div style="margin-top: 30px;">
-		        <p ><strong>결제 예정 금액</strong></p>
-		    </div>
-		    <div>
-			    <table class="table">
-			      	<colgroup>
-			        	<col style="width:33%">
-			        	<col style="width:34%">
-			        	<col style="width:33%">
-			        </colgroup>
-		            <tr class="table-secondary text-center">
-		            	<th><strong>총 주문 금액</strong></th>
-		                <th><strong>총 할인 + 부가결제 금액</strong></th>
-		                <th><strong>총 결제예정 금액</strong></th>
-		            </tr>
-		            <tr class="table text-center">
-		                <td><strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
-		                <td><strong>-<span style="font-size: x-large;">0</span>원</strong></td>
-		                <td><strong>=<span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
-		            </tr>
-			    </table>
-		    </div>
-		    <div style="padding-top: 30px; padding-bottom: 70px; text-align: center; padding-left: 105px;">
-		        <button type="button" class="btn btn-dark" onclick="buyAll();">전체상품주문</button>
-	        	<button type="button" class="btn btn-secondary" onclick="buyChecked()">선택상품주문</button>
-	        	<button type="button" class="btn btn-outline-dark" style="float: right;" onclick="keepShoping()">쇼핑계속하기</button>
-			</div>
+		<div class="col">
+			<h3 id="cartform-h3">장바구니</h3>
 		</div>
 	</div>
+	<div>
+	    <div id="div-h">
+	        <table id="h-table" class="table">
+	            <tr>
+	            	<td id="h1" rowspan="2"><strong>혜택정보</strong></td>
+	                <td><strong><%=user.getName() %></strong> 님은 [<%=user.getGrade() %>] 회원입니다.</td>
+	            </tr>
+	            <tr>
+	                <td>가용적립금: <strong><%=point.getAvailble()%>원</strong></td>
+	            </tr>
+	        </table>
+	    </div>
+    </div>
+    <div>
+        <table class="table">
+            <tr class="table-secondary">
+                <td><strong>일반상품</strong></td>
+            </tr>
+        </table>
+    </div>
+    <div id="product-table">
+    <form action="../order/form.jsp" id="cart-form">
+        <table class="table">
+			<thead>
+                <tr>
+                    <th><input class="form-check-input" type="checkbox" name="checkAll" id="checkbox-toggle" onchange="toggleCheckbox();"></th>
+                    <th>이미지</th>
+                    <th>상품정보</th>
+                    <th>판매가</th>
+                    <th>수량</th>
+                    <th>적립금</th>
+                    <th>배송구분</th>
+                    <th>배송비</th>
+                    <th>합계</th>
+                    <th>선택</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+				if (cartItems.isEmpty()) {
+			%>
+					<tr>
+						<td colspan="10" class="text-center"><strong>장바구니가 비어있습니다.</strong></td>
+					</tr>
+			<%
+				} else {
+					for (CartItem item : cartItems) {
+						// 적립금
+						int depositPoint = item.getProduct().getDepositPoint() * item.getQuantity();
+			%>
+		                <tr>
+		                    <td><input id="product-number" class="form-check-input" type="checkbox" name="productNo" value="<%=item.getProduct().getNo() %>" data-item-value="<%=item.getNo() %>" onchange="updateTotalPrice();"></td>
+		                    <td><a href="../flowerdetail.jsp?productNo=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName()%>" alt="이미지"></a></td>
+		                    <td><%=item.getProduct().getName()%></td>
+		                    <td><strong id="product-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()%>원</strong></td>
+		                    <td>
+		                        <p><input id="quantity-<%=item.getNo() %>" type="number" min="0" maxlength="3" name="quantity" value="<%=item.getQuantity()%>" style="width: 50px;"></p>
+		                        <p><button id="change-quantity" type="button" class="btn btn-light btn-sm" value="<%=item.getNo() %>" onclick="updateQuantity(<%=item.getNo() %>)">변경</button></p>
+		                    </td>
+		                    <td><span id="deposit-point"><%=depositPoint %></span>원</td>
+		                    <td>개별배송</td>
+		                    <td id="delivery-fee-<%=item.getProduct().getNo() %>"><%=item.getProduct().getDeliveryFee()%>원</td>
+		                    <td><strong id="order-price-<%=item.getProduct().getNo() %>"><%=item.getProduct().getSellPrice()*item.getQuantity() + item.getProduct().getDeliveryFee()%></strong>원</td>
+		                    <td>
+		                    	<div>
+		                    		<button id="order-button" type="button" class="btn btn-dark btn-sm" onclick="buy(<%=item.getProduct().getNo() %>, this);" data-item-no="<%=item.getNo() %>">주문하기</button>
+		                    	</div>
+		                    	<div style="margin-top: 5px; margin-bottom: 5px;">
+		                    		<button type="button" class="btn btn-light btn-sm" value="<%=item.getProduct().getNo() %>" onclick="addWish(this);">관심상품등록</button>
+		                    	</div>
+		                    	<div>
+		                    		<button type="button" class="btn btn-light btn-sm" value="<%=item.getNo() %>" onclick="deleteItemOne(this)">삭제</button>
+		                    	</div>
+		                    	
+		                    </td>
+		                </tr>
+             <%
+					}
+				}
+             %>
+            </tbody>
+        </table>
+    </form>
+    </div>
+    <div>
+        <table class="table">
+            <tr class="table-secondary">
+                <td>[개별배송]</td>
+                <td style="text-align: right;">상품구매금액 <strong id="total-product-price"></strong> + 배송비 <span id="total-delivery-fee"></span> = 합계: <strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
+            </tr>
+            <tr>
+                <td><span style="color:Red;">!</span><span style="font-size: small;"> 할인 적용 금액은 주문서작성의 결제예정금액에서 확인 가능합니다.</span></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="border-bottom: none;">
+                    <strong>선택상품을 </strong><button type="button" class="btn btn-secondary btn-sm" onclick="deleteCheckItems()">삭제하기</button>
+
+                </td>
+                <td style="border-bottom: none;">
+                    <button type="button" class="btn btn-light btn-sm" style="float: right;" value="<%=user.getNo() %>" onclick="deleteAll(this)">장바구니비우기</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+	<hr> 
+    <div style="margin-top: 30px;">
+        <p ><strong>결제 예정 금액</strong></p>
+    </div>
+    <div>
+	    <table class="table">
+	      	<colgroup>
+	        	<col style="width:33%">
+	        	<col style="width:34%">
+	        	<col style="width:33%">
+	        </colgroup>
+            <tr class="table-secondary text-center">
+            	<th><strong>총 주문 금액</strong></th>
+                <th><strong>총 할인 + 부가결제 금액</strong></th>
+                <th><strong>총 결제예정 금액</strong></th>
+            </tr>
+            <tr class="table text-center">
+                <td><strong><span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
+                <td><strong>-<span style="font-size: x-large;">0</span>원</strong></td>
+                <td><strong>=<span id="total-order-price" style="font-size: x-large;"></span>원</strong></td>
+            </tr>
+	    </table>
+    </div>
+    <div style="padding-top: 30px; padding-bottom: 70px; text-align: center; padding-left: 105px;">
+        <button type="button" class="btn btn-dark" onclick="buyAll();">전체상품주문</button>
+       	<button type="button" class="btn btn-secondary" onclick="buyChecked()">선택상품주문</button>
+       	<button type="button" class="btn btn-outline-dark" style="float: right;" onclick="keepShoping()">쇼핑계속하기</button>
+	</div>
 </div>
+
 <!-- footer -->
 <jsp:include page="../common/footer.jsp">
 	<jsp:param name="footer" value="cart"/>
@@ -293,6 +306,17 @@
 		updateProductPrice();
 	}
 	
+	// 상품 삭제 버튼 메소드
+	function deleteItemOne(item) {
+		let itemNo = item.value;
+		if (confirm("상품을 삭제하시겠습니까?") == true) {
+			alert("상품을 삭제합니다");
+			location.href = "delete.jsp?itemNo="+itemNo;
+		} else {
+			return false;
+		}
+	}
+	
 	// 상품 선택 삭제 버튼 메소드
 	function deleteCheckItems() {
 		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
@@ -352,7 +376,7 @@
 	function addWish(product) {
 		let productNo = product.value;
 		if (confirm("관심상품에 등록하시겠습니까?") == true) {
-			alert("관심상품에 등록합니다");
+			alert("등록되었습니다");
 			location.href = "addwish.jsp?productNo="+productNo;
 		} else {
 			return false;

@@ -25,12 +25,16 @@
 
 <body>
 <!-- header -->
+
+
 <jsp:include page="/common/nav.jsp">
 
 	<jsp:param name="mypage" value="myreview"/>
 </jsp:include>
 
 <!-- content -->
+
+
 <div class="container">
 	<div class="row">
 		<div class="col">

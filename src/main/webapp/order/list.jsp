@@ -22,14 +22,18 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
-	#p-title {border-bottom: solid 2px rgba(0, 0, 0, 0.15); font-size: larger;}
-	#div-h {padding-top: 20px; padding-bottom: 20px;}
-    #h-table {border-style: solid; border-width: 7px;}
-   	#h1 {text-align: center; vertical-align: middle; table-layout: fixed; width: 150px;}
+	#orderlist-container {margin-bottom: 100px;}
+	#orderlist-h3 {line-height: 40px; border-bottom: 1px solid #eee;}
+	h3 {font-size: 18px; font-weight: bold;}
+    #h-table {border-style: solid; border-width: 5px; margin-top: 20px; margin-bottom: 20px;}
    	.form-select {width: 170px;}
-   	#product-image img {width: 100px; height: 100px;}
+   	
+   	#product-image img {width: 50px; height: 50px;}
+   	.table tbody {font-size: 13px;}
    	th {text-align: center;}
    	td {vertical-align: middle; text-align: center;}
+   	a {text-decoration: none; color: #000;}
+   	#product-paging li {margin: 0 10px; margin-top: 30px; margin-bottom: 20px;}
 </style>
 <body>
 <!-- header -->
@@ -37,7 +41,7 @@
 	<jsp:param name="name" value="order"/>
 </jsp:include>
 
-<div class="container">
+<div class="container" id="orderlist-container">
 <%
 	String fail = request.getParameter("fail");
 %>
@@ -56,29 +60,27 @@
 <%
 	}
 %>
-   <div class="row">
-		<div class="col" style="margin-top: 10px;">
-			<h1 class="fs-4 borderless p-2"></h1>
+	<div class="row">
+		<div class="col">
+			<h3 id="orderlist-h3">주문조회</h3>
 		</div>
 	</div>
 	<div>
-        <p id="p-title"><strong>주문 조회</strong></p>
-    </div>
-    <div id="div-h">
-        <table id="h-table" class="table">
-            <tr>
-            	<td id="h1">
-            		<select class="form-select form-select-sm" aria-label=".form-select-sm">
-					  <option selected>전체 주문처리상태</option>
-					  <option value="1">입금전</option>
-					  <option value="2">배송완료</option>
-					  <option value="3">취소</option>
-					  <option value="4">반품</option>
-					</select>
-            	</td>
-            	<td>날짜</td>
-           	</tr>
-        </table>
+	    <div>
+	        <table id="h-table" class="table">
+	            <tr>
+	            	<td id="h1">
+	            		<select class="form-select form-select-sm" aria-label=".form-select-sm" onchange="selectOrderList(this.value)">
+						  <option selected>주문 조회</option>
+						  <option value="1">결제완료</option>
+						  <option value="2">배송완료</option>
+						  <option value="3">취소</option>
+						  <option value="4">반품</option>
+						</select>
+	            	</td>
+	           	</tr>
+	        </table>
+	    </div>
     </div>
     <%
 		int currentPage = StringUtil.stringToInt(request.getParameter("page"),1);
@@ -132,23 +134,21 @@
 					if (orderItemList.isEmpty()) {
 				%>
 					<tr>
-						<td colspan="10" class="text-center"><strong>주문내역이 없습니다.</strong></td>
+						<td colspan="11" class="text-center"><strong>주문내역이 없습니다.</strong></td>
 					</tr>
 				<%
 					} else {
 						for(OrderItem item : orderItemList) {
-						// 구매 적립 포인트
-						int depositPoint = item.getProduct().getDepositPoint() * item.getQuantity();
 				%>
 							<tr>
 								<td><%=item.getOrder().getNo() %></td>
 								<td id="product-image"><a href="../flowerdetail.jsp?productNo=<%=item.getProduct().getNo()%>"><img src="../images/category/<%=item.getProduct().getImageName() %>"></a></td>
 								<td><%=item.getProduct().getName() %></td>
 								<td><%=item.getQuantity() %></td>
-								<td><%=depositPoint %>원</td>
-								<td><%=item.getOrder().getUsedPoint() %>원</td>
+								<td><span><%=item.getOrder().getDepositPoint() %></span> 원</td>
+								<td><span><%=item.getOrder().getUsedPoint() %></span> 원</td>
 								<td>개별배송</td>
-								<td><%=item.getPrice() %>원</td>
+								<td><span><%=item.getPrice() %></span>원</td>
 								<td><%=item.getOrder().getPayType() %></td>
 								<td><%=item.getOrder().getCreatedDate() %></td>
 								<td><%=item.getOrder().getReceiveDate() %></td>
@@ -186,7 +186,6 @@
 		 	</nav>
 	 	</div>
 	 </div>
-    
 </div>
 
 <!-- footer -->

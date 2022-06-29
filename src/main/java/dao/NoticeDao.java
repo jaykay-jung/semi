@@ -14,6 +14,8 @@ public class NoticeDao {
 		return instance;
 	}
 	
+	
+	
 	private DaoHelper helper = DaoHelper.getInstance();
 	
 	/**
@@ -23,10 +25,10 @@ public class NoticeDao {
 	 */
 	public void insertNotice(Notice notice) throws SQLException {
 		String sql = "insert into semi_notices "
-					+ "(notice_no, notice_title, notice_content, notice_file_name) "
+					+ "(notice_no, notice_title, notice_content) "
 					+ "values "
-					+ "(semi_notices_seq.nextval, ?, ?, ?) ";
-		helper.insert(sql, notice.getTitle(), notice.getContent(), notice.getFilename());
+					+ "(semi_notices_seq.nextval, ?, ?) ";
+		helper.insert(sql, notice.getTitle(), notice.getContent());
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class NoticeDao {
 	 */
 	public List<Notice> getNotices(int beginIndex, int endIndex) throws SQLException {
 		String sql = "select * "
-					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count, notice_file_name "
+					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
 					+ "		 from semi_notices "
 					+" 		 where notice_deleted = 'N') "
 					+ "where row_number >= ? and row_number <= ? ";
@@ -81,7 +83,6 @@ public class NoticeDao {
 			notice.setContent(rs.getString("notice_content"));
 			notice.setCreatedDate(rs.getDate("notice_created_date"));
 			notice.setViewCount(rs.getInt("notice_view_count"));
-			notice.setFilename(rs.getString("notice_file_name"));
 			
 			return notice;
 		}, beginIndex, endIndex);
@@ -97,7 +98,7 @@ public class NoticeDao {
 	 */
 	public List<Notice> getNotices(int beginIndex, int endIndex, String keyword) throws SQLException {
 		String sql = "select * "
-					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count, notice_file_name "
+					+ "from (select row_number() over (order by notice_no desc) row_number, notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
 					+ "		 from semi_notices "
 					+" 		 where notice_deleted = 'N' and notice_title like '%' || ? || '%') "
 					+ "where row_number >= ? and row_number <= ? ";
@@ -109,14 +110,13 @@ public class NoticeDao {
 			notice.setContent(rs.getString("notice_content"));
 			notice.setCreatedDate(rs.getDate("notice_created_date"));
 			notice.setViewCount(rs.getInt("notice_view_count"));
-			notice.setFilename(rs.getString("notice_file_name"));
 			
 			return notice;
 		}, keyword, beginIndex, endIndex);
 	}
 	
 	public Notice getNotcieByNo(int noticeNo) throws SQLException {
-		String sql = "select notice_no, notice_title, notice_content, notice_created_date, notice_view_count, notice_deleted, notice_file_name "
+		String sql = "select notice_no, notice_title, notice_content, notice_created_date, notice_view_count "
 					+ "from semi_notices "
 					+ "where notice_no = ? ";
 		
@@ -127,8 +127,6 @@ public class NoticeDao {
 			notice.setContent(rs.getString("notice_content"));
 			notice.setCreatedDate(rs.getDate("notice_created_date"));
 			notice.setViewCount(rs.getInt("notice_view_count"));
-			notice.setDeleted(rs.getString("notice_deleted"));
-			notice.setFilename(rs.getString("notice_file_name"));
 			
 			return notice;
 		}, noticeNo);
@@ -141,10 +139,9 @@ public class NoticeDao {
 					+ "		notice_content = ?, "
 					+ "		notice_view_count = ?, "
 					+ "		notice_deleted = ?, "
-					+ "		notice_file_name = ? "
 					+ "where notice_no = ? ";
 		
-		helper.update(sql, notice.getTitle(), notice.getContent(), notice.getViewCount(), notice.getDeleted(), notice.getFilename(), notice.getNo());			
+		helper.update(sql, notice.getTitle(), notice.getContent(), notice.getViewCount(), notice.getDeleted(), notice.getNo());			
 	}
 	
 }

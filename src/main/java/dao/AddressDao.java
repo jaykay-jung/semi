@@ -14,8 +14,8 @@ public class AddressDao {
 	public static AddressDao getInstance() {
 		return instance;
 	}
-
 	private DaoHelper helper = DaoHelper.getInstance();
+	
 	
 	/**
 	 * 주소를 전달받아서, 주소록에 추가한다.
@@ -24,11 +24,11 @@ public class AddressDao {
 	 */
 	public void insertAddress(Address address) throws SQLException {
 		String sql = "INSERT INTO SEMI_USER_ADDRESS "
-					+ "(ADDRESS_NO, NICKNAME, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, USER_NO) "
+					+ "(ADDRESS_NO, NICKNAME, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, USER_NO, BASIC) "
 					+ "VALUES "
-					+ "(SEMI_USER_ADDRESS_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?) ";
+					+ "(SEMI_USER_ADDRESS_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		
-		helper.insert(sql, address.getNickName(), address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo());
+		helper.insert(sql, address.getNickName(), address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo(), address.getBasic());
 	}
 
 
@@ -40,17 +40,17 @@ public class AddressDao {
 	public void updateAddress(Address address) throws SQLException {
 		String sql = "UPDATE SEMI_USER_ADDRESS "
 				   + "SET "
-				   + "		NICKNAME = ?, "
 				   + "		ADDRESS_NAME = ?, "
 				   + "		POSTAL_CODE = ?, "
 				   + "		ADDRESS = ?, "
 				   + "		ADDRESS_DETAIL = ?, "
 				   + "		TEL = ?, "
-				   + "		USER_NO = ? "
-				   + "		BASIC = ? "
+				   + "		USER_NO = ?, "
+				   + "		BASIC = ?, "
+				   + "		NICKNAME = ? "
 				   + "WHERE ADDRESS_NO = ? ";
 		
-		helper.update(sql, address.getNickName(), address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo(), address.getBasic(), address.getNo());
+		helper.update(sql, address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo(), address.getBasic(), address.getNickName(), address.getNo());
 	}
 	
 	/**
@@ -60,15 +60,14 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public Address getAddress(int addressNo) throws SQLException {
-		String sql = "select * "
-				   + "from semi_user_address "
-				
-				   + "where ADDRESS_NO = ? ";
+		String sql = "SELECT ADDRESS_NO, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, ADDRESS_CREATED_DATE, USER_NO, NICKNAME, BASIC "
+				+ "FROM SEMI_USER_ADDRESS "
+				+ "WHERE ADDRESS_NO = ? ";
+		
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
-			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
@@ -80,6 +79,7 @@ public class AddressDao {
 			user.setNo(rs.getInt("USER_NO"));
 			address.setUser(user);
 			
+			address.setNickName(rs.getString("NICKNAME"));
 			address.setBasic(rs.getString("BASIC"));
 			return address;
 		
@@ -94,14 +94,14 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public Address getAddressByUserNo(int userNo) throws SQLException {
-		String sql = "select * "
-				   + "from semi_user_address "
-				   + "where user_no = ? ";
+		String sql = "SELECT ADDRESS_NO, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, ADDRESS_CREATED_DATE, USER_NO, NICKNAME, BASIC "
+					+ "FROM SEMI_USER_ADDRESS "
+					+ "WHERE USER_NO = ? ";
+		
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
-			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
@@ -113,6 +113,7 @@ public class AddressDao {
 			user.setNo(rs.getInt("USER_NO"));
 			address.setUser(user);
 			
+			address.setNickName(rs.getString("NICKNAME"));
 			address.setBasic(rs.getString("BASIC"));
 			return address;
 		
@@ -126,7 +127,7 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public List<Address> getAllAddress(int userNo) throws SQLException {
-		String sql = "SELECT A.ADDRESS_NO, A.NICKNAME, A.ADDRESS_NAME, A.POSTAL_CODE, A.ADDRESS, A.ADDRESS_DETAIL, A.TEL, A.ADDRESS_CREATED_DATE, A.BASIC, A.USER_NO, U.USER_NAME "
+		String sql = "SELECT A.ADDRESS_NO, A.ADDRESS_NAME, A.POSTAL_CODE, A.ADDRESS, A.ADDRESS_DETAIL, A.TEL, A.BASIC, A.NICKNAME, A.USER_NO, U.USER_NAME "
 				+ "FROM SEMI_USER_ADDRESS A, SEMI_USERS U "
 				+ "WHERE A.USER_NO = ? "
 				+ "AND A.USER_NO = U.USER_NO ";
@@ -134,14 +135,13 @@ public class AddressDao {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
-			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
 			address.setStreet(rs.getString("ADDRESS_DETAIL"));
 			address.setTel(rs.getString("TEL"));
-			address.setCreatedDate(rs.getDate("ADDRESS_CREATED_DATE"));
 			address.setBasic(rs.getString("BASIC"));
+			address.setNickName(rs.getString("NICKNAME"));
 			
 			User user = new User();
 			user.setNo(rs.getInt("USER_NO"));

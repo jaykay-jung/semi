@@ -38,6 +38,7 @@
 		throw new RuntimeException("다른 사용자의 주소록은 수정할 수 없습니다.");
 	}
 	
+	
 	// Address객체의 필드를 수정된 값을 바꾼다.
 	address.setNickName(nickname);
 	address.setName(name);
@@ -46,8 +47,7 @@
 	address.setStreet(addr2);
 	address.setTel(phone);
 	
-	if (!("F".equals(basic))) {
-		
+	if ("T".equals(basic)) {
 		List<Address> addressList = addressDao.getAllAddress(userNo);
 		
 		for (Address addr : addressList) {
@@ -55,6 +55,7 @@
 			addressDao.updateAddress(addr);
 		}
 		address.setBasic(basic);
+		
 		
 		//UserDao 획득
 		UserDao userDao = UserDao.getInstance();
@@ -64,8 +65,10 @@
 		// 사용자정보를 데이터베이스에 업데이트
 		userDao.updateUser(user);
 		
+	} else {
+		address.setBasic("F");
 	}
-	
+
 	// 갱신한 주소정보를 데이터베이스에 반영한다.
 	addressDao.updateAddress(address);
 	

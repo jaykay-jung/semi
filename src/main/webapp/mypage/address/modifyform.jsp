@@ -180,10 +180,10 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr1" name="addr1" style="width:460px; height:24px;"><span style="height:15px; font-size:12px;" value="<%=address.getCity() %>"> 기본주소 </span>
+							<input type="text" id="addr1" name="addr1" style="width:460px; height:24px;" value="<%=address.getCity() %>"><span style="height:15px; font-size:12px;" > 기본주소 </span>
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr2" name="addr2" style="width:460px; height:24px;"><span style="height:15px;font-size:12px;" value="<%=address.getStreet() %>">  나머지주소(선택입력가능)</span>
+							<input type="text" id="addr2" name="addr2" style="width:460px; height:24px;" value="<%=address.getStreet() %>"><span style="height:15px;font-size:12px;" >  나머지주소(선택입력가능)</span>
 						</div>
 					</div><div style="clear:both:"></div>
 				</div>
@@ -249,7 +249,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 
 <!-- footer -->
 <jsp:include page="/common/footer.jsp">
-	<jsp:param name="footer" value="register"/>
+	<jsp:param name="footer" value="mypage"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

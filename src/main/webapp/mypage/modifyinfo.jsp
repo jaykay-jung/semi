@@ -1,10 +1,11 @@
+<%@page import="util.StringUtil"%>
 <%@page import="vo.Address"%>
 <%@page import="util.PasswordUtil"%>
 <%@page import="java.sql.Date"%>
 <%@page import="dao.UserDao"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="error/500.jsp"%>
+    pageEncoding="UTF-8" %>
 <%
 	// 세션에서 로그인된 사용자정보를 조회한다.
 	User user = (User) session.getAttribute("LOGINED_USER");
@@ -12,12 +13,12 @@
 		throw new RuntimeException("회원탈퇴는 로그인 후 사용가능한 서비스입니다.");
 	}
 	
-	
+	  
 	// 요청파라미터에서 입력한 정보를 가져온다.
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
 	
-	int zip = Integer.parseInt(request.getParameter("zip"));
+	int zip = StringUtil.stringToInt(request.getParameter("zip"));
 	String city = request.getParameter("addr1");
 	String street = request.getParameter("addr2");
 		
@@ -39,6 +40,7 @@
 	// 세션에서 가져온 User객체에 사용자정보를 저장한다.
 	user.setPassword(secretPassword);
 	user.setName(name);
+	
 	
 	String address = "(" + zip + ")" + city + " " + street;
 	user.setAddress(address);

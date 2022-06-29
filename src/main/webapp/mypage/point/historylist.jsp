@@ -14,7 +14,8 @@
 	User user = (User) session.getAttribute("LOGINED_USER");
 	if (user == null) {
 		throw new RuntimeException("포인트내역 조회는 로그인 후 사용가능한 서비스 입니다.");
-	} 
+	}
+	int userNo = user.getNo();
 %>    
 <!doctype html>
 <html lang="ko">
@@ -66,6 +67,8 @@ font {font-size:13px;}
 
 <body>
 
+
+
 <!-- header -->
 <jsp:include page="/common/nav.jsp">
 	<jsp:param name="menu" value="mypage"/>
@@ -94,7 +97,6 @@ font {font-size:13px;}
 
 <%
 // 포인트를 조회한다.
-int userNo = user.getNo();
 PointDao pointDao = PointDao.getInstance();
 Point point = pointDao.getPointByUserNo(userNo);
 %>
@@ -109,9 +111,9 @@ Point point = pointDao.getPointByUserNo(userNo);
 					<br><font>>환불예정 적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px; text-align:right;">
-					<font><%=point.getTot() %>원</font>
-					<br><font ><%=point.getUsed() %>원</font>
-					<br><font>123,456 원</font>
+					<font><%=point == null ? 0 : point.getTot() %>원</font>
+					<br><font ><%=point == null ? 0 : point.getUsed() %>원</font>
+					<br><font>0원</font>
 				</div>
 			</div>
 			<div class="col" style="float:left; width:80%;">	
@@ -120,8 +122,8 @@ Point point = pointDao.getPointByUserNo(userNo);
 					<br><font>>미가용 적립금</font>
 				</div>
 	        	<div style="float:left; width:20%;margin-top:25px; text-align:right;">
-					<font><%=point.getAvailble() %>원</font>
-					<br><font><%=point.getUnUsed() %>원</font>
+					<font><%=point == null ? 0 : point.getAvailble() %>원</font>
+					<br><font><%=point == null ? 0 : point.getAvailble() %>원</font>
 				</div>
 			</div>
 		</div>
@@ -188,7 +190,7 @@ Point point = pointDao.getPointByUserNo(userNo);
 				%>
 				
 					<tr>
-						<td colspan="4" style="height:120px; border: 1px solid #d7d5d5; padding: 50px 0; text-align: center; color: #757575; font-weight:bold;"><strong>적립금 내역이 없습니다.</strong></td>
+						<td colspan="4" style="text-align: center; color: #757575; font-weight:bold;"><strong>적립금 내역이 없습니다.</strong></td>
 					</tr>
 				 
 					<tr style="border:1px solid white;">

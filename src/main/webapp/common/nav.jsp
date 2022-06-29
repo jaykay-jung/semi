@@ -32,7 +32,7 @@
 					if (user != null) {
 				%>
 					<li class="nav-item">
-						<a class="nav-link" href="">MODIFY</a>
+						<a class="nav-link" href="/semi/mypage/form.jsp">MODIFY</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/semi/logout.jsp">LOGOUT</a>
@@ -74,7 +74,7 @@
       <!-- 로고, 검색창 -->
       <div class="row">
          <div class="col-7 text-end">
-            <a href="home.jsp">
+            <a href="/semi/home.jsp">
                <img src="/semi/images/h_logo.png" alt="로고이미지">
             </a>
          </div>

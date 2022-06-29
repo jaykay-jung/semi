@@ -1,3 +1,10 @@
+<%@page import="vo.Category"%>
+<%@page import="dao.CategoryDao"%>
+<%@page import="vo.Product"%>
+<%@page import="dao.ProductDao"%>
+<%@page import="java.util.List"%>
+<%@page import="vo.OrderItem"%>
+<%@page import="dao.OrderItemDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,7 +32,10 @@
 <!-- content -->
 <div class="container-fluid">
 	<%
-	
+		OrderItemDao orderItemDao = OrderItemDao.getInstance();
+		List<OrderItem> orderItems = orderItemDao.getBestSeller();
+		ProductDao productDao = ProductDao.getInstance();
+		List<Product> products = productDao.getDryFlowerList();
 	%>
 	<div class="row mb-3">
 		<div class="col-12">
@@ -90,42 +100,25 @@
 			<h3>Best</h3>
 		</div>
 		<div class="row">
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
+		<%
+			for (OrderItem item : orderItems) {
+				Product product = productDao.getProductByNo(item.getProduct().getNo());
+		%>
+				<div class="col-4">
+					<div class="card">
+						<div style="border: 1px solid #eee; margin: 25px;">					
+							<p><img id="card-img" class="card-img-top" src="images/category/<%=product.getImageName() %>"></p>
+						</div>
+						<div class="card-body">
+							<p class="textBold"><%=product.getName() %></p>
+							<p class="textBold"><%=product.getSellPrice() %></p>
+							<p><small class="productExplain"><%=product.getDescription() %></small></p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>
-			</div>
+		<%
+			}
+		%>
 		</div>
 	</div>
 	<div class="row">
@@ -140,56 +133,25 @@
 			<h3>드라이 플라워</h3>
 		</div>
 		<div class="row">
-			<div class="col-3">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>			
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>			
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>			
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p>상품사진</p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">상품명</p>
-						<p class="textBold">가격</p>
-						<p><small class="productExplain">설명</small></p>
-					</div>
-				</div>			
-			</div>
+		<%
+			for (Product product : products) {
+		%>
+				<div class="col-3">
+					<div class="card">
+						<div style="border: 1px solid #eee; margin: 25px;">
+							<p><img id="card-img" class="card-img-top" src="images/category/<%=product.getImageName() %>"></p>
+						</div>
+						<div class="card-body">
+							<p class="textBold"><%=product.getName() %></p>
+							<p class="textBold"><%=product.getSellPrice() %></p>
+							<p><small class="productExplain"><%=product.getDescription() %></small></p>
+						</div>
+					</div>			
+				</div>
+		<%
+			}
+		%>
 		</div>
-		
 	</div>
 </div>
 

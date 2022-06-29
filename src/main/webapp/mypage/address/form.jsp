@@ -36,6 +36,9 @@ function popupZipSearch(){
 		  } else { // 사용자가 지번 주소를 선택했을 경우(J)
 		      fullAddr = data.jibunAddress;
 		  }
+		  
+		  
+		  
 		 
 		  // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
 		  if(data.userSelectedType === 'R'){
@@ -187,7 +190,7 @@ font {font-family: 'Lato',sans-serif; font-size:13px; }
 			<div class="row" style="height:40px;">
         		<div class="col" >
         			<div style="float:right; width:170px; height:40px; border-right:1px solid #dfdfdf; background-color: #fbfafa; padding:7px;">
-						<input type="checkbox" name="defaultadr" style="width:13px; height:13px;">
+						<input type="checkbox" name="basic" value="T" style="width:13px; height:13px;">
         				<font style="line-height: 10px; margin-left: 7px;">기본 배송지로 저장</font>
 					</div>
 				</div>

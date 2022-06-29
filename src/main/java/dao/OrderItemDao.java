@@ -48,6 +48,27 @@ public class OrderItemDao {
 	}
     
 	/**
+	 * 베스트 상품 등록을 위해서 제일 많이 팔린 상품정보 조회하기
+	 * @return orderItem 
+	 * @throws SQLException
+	 */
+	public List<OrderItem> getBestSeller() throws SQLException {
+		String sql = "select product_no "
+				   + "from (select product_no "
+				   + "		from order_item "
+				   + "		group by product_no) "
+				   + "where rownum <= 3 ";
+		
+		return helper.selectList(sql, rs -> {
+			OrderItem orderItem = new OrderItem();
+			Product product = new Product();
+			product.setNo(rs.getInt("product_no"));
+			orderItem.setProduct(product);
+			return orderItem;
+		});
+	}
+	
+	/**
 	 * 페이징 처리를 위한 상품주문 리스트 반환
 	 * @param beginIndex
 	 * @param endIndex

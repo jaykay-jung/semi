@@ -25,11 +25,11 @@ public class ReviewDao {
 	 */
 	public void insertReview(Review review) throws SQLException {
 		String sql = "insert into semi_reviews "
-					+ "(review_no, user_no, product_no, review_title, review_content, review_file_name) "
+					+ "(review_no, user_no, product_no, review_title, review_content) "
 					+ "values "
-					+ "(semi_reviews_seq.nextval, ?, ?, ?, ?, ?) ";
+					+ "(semi_reviews_seq.nextval, ?, ?, ?, ?) ";
 		
-		helper.insert(sql, review.getUser().getNo(), review.getProduct().getNo(), review.getTitle(), review.getContent(), review.getFilename());
+		helper.insert(sql, review.getUser().getName(), review.getProduct().getName(), review.getTitle(), review.getContent());
 	}
 	 
 	
@@ -72,8 +72,8 @@ public class ReviewDao {
 	 * @throws SQLException
 	 */
 	public List<Review> getReviews(int beginIndex, int endIndex) throws SQLException {
-		String sql = "select * "
-					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, review_file_name, "
+		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
+					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "
 					+ "		 		row_number() over (order by review_no desc) row_number "
 					+ "		 from semi_reviews "
 					+ "		 where review_deleted = 'N') R, semi_users U, semi_products P "
@@ -100,7 +100,6 @@ public class ReviewDao {
 			review.setUser(user);
 			
 			review.setCreatedDate(rs.getDate("review_created_date"));
-			review.setFilename(rs.getString("review_file_name"));
 			
 			return review;
 			
@@ -116,7 +115,7 @@ public class ReviewDao {
 	 * @throws SQLException
 	 */
 	public List<Review> getReviews(int beginIndex, int endIndex, String keyword) throws SQLException {
-		String sql = "select * "
+		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, R.review_created_date "
 					+ "from (select review_no,product_no, review_title, user_no,  review_created_date, "
 					+ "		 		row_number() over (order by review_no desc) row_number "
 					+ "		 from semi_reviews "
@@ -144,7 +143,6 @@ public class ReviewDao {
 			review.setUser(user);
 			
 			review.setCreatedDate(rs.getDate("review_created_date"));
-			review.setFilename(rs.getString("review_file_name"));
 			
 			return review;
 			
@@ -160,7 +158,7 @@ public class ReviewDao {
 	 */
 	public Review getReviewByNo(int reviewNo) throws SQLException {
 		String sql = "select R.review_no, R.product_no, P.product_name, P.product_image_name, R.review_title, R.user_no, U.user_name, "
-					+ "		 R.review_content, R.review_deleted, R.review_created_date, R.review_file_name "
+					+ "		 R.review_content, R.review_deleted, R.review_created_date "
 					+ "from semi_reviews R, semi_users U, semi_products P "
 					+ "where R.review_no = ? "
 					+ "and R.user_no = U.user_no "
@@ -170,7 +168,6 @@ public class ReviewDao {
 			Review review = new Review();
 			review.setNo(rs.getInt("review_no"));
 			review.setTitle(rs.getString("review_title"));
-			review.setFilename(rs.getString("review_file_name"));
 			
 			User user = new User();
 			user.setNo(rs.getInt("user_no"));
@@ -196,10 +193,9 @@ public class ReviewDao {
 					+ "set "
 					+ "		review_title = ?, "
 					+ "		review_content = ?, "
-					+ "		review_deleted = ?, "
-					+ "		review_file_name = ? "
+					+ "		review_deleted = ? "
 					+ "where review_no = ? ";
-		helper.update(sql, review.getTitle(), review.getContent(), review.getDeleted(), review.getFilename(), review.getNo());;
+		helper.update(sql, review.getTitle(), review.getContent(), review.getDeleted(), review.getNo());;
 	}
   
 

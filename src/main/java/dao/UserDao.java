@@ -15,6 +15,7 @@ public class UserDao {
     
     private DaoHelper helper = DaoHelper.getInstance();
 
+    
     /**
      * 회원가입 기능 메소드 
      * @param user 사용자 정보
@@ -147,6 +148,33 @@ public class UserDao {
 			
 		helper.update(sql, user.getPassword(), user.getEmail(), user.getPhone(), user.getGender(), new java.sql.Date(user.getBirthday().getTime()), user.getAddress(), user.getDeleted(), user.getNo());
 	}
-    
+
+	
+	/**
+	 * 주소록 기본 or 회원정보 업데이트에 필요한 유저정보 가져오기
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public User getUserByNo(int userNo) throws SQLException {
+		String sql = "SELECT USER_NO, USER_PASSWORD, USER_EMAIL, USER_PHONE, USER_GENDER, USER_BIRTHDAY, USER_ADDRESS, USER_DELETED, "
+					+ "FROM SEMI_USERS "
+					+ "WHERE USER_NO = ? ";
+
+    	return helper.selectOne(sql, rs -> {
+    		User user = new User();
+    		user.setNo(rs.getInt("USER_NO"));
+            user.setPassword(rs.getString("USER_PASSWORD"));
+            user.setEmail(rs.getString("USER_EMAIL"));
+            user.setPhone(rs.getString("USER_PHONE"));
+            user.setGender(rs.getString("USER_GENDER"));
+            user.setBirthday(rs.getDate("USER_BIRTHDAY"));
+            user.setAddress(rs.getString("USER_ADDRESS"));
+            user.setDeleted(rs.getString("USER_DELETED"));
+
+    		return user;
+    	}, userNo);
+
+	}
 }
 
