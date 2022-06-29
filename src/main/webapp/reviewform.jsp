@@ -48,7 +48,7 @@
 	</div>
 	
 	<div>
-		<form method="post" action="review.jsp">
+		<form method="post" action="review.jsp" enctype="multipart/form-data">
 			<table class="table">
 				<tbody>
 					<tr>
@@ -78,6 +78,12 @@
 					<tr>
 						<td colspan="2">
 							<textarea rows="10" name="content"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td>
+							<input type="file" name="upfile">
 						</td>
 					</tr>
 				</tbody>

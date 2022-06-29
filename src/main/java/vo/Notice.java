@@ -10,6 +10,7 @@ public class Notice {
 	private Date createdDate;
 	private int viewCount;
 	private String deleted;
+	private String filename;
 	
 	public Notice() {}
 
@@ -59,6 +60,14 @@ public class Notice {
 
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	
 	
