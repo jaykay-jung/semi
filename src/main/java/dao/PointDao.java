@@ -23,11 +23,11 @@ public class PointDao {
      */
     public void insertPoint(Point point) throws SQLException {
 		String sql = "INSERT INTO SEMI_USER_POINTS "
-					+ "(USER_POINT_NO, USER_TOTAL_POINT, USER_USED_POINT, USER_AVAILABLE_POINT, USER_NO) "
+					+ "(USER_POINT_NO, USER_TOTAL_POINT, USER_USED_POINT, USER_AVAILABLE_POINT, USER_UNUSED_POINT, USER_NO) "
 					+ "VALUES "
-					+ "(SEMI_USER_POINTS_SEQ.nextval, ?, ?, ?, ? ) ";
+					+ "(SEMI_USER_POINTS_SEQ.nextval, ?, ?, ?, ?, ? ) ";
 		
-		helper.insert(sql, point.getTot(), point.getUsed(), point.getAvailble(), point.getUser().getNo());
+		helper.insert(sql, point.getTot(), point.getUsed(), point.getAvailble(), point.getUnUsed(), point.getUser().getNo());
 	}
     
     /**
@@ -40,10 +40,11 @@ public class PointDao {
 				   + "SET "
 				   + "		USER_TOTAL_POINT = ?, "
 				   + "		USER_USED_POINT = ?, "
-				   + "		USER_AVAILABLE_POINT = ? "
-				   + "WHERE USER_POINT_NO = ? ";
+				   + "		USER_AVAILABLE_POINT = ?, "
+				   + "		USER_UNUSED_POINT = ? "
+				   + "WHERE USER_NO = ? ";
 		
-		helper.update(sql, point.getTot(), point.getUsed(), point.getAvailble(), point.getNo());
+		helper.update(sql, point.getTot(), point.getUsed(), point.getAvailble(), point.getUnUsed(), point.getUser().getNo());
 	}
     
     /**
@@ -53,7 +54,7 @@ public class PointDao {
      * @throws SQLException
      */
     public Point getPointByUserNo(int userNo) throws SQLException {
-		String sql = "SELECT USER_POINT_NO, USER_TOTAL_POINT, USER_USED_POINT, USER_AVAILABLE_POINT, USER_NO "
+		String sql = "SELECT USER_POINT_NO, USER_TOTAL_POINT, USER_USED_POINT, USER_AVAILABLE_POINT, USER_UNUSED_POINT, USER_NO "
 				   + "FROM SEMI_USER_POINTS "
 				   + "WHERE USER_NO = ? ";
 		
@@ -63,6 +64,7 @@ public class PointDao {
 			point.setTot(rs.getInt("USER_TOTAL_POINT"));
 			point.setUsed(rs.getInt("USER_USED_POINT"));
 			point.setAvailble(rs.getInt("USER_AVAILABLE_POINT"));
+			point.setUnUsed(rs.getInt("USER_UNUSED_POINT"));
 			
 			User user = new User();
 			user.setNo(rs.getInt("USER_NO"));

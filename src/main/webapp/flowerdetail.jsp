@@ -145,7 +145,7 @@
 		    		</tr>
 			    	<tr>
 		        		<td><strong>판매가</strong></td>
-		        		<td><strong><%=product.getSellPrice() %> 원</strong></td>
+		        		<td><strong><span id="product-price"><%=product.getSellPrice() %></span> 원</strong></td>
 		        		
 		    		</tr>
 		    		<tr>
@@ -193,7 +193,7 @@
 	   			<table style="width:100%">
 	   				<tr>
 	   					<td><%=product.getName() %></td>
-	   					<td><input type="number" id="selectedquantity" min="0" max="10" placeholder="수량"></td>
+	   					<td><input type="number" id="quantity" min="1" max="10" value="1" placeholder="수량"></td>
 	   					<td><button type="button" onclick="caculation();">변경</button></td>
 	   				</tr>
 	   				<tr>
@@ -212,21 +212,12 @@
 	   				</tr>
 	   				<tr>
 	   					<td><font size="2"><strong>총 상품금액</strong>(수량):</font></td>
-	   					<td colspan="2"><font size=2><strong><!--선택된 상품가격--></strong>(selectedQuantity개)</font></td>
+	   					<td colspan="2"><font size=2><strong><span id="total-price"><%=product.getSellPrice() %></span>원</strong>(<span id="selected-quantity">1</span>개)</font></td>
 	   				</tr>	
 	   			</table>
 	   		</div>
 	   		
-	   		<script>
-	   		function caculation() {
-	   			
-	   		 let QuantityEl = document.querySelector("#selected-quantity");
-	   		 let selectedQuantity = parseInt(QuantityEl.value);
-	   		 
-	   		 let selectedItem = <%=product.getName() %>;
-	
-	   		}
-	   		</script>	
+	   		
 	   		
 	   		<div id="buttonlist">
 	   			<a href="order/form.jsp?productNo=<%=product.getNo() %>&quantity=1"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
@@ -358,5 +349,18 @@
 	<jsp:param name="footer" value="flowerdetail"/>
 </jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	function caculation() {
+		let selectedItem = '<%=product.getName() %>';
+		
+		let quantity = document.querySelector("#quantity").value;
+		let price = document.querySelector("#product-price").textContent;
+		
+		let totalPrice = quantity*price;
+		
+		document.querySelector("#selected-quantity").textContent = quantity ;
+		document.querySelector("#total-price").textContent = totalPrice;
+	}
+</script>	
 </body>
 </html>

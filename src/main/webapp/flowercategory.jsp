@@ -59,22 +59,7 @@
 	<div id="categoryname">
 		<h6></h6><!--카테고리 명칭을 입력-->
 	</div>
-	<div id="sortingfunction">
-		<ul class="nav justify-content-end">
-  			<li class="nav-item">
-    			<a class="nav-link" href="#">NEW</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#">TITLE</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#">LOW PRICE</a>
-  			</li>
-  			<li class="nav-item">
-    			<a class="nav-link" href="#">HIGH PRICE</a>
-  			</li>
-		</ul>
-	</div>
+	
 	<!-- 카드 형식으로 데이터 나열 for문으로  -->
 	<div class="row mb-3"> 
 		<%

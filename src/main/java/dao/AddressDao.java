@@ -40,17 +40,17 @@ public class AddressDao {
 	public void updateAddress(Address address) throws SQLException {
 		String sql = "UPDATE SEMI_USER_ADDRESS "
 				   + "SET "
+				   + "		NICKNAME = ?, "
 				   + "		ADDRESS_NAME = ?, "
 				   + "		POSTAL_CODE = ?, "
 				   + "		ADDRESS = ?, "
 				   + "		ADDRESS_DETAIL = ?, "
 				   + "		TEL = ?, "
-				   + "		USER_NO = ?, "
-				   + "		BASIC = ?, "
-				   + "		NICKNAME = ? "
+				   + "		USER_NO = ? "
+				   + "		BASIC = ? "
 				   + "WHERE ADDRESS_NO = ? ";
 		
-		helper.update(sql, address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo(), address.getBasic(), address.getNickName(), address.getNo());
+		helper.update(sql, address.getNickName(), address.getName(), address.getZip(), address.getCity(), address.getStreet(), address.getTel(), address.getUser().getNo(), address.getBasic(), address.getNo());
 	}
 	
 	/**
@@ -60,13 +60,15 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public Address getAddress(int addressNo) throws SQLException {
-		String sql = "SELECT ADDRESS_NO, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, ADDRESS_CREATED_DATE, USER_NO, NICKNAME, BASIC "
-					+ "FROM SEMI_USER_ADDRESS "
-					+ "WHERE ADDRESS_NO = ? ";
+		String sql = "select * "
+				   + "from semi_user_address "
+				
+				   + "where ADDRESS_NO = ? ";
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
+			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
@@ -78,7 +80,6 @@ public class AddressDao {
 			user.setNo(rs.getInt("USER_NO"));
 			address.setUser(user);
 			
-			address.setNickName(rs.getString("NICKNAME"));
 			address.setBasic(rs.getString("BASIC"));
 			return address;
 		
@@ -93,13 +94,14 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public Address getAddressByUserNo(int userNo) throws SQLException {
-		String sql = "SELECT ADDRESS_NO, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, ADDRESS_CREATED_DATE, USER_NO, NICKNAME, BASIC "
-				+ "FROM SEMI_USER_ADDRESS "
-				+ "WHERE USER_NO = ? ";
+		String sql = "select * "
+				   + "from semi_user_address "
+				   + "where user_no = ? ";
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
+			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
@@ -111,7 +113,6 @@ public class AddressDao {
 			user.setNo(rs.getInt("USER_NO"));
 			address.setUser(user);
 			
-			address.setNickName(rs.getString("NICKNAME"));
 			address.setBasic(rs.getString("BASIC"));
 			return address;
 		
@@ -125,7 +126,7 @@ public class AddressDao {
 	 * @throws SQLException
 	 */
 	public List<Address> getAllAddress(int userNo) throws SQLException {
-		String sql = "SELECT A.ADDRESS_NO, A.ADDRESS_NAME, A.POSTAL_CODE, A.ADDRESS, A.ADDRESS_DETAIL, A.TEL, A.BASIC, A.NICKNAME, A.USER_NO, U.USER_NAME "
+		String sql = "SELECT A.ADDRESS_NO, A.NICKNAME, A.ADDRESS_NAME, A.POSTAL_CODE, A.ADDRESS, A.ADDRESS_DETAIL, A.TEL, A.ADDRESS_CREATED_DATE, A.BASIC, A.USER_NO, U.USER_NAME "
 				+ "FROM SEMI_USER_ADDRESS A, SEMI_USERS U "
 				+ "WHERE A.USER_NO = ? "
 				+ "AND A.USER_NO = U.USER_NO ";
@@ -133,13 +134,14 @@ public class AddressDao {
 			
 			Address address = new Address();
 			address.setNo(rs.getInt("ADDRESS_NO"));
+			address.setNickName(rs.getString("NICKNAME"));
 			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
 			address.setStreet(rs.getString("ADDRESS_DETAIL"));
 			address.setTel(rs.getString("TEL"));
+			address.setCreatedDate(rs.getDate("ADDRESS_CREATED_DATE"));
 			address.setBasic(rs.getString("BASIC"));
-			address.setNickName(rs.getString("NICKNAME"));
 			
 			User user = new User();
 			user.setNo(rs.getInt("USER_NO"));
