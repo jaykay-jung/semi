@@ -73,17 +73,18 @@ font {font-size:13px;}
 	<div style="margin:20px 5px; border:1px solid gainsboro; ">
 		<div class="row" style="margin:40px; height:auto;">
         	<div class="col">
-        		<div style="line-height:50px; margin:30px 10px;">
-   					<h1 style="text-align:center; font-weight:bold; ">회원정보 수정이 완료되었습니다.</h1>
+        		<div style="line-height:30px; margin:30px 10px;">
+   					<h1 style="text-align:center; font-weight:bold; color:gray;">[수정완료]</h1>
+   					<h3 style="text-align:center; font-weight:bold; ">회원정보 수정이 완료되었습니다.</h3>
 				</div>
 			</div>
 		</div>
-		<div class="row" style="margin:30px 470px; height:auto; background-color:gainsboro;">
-       		<div class="col" style="width:20%; height:60; margin:20px 10px; text-align:center; ">
-       			<a class="nolinelink" href="mypage.jsp" style="height:50px; margin-left:7px; ">
-					<font style="font-weight:bold; font-size:30px; line-height:30px; ">[ MYPAGE ]</font>
-					<font style="font-weight:bold; font-size:12px; line-height:30px; ">    마이페이지로 돌아가기  </font>
-				</a>
+		<div class="row" style="margin:0px 400px 100px 450px; height:auto;">
+			<div class="col-6">
+				<a class="btn btn-dark" href="mypage.jsp">마이페이지로 이동</a>
+			</div>
+			<div class="col-6">
+				<a class="btn btn-secondary" href="/semi/home.jsp">메인화면으로 이동</a>
 			</div>
 		</div>	
 	</div>

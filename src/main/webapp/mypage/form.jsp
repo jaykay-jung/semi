@@ -1,3 +1,5 @@
+<%@page import="vo.Address"%>
+<%@page import="dao.AddressDao"%>
 <%@page import="vo.OrderSummary"%>
 <%@page import="dao.OrderSummaryDao"%>
 <%@page import="vo.Point"%>
@@ -140,6 +142,7 @@ font {font-size:13px;}
 	OrderSummaryDao orderSummaryDao = OrderSummaryDao.getInstance();
 	OrderSummary orderSummary = orderSummaryDao.getOrderSummaryByUserNo(userNo);
 	
+	
 %>  	
 <!-- 회원이름과 등급 -->				
 	<div style="margin:20px 5px; border:1px solid gainsboro; ">
@@ -220,6 +223,12 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 				</div>
 	    	</div>
 		</div>
+		
+		
+<%
+	AddressDao addressDao = AddressDao.getInstance();
+	Address address = addressDao.getBasicAddressByUserNo(userNo);
+%>
 		<div style="border-top:1px solid #dfdfdf; color:#353535;">
 			<div class="row" style="height:98px;">
         		<div class="col">
@@ -228,14 +237,14 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
 					</div>
 					<div style="float:left; margin:5px 10px;">
 						<div style="height:29px;">
-							<input type="text" id="zip" name="zip" style="width:50px; height:24px;" readonly="readonly">
+							<input type="text" id="zip" name="zip" style="width:50px; height:24px;" readonly="readonly" value="<%=address == null ? " " : address.getZip() %>">
 							<a href="javascript:void(0);" onclick="popupZipSearch();return false;"><img src="../images/mypage/modify-zipcode.png" style="margin-left:5px; margin-bottom:6px;" ></a>
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr1" name="addr1" style="width:290px; height:24px;"><span style="height:15px; font-size:12px;"> 기본주소 </span>
+							<input type="text" id="addr1" name="addr1" style="width:290px; height:24px;" readonly="readonly" value="<%=address == null ? " " : address.getCity() %>"><span style="height:15px; font-size:12px;" > 기본주소 </span>
 						</div>
 						<div style="height:29px;">
-							<input type="text" id="addr2" name="addr2" style="width:290px; height:24px;"><span style="height:15px;font-size:12px;">  나머지주소(선택입력가능)</span>
+							<input type="text" id="addr2" name="addr2" style="width:290px; height:24px;" value="<%=address == null ? " " : address.getStreet() %>"><span style="height:15px;font-size:12px;">  나머지주소(선택입력가능)</span>
 						</div>
 					</div><div style="clear:both:"></div>
 				</div>
@@ -248,7 +257,7 @@ submitRegisterForm()함수가 false를 반환하면 <form>태그내의 폼 입�
         				<font style="line-height: 10px;margin-left: 7px;">휴대전화</font><img src="../images/mypage/address-add.png" style="width:7px; margin-left:5px;">
 					</div>
 					<div style="float:left; margin:10px 10px;">
-						<input type="text" name="phone" style="width:190px; height:24px;" value="<%=user.getPhone() %>">
+						<input type="text" name="phone" style="width:190px; height:24px;" value="<%=user.getPhone() == null? "" : user.getPhone() %>">
 					</div><div style="clear:both:"></div>
 				</div>
 	    	</div>
