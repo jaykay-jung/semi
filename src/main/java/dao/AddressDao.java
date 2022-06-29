@@ -88,33 +88,23 @@ public class AddressDao {
 	}
 	
 	/**
-	 * 사용자 번호로 주소정보 반환
+	 * 사용자 번호로 주소정보 반환 -> 회원정보수정에 쓰일 예정
 	 * @param userNo
 	 * @return
 	 * @throws SQLException
 	 */
-	public Address getAddressByUserNo(int userNo) throws SQLException {
-		String sql = "SELECT ADDRESS_NO, ADDRESS_NAME, POSTAL_CODE, ADDRESS, ADDRESS_DETAIL, TEL, ADDRESS_CREATED_DATE, USER_NO, NICKNAME, BASIC "
+	public Address getBasicAddressByUserNo(int userNo) throws SQLException {
+		String sql = "SELECT POSTAL_CODE, ADDRESS, ADDRESS_DETAIL "
 					+ "FROM SEMI_USER_ADDRESS "
-					+ "WHERE USER_NO = ? ";
+					+ "WHERE USER_NO = ? "
+					+ "AND BASIC = 'T' ";
 		
 		return helper.selectOne(sql, rs -> {
 			
 			Address address = new Address();
-			address.setNo(rs.getInt("ADDRESS_NO"));
-			address.setName(rs.getString("ADDRESS_NAME"));
 			address.setZip(rs.getInt("POSTAL_CODE"));
 			address.setCity(rs.getString("ADDRESS"));
 			address.setStreet(rs.getString("ADDRESS_DETAIL"));
-			address.setTel(rs.getString("TEL"));
-			address.setCreatedDate(rs.getDate("ADDRESS_CREATED_DATE"));
-			
-			User user = new User();
-			user.setNo(rs.getInt("USER_NO"));
-			address.setUser(user);
-			
-			address.setNickName(rs.getString("NICKNAME"));
-			address.setBasic(rs.getString("BASIC"));
 			return address;
 		
 		}, userNo);
