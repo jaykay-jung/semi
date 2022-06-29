@@ -1,4 +1,3 @@
-
 package dao;
 
 import java.sql.SQLException;
@@ -23,11 +22,11 @@ public class UserDao {
      */
     public void insertUser(User user) throws SQLException {
         String sql = "insert into semi_users "
-                   + "(user_no, user_id, user_password, user_email, user_name, user_phone, user_gender, user_birthday) "
+                   + "(user_no, user_id, user_password, user_email, user_name, user_phone, user_gender, user_birthday, user_grade) "
                    + "values "
-                   + "(semi_users_seq.nextval, ?, ?, ?, ?, ?, ?, ?) ";
+                   + "(semi_users_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
-        helper.insert(sql, user.getId(), user.getPassword(), user.getEmail(), user.getName(), user.getPhone(), user.getGender(), user.getBirthday());
+        helper.insert(sql, user.getId(), user.getPassword(), user.getEmail(), user.getName(), user.getPhone(), user.getGender(), user.getBirthday(), user.getGrade());
     }
 
     /**
@@ -93,5 +92,61 @@ public class UserDao {
             return user;
         }, email);
     }
+    
+    /**
+     * 가장 최근에 가입한 유저정보 반환
+     * @param rownum 1로 설정
+     * @return
+     * @throws SQLException
+     */
+    public User getUserByRownum(int rownum) throws SQLException {
+    	String sql = "select * "
+    			   + "from (select * "
+    			   + "		from semi_users "
+    			   + "		order by user_created_date desc) "
+    			   + "where rownum = ? ";
+    	
+    	return helper.selectOne(sql, rs -> {
+    		User user = new User();
+    		user.setNo(rs.getInt("user_no"));
+            user.setId(rs.getString("user_id"));
+            user.setPassword(rs.getString("user_password"));
+            user.setEmail(rs.getString("user_email"));
+            user.setName(rs.getString("user_name"));
+            user.setPhone(rs.getString("user_phone"));
+            user.setGender(rs.getString("user_gender"));
+            user.setBirthday(rs.getDate("user_birthday"));
+            user.setAdmin(rs.getString("user_admin"));
+            user.setAddress(rs.getString("user_address"));
+            user.setDeleted(rs.getString("user_deleted"));
+            user.setCreatedDate(rs.getDate("user_created_date"));
+            user.setCreatedDate(rs.getDate("user_updated_date"));
+            user.setGrade(rs.getString("user_grade"));
+    		
+    		return user;
+    	}, rownum);
+    }
 
+    /**
+     * 사용자의 정보를 업데이트한다.
+     * @param user
+     * @throws SQLException
+     */
+	public void updateUser(User user) throws SQLException {
+		String sql = "UPDATE SEMI_USERS "
+					+ "SET "
+					+ "USER_PASSWORD = ?, "
+					+ "USER_EMAIL = ?, "
+					+ "USER_PHONE = ?, "
+					+ "USER_GENDER = ?, "
+					+ "USER_BIRTHDAY = ?, "
+					+ "USER_ADDRESS = ?, "
+					+ "USER_DELETED = ?, "
+					+ "USER_UPDATED_DATE = SYSDATE "
+					+ "WHERE USER_NO = ? ";
+			
+		helper.update(sql, user.getPassword(), user.getEmail(), user.getPhone(), user.getGender(), new java.sql.Date(user.getBirthday().getTime()), user.getAddress(), user.getDeleted(), user.getNo());
+	}
+    
 }
+

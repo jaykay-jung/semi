@@ -11,14 +11,15 @@ public class Product {
     private int customerPrice;
     private int sellPrice;
     private int depositPoint;
-    private int deleveryFee;
+    private int deliveryFee;
     private int stock;
     private String onSell;
     private Date createdDate;
     private Date updatedDate;
     private int categoryNo;
     private String deleted;
-
+    private Category category;
+    
     public Product() {}
 
 	public int getNo() {
@@ -77,12 +78,12 @@ public class Product {
 		this.depositPoint = depositPoint;
 	}
 
-	public int getDeleveryFee() {
-		return deleveryFee;
+	public int getDeliveryFee() {
+		return deliveryFee;
 	}
 
-	public void setDeleveryFee(int deleveryFee) {
-		this.deleveryFee = deleveryFee;
+	public void setDeliveryFee(int deliveryFee) {
+		this.deliveryFee = deliveryFee;
 	}
 
 	public int getStock() {
@@ -133,6 +134,13 @@ public class Product {
 		this.deleted = deleted;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
     
 }
-

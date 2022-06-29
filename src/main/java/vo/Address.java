@@ -1,20 +1,22 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Address {
 
 	private int no;
+	private String nickName;
 	private String name;
 	private int zip;
 	private String city;
 	private String street;
 	private String tel;
-	private Date createdDate;
+	private Date createdDate;	
+  	private User user;
+  	private String basic;
 	
-	public Address() {
-		super();
-	}
+	public Address() {}
+
 
 	public int getNo() {
 		return no;
@@ -23,6 +25,16 @@ public class Address {
 	public void setNo(int no) {
 		this.no = no;
 	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 
 	public String getName() {
 		return name;
@@ -71,7 +83,25 @@ public class Address {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	public String getBasic() {
+		return basic;
+	}
+
+
+	public void setBasic(String basic) {
+		this.basic = basic;
+	}
 	
 	
 }
+
