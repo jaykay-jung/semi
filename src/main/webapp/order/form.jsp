@@ -61,11 +61,8 @@
 	// 로그인한 사용자의 포인트정보 가져오기
 	PointDao pointDao = PointDao.getInstance();
 	Point point = pointDao.getPointByUserNo(user.getNo());
-	
 %>
-
-	<form action="" id="order-form" method="post" onsubmit="return inputCheck()">
-
+	<form action="order.jsp" id="order-form" method="post" onsubmit="return inputCheck()">
 	    <div class="row">
 			<div class="col" style="margin-top: 10px;">
 				<h1 id="title" class="fs-4 borderless p-2">주문서 작성</h1>
@@ -122,12 +119,13 @@
 				            		// 꺼낸 상품번호로 Dao메소드를 사용. 상품정보 불러오기
 				            		Product product = productDao.getProductByNo(productNo);
 				            		
+				            		
 				            		// 적립금
 				            		int depositPoint = product.getDepositPoint()*quantity; 
-				            		// 수량과 배송비를 포함해 계산한 상품가격 변수 만들기
+				            		// 수량과 배송비를 포함해 계산한 상품가격 변수 생성
 				            		int productPrice = (product.getSellPrice()*quantity) + product.getDeliveryFee();
 				            		
-				            		// 필요한 변수 만들기
+				            		// 필요한 변수 생성
 				            		totalOrderPrice += productPrice;
 				            		totalProductPrice += product.getSellPrice()*quantity;
 				            		totalDeliveryFee += product.getDeliveryFee();
@@ -137,9 +135,15 @@
 				            %>
 					                <tr>
 					                    <td><a href="../flowerdetail.jsp?no=<%=product.getNo() %>"><img src="../images/category/<%=product.getImageName() %>" alt="상품이미지"></a></td>
-					                    <td><%=product.getName()%></td>
+					                    <td>
+					                    	<%=product.getName()%>
+					                    	<input type="hidden" name="productNo" value="<%=product.getNo() %>">
+					                    </td>
 					                    <td><strong><%=product.getSellPrice() %>원</strong></td>
-					                    <td><%=quantity %></td>
+						                    <td>
+						                    	<%=quantity %>
+						                    	<input type="hidden" name="quantity" value="<%=quantity %>">
+						                    </td>
 					                    <td><%=depositPoint %>원</td>
 					                    <td>개별배송</td>
 					                    <td><%=product.getDeliveryFee() %>원</td>
@@ -155,12 +159,14 @@
 				        <table class="table">
 				            <tr class="table-secondary">
 				                <td>[개별배송]</td>
-				                <td style="text-align: right;">상품구매금액 <strong><%=totalProductPrice %></strong> + 배송비 <%=totalDeliveryFee %> = 합계: <strong><span style="font-size: x-large;"><%=totalOrderPrice %></span>원</strong></td>
+				                <td style="text-align: right;">상품구매금액 <strong><%=totalProductPrice %></strong> + 배송비 <%=totalDeliveryFee %> = 합계: <strong><span style="font-size: x-large;"><%=totalOrderPrice %></span>원</strong>
+				                	<input type="hidden" name="totalPrice" value="<%=totalOrderPrice %>">
+				                </td>
 				            </tr>
 				        </table>
 				    </div>
 					<hr> 
-				    <div>
+				    <div id="address-table">
 				        <table class="table">
 				        	<thead>
 				                <tr>
@@ -188,6 +194,7 @@
 				                    <td>
 					                    <div class="col-sm-3">
 					                    	<input type="text" class="form-control" id="name-input" name="userName" placeholder="이름" value="">
+					                    	<input type="hidden" name="userNo" value="<%=user.getNo() %>">
 					                    </div>
 				                    </td>
 				                </tr>
@@ -268,7 +275,7 @@
 					            </tr>
 					            <tr>
 					                <td><strong>총 부가결제금액</strong></td>
-					            	<td id="deposit-point" colspan="2">0<span>원</span></td>
+					            	<td colspan="2"><span id="deposit-point">0</span>원</td>
 
 					            </tr>
 					            <tr>
@@ -310,27 +317,30 @@
 				        <div style="float: right; width: 30%;">
 				            <p><strong>최종 결제금액</strong></p>
 				            <p><strong><span id="total-sum-order-price" style="font-size: x-large;"><%=totalOrderPrice %></span>원</strong></p>
+				            <input id="total-pay" type="hidden" name="totalPay" value="0">
 				            <div>
-				            	<p><button id="button-pay" type="submit" class="btn btn-dark btn-lg" style="display:block;" onclick="pay();">결제하기</button></p>
-				            </div>
-				            <div>
-				            	<p><button id="button-kakaopay" type="submit" class="btn btn-dark btn-lg" style="display:none;" onclick="kakaopay();">결제하기</button></p>
+				            	<p><button id="button-pay" type="submit" class="btn btn-dark btn-lg">결제하기</button></p>
 				            </div>
 				            <p style="border-top : solid 1px black; border-bottom : solid 1px black;"><strong>총 적립예정금액</strong> : <span id="red"><%=totalDepositPoint %>원</span></p>
 				            <p>상품 적립금 : <%=totalDepositPoint %>원</p>
+				            <input type="hidden" name="depositPoint" value="<%=totalDepositPoint %>">
 				            <p>회원 적립금 : 0원</p>
 				            <p>쿠폰 적립금 : 0원</p>
 				        </div>
 				        <div id="payment-info-card" style="display:none;">
 				        	<p><strong>카드 결제</strong></p>
 				        	<span id="red">!</span> 소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.
+				        	<input id="payment-info-card" type="hidden" name="payType" value="카드결제">
 				        </div>
 				        <div id="payment-info-bankbook" class="table" style="display:none;">
 				        	<p><strong>무통장입금 결제</strong></p>
 				            <table id="deposit-table">
 								<tr>
 				                    <td>입금자명</td>
-				                    <td><input type="text" class="form-control" id="depositor-input" name="depositorName" value="<%=user.getName() %>"></td>
+				                    <td>
+				                    	<input type="text" class="form-control" id="depositor-input" name="depositorName" value="<%=user.getName() %>">
+				                    	<input id="payment-info-bankbook" type="hidden" name="payType" value="무통장입금">
+				                    </td>
 				                </tr>
 				                <tr>
 				                    <td>입금은행</td>
@@ -341,6 +351,7 @@
 				        <div id="payment-info-kakaopay" style="display:none;">
 				        	<p><strong>카카오페이 결제</strong></p>
 				        	<span id="red">!</span> 소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.
+				        	<input id="payment-info-kakaopay" type="hidden" name="payType" value="카카오페이">
 				        </div>
 			        </div>
 		    	</div>
@@ -359,7 +370,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
-	// 회원정보와 동일 라디오 버튼 메소드
+	// 회원정보와 동일 라디오 버튼
 	function getUserInfo(userName, userPhone, userEmail) {
 		document.getElementById("name-input").value = userName;
 		document.getElementById("phone-input").value = userPhone;
@@ -373,7 +384,7 @@
 		disableInput();
 	}
 	
-	// 새로운 배송지 라디오 버튼 메소드
+	// 새로운 배송지 라디오 버튼
 	function getNewInfo() {
 		document.getElementById("name-input").value = '';
 		document.getElementById("phone-input").value = '';
@@ -387,29 +398,24 @@
 		useableInput();
 	}
 
-	// 주소찾기 버튼 메소드
+	// 주소찾기 버튼
 	// 다음주소 API 
 	function daumPostAPI() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 let addr = ''; // 주소 변수
                 let extraAddr = ''; // 참고항목 변수
-
                 let extra = '';
                 let road = '';
-
-
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
-
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if(data.userSelectedType === 'R'){
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -426,13 +432,11 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-
                     // document.getElementById("extraAddress").value = extraAddr;
                 } else {
                     // document.getElementById("extraAddress").value = '';
                     extraAddr = '';
                 }
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("post-code").value = data.zonecode;
                 document.getElementById("road-address").value = addr + extraAddr;
@@ -443,97 +447,115 @@
         }).open();
     }
 	
-	// 적립금 사용 입력폼 메소드
+	// 적립금 사용 입력폼
 	function usePoint(input) {
-		// 사용가능한 포인트 읽어오기
-		let availPoint = parseInt(document.querySelector("#availble-point").textContent);
-		
-		document.getElementById("deposit-point").textContent = input.value;
-		availPoint = input.value;
-		
+		// 사용가능 적립금
+		let availPoint = document.getElementById("availble-point");
+		// 사용할 포인트 표시할 자리
+		let pointView = document.querySelectorAll("#deposit-point");
+		let point = '';
+		for (i=0; i<pointView.length; i++) {
+			point = pointView[i];
+			// 적립금 제한
+			if (input.value > parseInt(availPoint.textContent)) {
+				alert("사용가능 적립금보다 많습니다.\n다시 입력해주세요.")
+				return;
+			}
+			// input null방지
+			if (input.value == '') {
+				input.value = 0;
+			}
+ 			point.textContent = input.value;
+		}
+		// 기존 결제금액
+		let prePriceView = document.getElementById("total-order-price");
+		// 적립금을 사용한 결제금액
+		let totalPriceView = document.querySelectorAll("#total-sum-order-price");
+		let price = '';
+		for (i=0; i<totalPriceView.length; i++) {
+			price = totalPriceView[i];
+			price.textContent = parseInt(prePriceView.textContent) - parseInt(point.textContent); 
+		}
+		let totalpay = document.getElementById("total-pay");
+		totalpay.value = price.textContent;
 	}
 	
-	// 결제수단 라디오버튼 처리
+	// 결제수단 라디오버튼
 	function displayPaymentInfo() {
 		let card = document.getElementById("radio-payment-card").checked;
 		let bankbook = document.getElementById("radio-payment-bankbook").checked;
 		let kakaopay = document.getElementById("radio-payment-kakaopay").checked;
-		
 		if (card == true) {
 			document.getElementById("payment-info-card").style.display = "block";
-			document.getElementById("button-pay").style.display = "block";
+			document.getElementById("payment-info-card").disabled = false;
 		} else {
 			document.getElementById("payment-info-card").style.display = "none";
-			document.getElementById("button-pay").style.display = "none";
+			document.getElementById("payment-info-card").disabled = true;
 		}
-	
 		if (bankbook == true) {
 			document.getElementById("payment-info-bankbook").style.display = "block";
-			document.getElementById("button-pay").style.display = "block";
+			document.getElementById("payment-info-bankbook").disabled = false;
 		} else {
 			document.getElementById("payment-info-bankbook").style.display = "none";
+			document.getElementById("payment-info-bankbook").disabled = true;
 		}
-		
 		if (kakaopay == true) {
 			document.getElementById("payment-info-kakaopay").style.display = "block";
-			document.getElementById("button-kakaopay").style.display = "block";
+			document.getElementById("payment-info-kakaopay").disabled = false;
 		} else {
 			document.getElementById("payment-info-kakaopay").style.display = "none";
-			document.getElementById("button-kakaopay").style.display = "none";
+			document.getElementById("payment-info-kakaopay").disabled = true;
 		}
 	}
 	
 	// 결제버튼 (카드,무통장)
 	function pay() {
-		let form = document.getElementById("order-form");
-		form.action = "order.jsp";
 		document.getElementById("order-form").submit();
 	}
 	
-	// 결제버튼 (카카오페이)
+	// 결제버튼 (카카오페이) 미구현
 	function kakaopay() {
 		
 	}
 	
-	// 배송정보 입력에 필수입력값이 없으면 페이지 이동을 막는 메소드
+	// 필수입력값이 없으면 페이지 이동을 막는 함수
 	function inputCheck() {
+		let view = document.getElementById("address-table");
 		let name = document.getElementById("name-input");
 		let postCode = document.getElementById("post-code");
 		let address = document.getElementById("road-address");
 		let phone = document.getElementById("phone-input");
 		let email = document.getElementById("email-input");
 		let radioList = document.querySelectorAll("input[name=paymentMethod]:checked");
-		
+		let depositPoint = document.querySelector("input[name=usedPoint]").value;
 		if (name.value.length == '') {
 			alert("받으실 분 성함을 입력하세요");
+			view.scrollIntoView(false);
 			return false;
 		}
-		
 		if (postCode.value.length == 0) {
 			alert("주소를 입력하세요");
+			view.scrollIntoView(false);
 			return false;
 		}
-		
-		if (address.value.length == '') {
-			alert("주소를 입력하세요");
-			return false;
-		}
-		
 		if (phone.value.length == '') {
 			alert("연락처를 입력하세요");
+			view.scrollIntoView(false);
 			return false;
 		}
-		
 		if (email.value.length == '') {
 			alert("이메일을 입력하세요");
+			view.scrollIntoView(false);
 			return false;
 		}
-		
 		if (radioList.length == 0) {
 			alert("결제수단을 선택하세요");
 			return false;
 		}
-		
+		if (depositPoint > 0 && depositPoint < 1000) {
+			alert("적립금은 1000원 이상일 때 결제 가능합니다");
+			return false;
+		}
 		return true;
 	}
 	

@@ -295,20 +295,16 @@
 	
 	// 상품 선택 삭제 버튼 메소드
 	function deleteCheckItems() {
-		
 		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
-		
 		if (checkboxes.length == 0) {
 			alert("상품을 선택하세요");
 			return;
 		}
-		
 		for (let i = 0; i < checkboxes.length; i++) {
 			let checkbox = checkboxes[i];
 			let itemNo = checkbox.getAttribute('data-item-value');
 			location.href = "delete.jsp?itemNo="+itemNo;
 		}
-		
 	}
 	
 	// 장바구니비우기 버튼 메소드
@@ -355,7 +351,6 @@
 	// 관심상품등록 버튼
 	function addWish(product) {
 		let productNo = product.value;
-		
 		if (confirm("관심상품에 등록하시겠습니까?") == true) {
 			alert("관심상품에 등록합니다");
 			location.href = "addwish.jsp?productNo="+productNo;
@@ -366,12 +361,33 @@
 	
 	// 선택상품주문 버튼
 	function buyChecked() {
-		// productNo 이름을 가진 모든 체크박스 엘리먼트 조회
-		let checkboxes = document.querySelectorAll("input[name='productNo']:checked");
-		
+		// productNo 이름을 가진 모든 엘리먼트 조회
+		let notChecked = document.querySelectorAll("input[name=productNo]");
+		// quantity 이름을 가진 모든 엘리먼트 조회
+		let quantity = document.querySelectorAll("input[name=quantity]");
+		// productNo 이름을 가진 모든 '체크된' 엘리먼트 조회
+		let checkboxes = document.querySelectorAll("input[name=productNo]:checked");
+			
+		// 체크된게 없을 경우
 		if (checkboxes.length == 0) {
 			alert("상품을 선택하세요");
 			return;
+		}
+		// 일단 전부 disabled 
+		for (i=0; i<notChecked.length; i++) {
+			let boxDisabled = notChecked[i];
+			boxDisabled.disabled = true;
+			quantity[i].disabled = true;
+		}
+		// 체크된 것만 disabled 해제
+		for (i=0; i<checkboxes.length; i++) {
+			let boxChecked = checkboxes[i];
+			// productNo
+			boxChecked.disabled = false;
+			let itemNo = boxChecked.getAttribute('data-item-value');
+			let input = document.getElementById("quantity-" + itemNo);
+			// quantity
+			input.disabled = false;
 		}
 		// id가 cart-form인 form엘리먼트의 submit() 메소드 실행하여 선택상품의 값 보내기
 		document.getElementById("cart-form").submit();
@@ -380,7 +396,7 @@
 	// 전체상품주문 버튼
 	function buyAll() {
 		// productNo 이름을 가진 모든 체크박스 엘리먼트 조회
-		let checkboxes = document.querySelectorAll("input[name='productNo']");
+		let checkboxes = document.querySelectorAll("input[name=productNo]");
 		// 조회된 모든 체크박스 체크하기
 		for (let i=0; i<checkboxes.length; i++) {
 			checkboxes[i].checked = true;

@@ -11,12 +11,10 @@
 		response.sendRedirect("../loginform.jsp?fail=deny");
 		return;
 	}
-	
+	// 파라미터
 	int userNo = Integer.parseInt(request.getParameter("userNo"));
 	
 	CartItemDao cartItemDao = CartItemDao.getInstance();
-	List<CartItem> cartItem = cartItemDao.getCartItemsByUserNo(userNo);
-
 	// 장바구니 아이템 삭제 메소드 실행
 	cartItemDao.deleteAllCartItemByUserNo(userNo);
 	

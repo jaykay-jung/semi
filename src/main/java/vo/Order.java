@@ -15,9 +15,7 @@ public class Order {
     private Date updatedDate;
     private Date receiveDate;
     private User user;
-    private Product product;
     private Address address;
-    private int orderQuantity;
     
     public Order() {}
 
@@ -108,29 +106,13 @@ public class Order {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
+	
 	public Address getAddress() {
 		return address;
 	}
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public int getOrderQuantity() {
-		return orderQuantity;
-	}
-
-	public void setOrderQuantity(int orderQuantity) {
-		this.orderQuantity = orderQuantity;
 	}
 
 }
