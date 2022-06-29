@@ -33,16 +33,13 @@
 			ProductDao productDao = ProductDao.getInstance();
 			
 			// 전체 데이터의 수를 조회
-			int totalRows = 0;
-			totalRows = productDao.getTotalRows(keyword);
+			int totalRows = productDao.getTotalRows(keyword);
 						
 			// 페이징처리에 필요한 정보 제공 객체 생성
 			Pagination pagination = new Pagination(rows, totalRows, currentPage);
 			
 			// 요청한 페이지번호에 해당하는 데이터 조회하기
-			List<Product> productList = null;
-			
-			productList = productDao.getProducts(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);				
+			List<Product> productList = productDao.getProducts(pagination.getBeginIndex(), pagination.getEndIndex(), keyword);				
 		%>
 
 
@@ -56,7 +53,7 @@
 	</div>
 
 	<div style="padding:10px; margin-bottom:10px;">
-	<p style="text-align: center;"> <strong><%=keyword %></strong>로 조회한 상품이 <strong><%=totalRows %></strong>건 존재합니다.</p> 
+	<p style="text-align: center;"> <strong><%=keyword %></strong>(으)로 조회한 상품이 <strong><%=totalRows %></strong>건 존재합니다.</p> 
 	</div>
 
 	<div id="sortingfunction">
@@ -81,7 +78,7 @@
 		<%
 			for (Product product : productList) {
 		%>		
-		<div class="col-3 mb-3">
+		<div class="col-3 mb-3" style="padding:10px;">
 			<div class="card">
 				<a href="flowerdetail.jsp?productNo=<%=product.getNo() %>&page=<%=pagination.getCurrentPage() %>">
 				<img src="images/category/<%=product.getImageName() %>" class="card-img-top" alt="...">

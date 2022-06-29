@@ -34,17 +34,26 @@
 	padding:10px;
 	}
 
-#productoption {
-   font-size:12px;
-    width: 100%;
-    border-top: 1px solid grey;
-    padding: 10px;
-  }
+#optioninfo {
+	font-size:12px;
+	padding: 10px;
+	border-top: 1px solid #e9e9e9;
+    border-bottom: 1px solid grey;
+  
+}
+
+#quantitycontrol{
+    border-bottom: 1px solid grey;
+    margin-top : 20px;
+    font-size: 13px;
+	}
 
 #priceandquantity{
 	border-top: 1px solid black;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #e9e9e9;
     padding: 10px;
+    margin-bottom:10px;
+    
 	}
 		
 .btn-outline-secondary{font-size: 12px; }
@@ -130,18 +139,18 @@
 	    			
 		    		<tr>
 		        		<td>소비자가</td>
-		        		<td><del><%=product.getCustomerPrice() %>원</del></td>
+		        		<td><del><%=product.getCustomerPrice() %> 원</del></td>
 		        		<td></td>
 		        		
 		    		</tr>
 			    	<tr>
 		        		<td><strong>판매가</strong></td>
-		        		<td><strong><%=product.getSellPrice() %>원</strong></td>
+		        		<td><strong><%=product.getSellPrice() %> 원</strong></td>
 		        		
 		    		</tr>
 		    		<tr>
 		        		<td>적립금</td>
-		        		<td><img src="images/category-detail/card.gif"><%=product.getDepositPoint() %>원</td>
+		        		<td><img src="images/category-detail/card.gif"><%=product.getDepositPoint() %> 원</td>
 		        		
 		    		</tr>
 					<tr>
@@ -161,16 +170,39 @@
 		    		</tr>
 		    		<tr>
 		        		<td>배송비</td>
-		        		<td><%=product.getDeliveryFee() %></td>
+		        		<td><%=product.getDeliveryFee() %>원</td>
 	        	
 	    			</tr>
 	    			<tr>
 	        			<td>SNS 상품홍보</td>
-	        			<td><a href="https://ko-kr.facebook.com/"><img src="images/category-detail/Sns1.jpg"></a></td>
+	        			<td>
+	        			<a href="https://ko-kr.facebook.com/"><img src="images/category-detail/Sns1.jpg"></a>
+	        			<a href="https://twitter.com/i/flow/login"><img src="images/category-detail/Sns2.jpg"></a>
+	        			</td>
 	        		</tr>
 				</table>
    			</div>
    			
+   			<div id="optioninfo">
+   			 <div style="color:grey;">(최소주문수량 1개 이상)</div>
+   			 <div>&nbsp;</div>
+   			 <div>&nbsp;수량을 선택해주세요.</div>
+   			</div>
+   			<!-- 상품 정보 출력 -->	
+	   		<div id="quantitycontrol">
+	   			<table style="width:100%">
+	   				<tr>
+	   					<td><%=product.getName() %></td>
+	   					<td><input type="number" id="selectedquantity" min="0" max="10" placeholder="수량"></td>
+	   					<td><button type="button" onclick="caculation();">변경</button></td>
+	   				</tr>
+	   				<tr>
+	   					<td>&nbsp;</td>
+	   					<td>&nbsp;</td>
+	   					<td>&nbsp;</td>
+	   				</tr>
+	   			</table>
+	   		
 	   	<!-- 선택된 상품 정보, 수량, 가격 출력 -->
 	   		<div id="priceandquantity">
 	   			<table style="width:100%">
@@ -180,10 +212,21 @@
 	   				</tr>
 	   				<tr>
 	   					<td><font size="2"><strong>총 상품금액</strong>(수량):</font></td>
-	   					<td colspan="2"><font size=2><strong><!--선택된 상품가격--></strong>(<!--선택된 상품의 수-->개)</font></td>
+	   					<td colspan="2"><font size=2><strong><!--선택된 상품가격--></strong>(selectedQuantity개)</font></td>
 	   				</tr>	
 	   			</table>
 	   		</div>
+	   		
+	   		<script>
+	   		function caculation() {
+	   			
+	   		 let QuantityEl = document.querySelector("#selected-quantity");
+	   		 let selectedQuantity = parseInt(QuantityEl.value);
+	   		 
+	   		 let selectedItem = <%=product.getName() %>;
+	
+	   		}
+	   		</script>	
 	   		
 	   		<div id="buttonlist">
 	   			<a href="order/form.jsp?productNo=<%=product.getNo() %>&quantity=1"><button class="btn btn-dark" style="width: 100%;">바로구매</button></a>
@@ -235,7 +278,7 @@
 		</table>
 		<div style="text-align:end">
 				<a href="reviewform.jsp"><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
-				<a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a> 
+				<a href="reviewlist.jsp"><button class="btn btn-secondary" style="width: 12%;">MORE</button></a> 
 		</div>
 	</div>
 	
@@ -304,8 +347,8 @@
 				</tr>
 		</table>
 		<div style="text-align:end;">
-				<p><a href=""><button class="btn btn-dark" style="width: 12%;">WRITE</button></a></p>
-				<p><a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a></p> 
+				<a href=""><button class="btn btn-dark" style="width: 12%;">WRITE</button></a>
+				<a href=""><button class="btn btn-secondary" style="width: 12%;">MORE</button></a>  
 		</div>
 	</div>
 </div>

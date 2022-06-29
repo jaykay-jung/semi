@@ -30,22 +30,19 @@
 <div class="container">
 		<%
 		
-			/*
-			// 요청파라미터에서 카테고리 번호 조회하기
-		
+			
 			// 해당 카테고리 번호로 정보 조회하기
 			CategoryDao categoryDao = CategoryDao.getInstance();
-			Category category = categoryDao.getCategoryByNo(categoryNo);
-		
-			if (category == null) {
-			throw new RuntimeException("카테고리 정보가 존재하지 않습니다.");
-			}
-			*/
 			
 			int categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
 			
+			Category category = categoryDao.getCategoryByNo(categoryNo);
+		
+			
+			
+			
 			int currentPage = StringUtil.stringToInt(request.getParameter("page"), 1);
-			int rows = StringUtil.stringToInt(request.getParameter("rows"), 3);
+			int rows = StringUtil.stringToInt(request.getParameter("rows"), 5);
 			
 			ProductDao productDao = ProductDao.getInstance();
 			
@@ -60,7 +57,7 @@
 		%>
 
 	<div id="categoryname">
-		<h6>플라워</h6><!--카테고리 명칭을 입력-->
+		<h6></h6><!--카테고리 명칭을 입력-->
 	</div>
 	<div id="sortingfunction">
 		<ul class="nav justify-content-end">
@@ -109,7 +106,7 @@
 			 <nav aria-label="pagenavigation">
 	  			<ul class="pagination justify-content-center">
 	    			<li class="page-item">
-	      				<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() - 1 %>)" aria-label="Previous">
+	      				<a class="page-link <%=pagination.getCurrentPage() == 1 ? "disabled" : "" %>" href="flowercategory.jsp?categoryNo=<%=categoryNo %>&page=<%=pagination.getCurrentPage() - 1 %>" aria-label="Previous">
 	        				<span aria-hidden="true">&laquo;</span>
 	      				</a>
 	      			</li>
@@ -117,14 +114,14 @@
 					for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 				%>
 	    			<li class="page-item">
-	    				<a class="page-link <%=pagination.getCurrentPage() == num ? "active" : "" %>" href="javascript:clickPageNo(<%=num %>)"><%=num %>
+	    				<a class="page-link <%=pagination.getCurrentPage() == num ? "active" : "" %>" href="flowercategory.jsp?categoryNo=<%=categoryNo %>&page=<%=num %>"><%=num %>
 	    				</a>
 	    			</li>
 	    		<%
 					}
 				%>
 	    			<li class="page-item">
-	      				<a class="page-link <%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="javascript:clickPageNo(<%=pagination.getCurrentPage() + 1 %>)" aria-label="Next">
+	      				<a class="page-link <%=pagination.getCurrentPage() == pagination.getTotalPages() ? "disabled" : "" %>" href="flowercategory.jsp?categoryNo=<%=categoryNo %>&page=<%=pagination.getCurrentPage() + 1 %>" aria-label="Next">
 	        				<span aria-hidden="true">&raquo;</span>
 	      				</a>
 	    			</li>
@@ -141,20 +138,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
-
-/*
-	function changeRows() {
-		document.querySelector("input[name=page]").value = 1;
-		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
-		document.getElementById("search-form").submit();
-	}
-*/
-	
-	function clickPageNo(pageNo) {
-		document.querySelector("input[name=page]").value = pageNo;
-		document.querySelector("input[name=rows]").value = document.querySelector("select[name=rows]").value;
-		document.getElementById("search-form").submit();
-	}
 	
 </script>
 </body>
