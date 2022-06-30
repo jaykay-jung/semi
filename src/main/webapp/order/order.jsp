@@ -29,6 +29,7 @@
 	AddressDao addressDao = AddressDao.getInstance();
 	Address address = addressDao.getAddressByUserNo(user.getNo());
 	
+	
 	// order set
 	OrderDao orderDao = OrderDao.getInstance();
 	int orderNo = orderDao.getSequence();

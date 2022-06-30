@@ -143,6 +143,36 @@ public class AddressDao {
 		}, userNo);
 				
 	}
+	/**
+	 * 사용자 번호로 주소정보 반환
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Address getAddressByUserNo(int userNo) throws SQLException {
+		String sql = "select * "
+				   + "from semi_user_address "
+				   + "where user_no = ? ";
+		return helper.selectOne(sql, rs -> {
+			
+			Address address = new Address();
+			address.setNo(rs.getInt("ADDRESS_NO"));
+			address.setNickName(rs.getString("NICKNAME"));
+			address.setName(rs.getString("ADDRESS_NAME"));
+			address.setZip(rs.getInt("POSTAL_CODE"));
+			address.setCity(rs.getString("ADDRESS"));
+			address.setStreet(rs.getString("ADDRESS_DETAIL"));
+			address.setTel(rs.getString("TEL"));
+			address.setCreatedDate(rs.getDate("ADDRESS_CREATED_DATE"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("USER_NO"));
+			address.setUser(user);
+			
+			return address;
+		
+		}, userNo);
+	}
 	
 	/**
 	 * 주소록번호를 입력받아 일치하는 주소 정보를 삭제한다.

@@ -1,4 +1,3 @@
-<%@page import="util.StringUtil"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.ProductDao"%>
 <%@page import="dao.CartItemDao"%>
@@ -16,8 +15,8 @@
 	}
 	
 	// 상품번호 파라미터 요청
-	int productNo = StringUtil.stringToInt(request.getParameter("productNo"));
-	int quantity = StringUtil.stringToInt(request.getParameter("quantity"));
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int quantity = Integer.parseInt(request.getParameter("quantity"));
 	
 	// 상품정보 객체에 저장
 	ProductDao productDao = ProductDao.getInstance();

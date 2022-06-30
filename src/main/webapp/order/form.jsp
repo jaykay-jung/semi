@@ -61,6 +61,7 @@
 	// 로그인한 사용자의 주소정보 가져오기
 	AddressDao addressDao = AddressDao.getInstance();
 	Address address = addressDao.getAddressByUserNo(user.getNo());
+	
 	// 로그인한 사용자의 포인트정보 가져오기
 	PointDao pointDao = PointDao.getInstance();
 	Point point = pointDao.getPointByUserNo(user.getNo());
